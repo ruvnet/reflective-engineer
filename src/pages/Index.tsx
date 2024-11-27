@@ -8,7 +8,11 @@ const CATEGORIES = {
   "Abstract Algebra": "abstract-algebra",
   "Set Theory": "set-theory",
   "Symbolic Systems": "symbolic-systems",
-  "Real-World Simulations": "systematic-suppression"
+  "Real-World Simulations": "systematic-suppression",
+  "Complex Analysis": "complex-analysis",
+  "Number Theory": "number-theory",
+  "Category Theory": "category-theory",
+  "Topology": "topology"
 } as const;
 
 const Index = () => {
