@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { ChevronRight, ChevronDown, Terminal, BookTemplate } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronRight, ChevronDown, BookTemplate } from "lucide-react";
 import { useTemplate } from "../services/templateService";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "../components/ui/use-toast";
+import MainNav from "../components/MainNav";
 
 const CATEGORIES = {
   "Mathematical Logic": "mathematical-logic",
@@ -18,6 +19,7 @@ const CATEGORIES = {
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [currentTemplate, setCurrentTemplate] = useState("systematic-suppression");
+  const [selectedDomain, setSelectedDomain] = useState("");
   const { toast } = useToast();
   
   const { data: template, isLoading } = useTemplate(currentTemplate);
@@ -27,28 +29,25 @@ const Index = () => {
     setCurrentTemplate(templateId);
     toast({
       title: "Template Loaded",
-      description: `Loading ${category} template...`
+      description: `Loading ${category} template...`,
+      duration: 3000 // Auto dismiss after 3 seconds
     });
+  };
+
+  // Initialize domain when template loads
+  useEffect(() => {
+    if (template?.domain) {
+      setSelectedDomain(template.domain);
+    }
+  }, [template?.domain]);
+
+  const handleDomainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDomain(e.target.value);
   };
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="glass-panel p-6 m-4 flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <Terminal className="w-6 h-6 text-console-cyan" />
-          <h1 className="typing-container font-code text-xl">
-            Symbolic Reasoning Prompt Generator
-          </h1>
-        </div>
-        <nav className="hidden md:flex space-x-6">
-          {["Home", "Templates", "Documentation", "About"].map((item) => (
-            <button key={item} className="console-button">
-              {item}
-            </button>
-          ))}
-        </nav>
-      </header>
+      <MainNav title="Symbolic Reasoning Prompt Generator" />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col md:flex-row gap-4 p-4">
@@ -98,8 +97,8 @@ const Index = () => {
                 <label className="block text-console-cyan mb-2">Domain Selection</label>
                 <select 
                   className="console-input w-full"
-                  value={template?.domain || ""}
-                  onChange={(e) => {/* Handle changes */}}
+                  value={selectedDomain}
+                  onChange={handleDomainChange}
                 >
                   <option value="">Select domain...</option>
                   <option value="infosec">Information Security</option>

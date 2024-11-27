@@ -1,69 +1,166 @@
-# Welcome to your Lovable project
+# Symbolic Scribe
 
-## Project info
+A modern web application for generating and managing mathematical and symbolic reasoning prompts, powered by OpenRouter AI.
 
-**URL**: https://lovable.dev/projects/9423e56c-883d-4753-aa88-70135a1c3577
+## Overview
 
-## How can I edit this code?
+Symbolic Scribe is a specialized tool designed to help users create, manage, and utilize prompts for mathematical and symbolic reasoning. It provides a sophisticated interface for working with various mathematical domains, from abstract algebra to topology, while leveraging advanced language models through OpenRouter's API.
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Template Management**: Pre-built templates for various mathematical domains:
+  - Abstract Algebra
+  - Category Theory
+  - Complex Analysis
+  - Mathematical Logic
+  - Number Theory
+  - Set Theory
+  - Symbolic Systems
+  - Topology
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9423e56c-883d-4753-aa88-70135a1c3577) and start prompting.
+- **AI Integration**:
+  - OpenRouter API integration for access to multiple AI models
+  - Configurable model selection
+  - Secure API key management
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Modern UI**:
+  - Responsive design with dark mode
+  - Interactive console-style interface
+  - Real-time template previews
+  - Toast notifications for user feedback
 
-**Use your preferred IDE**
+## Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- OpenRouter AI SDK
+- React Query
+- React Router
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Getting Started
 
-Follow these steps:
+### Prerequisites
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Node.js 18 or higher
+- npm or pnpm
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/symbolic-scribe.git
+cd symbolic-scribe
 ```
 
-**Edit a file directly in GitHub**
+2. Install dependencies:
+```bash
+npm install
+# or
+pnpm install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. Configure environment variables:
+```bash
+cp .env.sample .env
+```
+Edit `.env` and add your OpenRouter API key:
+```
+VITE_OPENROUTER_KEY=your_api_key_here
+VITE_ENCRYPTION_KEY=your_encryption_key_here
+```
 
-**Use GitHub Codespaces**
+4. Start the development server:
+```bash
+npm run dev
+# or
+pnpm dev
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The application will be available at `http://localhost:8080`
 
-## What technologies are used for this project?
+## Development
 
-This project is built with .
+### Project Structure
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+src/
+├── components/     # Reusable UI components
+├── hooks/         # Custom React hooks
+├── lib/           # Utility functions and helpers
+├── pages/         # Page components
+├── services/      # API and service integrations
+└── templates/     # Mathematical domain templates
+```
 
-## How can I deploy this project?
+### Key Components
 
-Simply open [Lovable](https://lovable.dev/projects/9423e56c-883d-4753-aa88-70135a1c3577) and click on Share -> Publish.
+- `src/pages/Index.tsx`: Main template interface
+- `src/pages/Settings.tsx`: OpenRouter configuration
+- `src/services/settingsService.ts`: API key and settings management
+- `src/services/templateService.ts`: Template loading and processing
 
-## I want to use a custom domain - is that possible?
+### Adding New Templates
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+1. Create a new markdown file in `src/templates/`
+2. Include required frontmatter:
+```markdown
+---
+title: Your Template Title
+domain: your-domain
+category: Your Category
+overview: Brief description of the template
+---
+
+Template content here...
+```
+
+### Styling
+
+The project uses Tailwind CSS with custom utility classes for the console theme:
+
+- `glass-panel`: Glassmorphic container style
+- `console-input`: Terminal-style input fields
+- `console-button`: Command button styling
+- `console-checkbox`: Custom checkbox design
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch:
+```bash
+git checkout -b feature/your-feature-name
+```
+
+3. Make your changes and commit:
+```bash
+git commit -m "feat: add your feature description"
+```
+
+4. Push to your fork:
+```bash
+git push origin feature/your-feature-name
+```
+
+5. Open a Pull Request
+
+### Contribution Guidelines
+
+- Follow the existing code style and conventions
+- Add appropriate documentation for new features
+- Include tests for new functionality
+- Update the README if necessary
+- Follow conventional commits specification
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Acknowledgments
+
+- [OpenRouter](https://openrouter.ai/) for AI model access
+- [shadcn/ui](https://ui.shadcn.com/) for UI components
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Vite](https://vitejs.dev/) for build tooling
