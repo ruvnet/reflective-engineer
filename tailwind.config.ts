@@ -24,6 +24,12 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        console: {
+          green: "#00FF41",
+          cyan: "#00F5FF",
+          purple: "#9D00FF",
+          dark: "#0A0E17",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -53,10 +59,9 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      fontFamily: {
+        mono: ["IBM Plex Mono", "monospace"],
+        code: ["Source Code Pro", "monospace"],
       },
       keyframes: {
         "accordion-down": {
@@ -67,10 +72,30 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        typing: {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
+        },
+        blink: {
+          "50%": { borderColor: "transparent" },
+        },
+        "matrix-fade": {
+          "0%": { 
+            opacity: "0",
+            transform: "translateY(10px)"
+          },
+          "100%": { 
+            opacity: "1",
+            transform: "translateY(0)"
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        typing: "typing 3.5s steps(40, end)",
+        "cursor-blink": "blink 1s step-end infinite",
+        "matrix-fade": "matrix-fade 0.5s ease-out forwards",
       },
     },
   },
