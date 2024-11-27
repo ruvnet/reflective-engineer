@@ -1,29 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Code+Pro:wght@400;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-    --console-cyan: 186 100% 42%;
+    --background: 222 47% 11%;
+    --foreground: 0 0% 100%;
+    --card: 222 47% 11%;
+    --card-foreground: 0 0% 100%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 142 100% 50%;
+    --primary-foreground: 144 100% 10%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 32% 17%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 142 100% 50%;
   }
 }
 
@@ -32,26 +33,29 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Courier New', Courier, monospace;
+    @apply bg-console-dark text-console-green font-mono antialiased;
   }
 }
 
-@layer utilities {
-  .typing-animation {
-    overflow: hidden;
-    border-right: 2px solid var(--console-cyan);
-    white-space: nowrap;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+@layer components {
+  .glass-panel {
+    @apply bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-lg;
+  }
+  
+  .console-input {
+    @apply bg-console-dark/50 border border-console-green/20 text-console-green 
+           rounded px-4 py-2 focus:outline-none focus:border-console-green
+           transition-colors duration-200;
   }
 
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+  .console-button {
+    @apply px-4 py-2 bg-console-green/10 text-console-green border border-console-green/20
+           hover:bg-console-green/20 transition-colors duration-200 rounded
+           focus:outline-none focus:ring-2 focus:ring-console-green/50;
   }
 
-  @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--console-cyan) }
+  .typing-container {
+    @apply overflow-hidden whitespace-nowrap border-r-4 border-console-green;
+    animation: typing 3.5s steps(40, end), blink 1s step-end infinite;
   }
 }
