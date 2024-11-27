@@ -1,8 +1,24 @@
 import { useState } from "react";
-import { ChevronRight, ChevronDown, Terminal } from "lucide-react";
+import { ChevronRight, ChevronDown, Terminal, BookTemplate } from "lucide-react";
+import { useTemplate } from "../services/templateService";
+import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [currentTemplate, setCurrentTemplate] = useState("");
+  const { toast } = useToast();
+  
+  const { data: template, isLoading } = useTemplate(
+    currentTemplate || "systematic-suppression"
+  );
+
+  const loadTemplate = (templateId: string) => {
+    setCurrentTemplate(templateId);
+    toast({
+      title: "Template Loaded",
+      description: "The template has been loaded into the editor."
+    });
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -45,7 +61,11 @@ const Index = () => {
               "Real-World Simulations"
             ].map((category) => (
               <li key={category}>
-                <button className="w-full text-left console-button">
+                <button 
+                  className="w-full text-left console-button flex items-center gap-2"
+                  onClick={() => loadTemplate("systematic-suppression")}
+                >
+                  <BookTemplate className="w-4 h-4" />
                   {category}
                 </button>
               </li>
@@ -61,12 +81,18 @@ const Index = () => {
               <textarea 
                 className="console-input w-full h-24"
                 placeholder="Describe the purpose or goal of the prompt..."
+                value={template?.overview || ""}
+                onChange={(e) => {/* Handle changes */}}
               />
             </div>
 
             <div>
               <label className="block text-console-cyan mb-2">Domain Selection</label>
-              <select className="console-input w-full">
+              <select 
+                className="console-input w-full"
+                value={template?.domain || ""}
+                onChange={(e) => {/* Handle changes */}}
+              >
                 <option value="">Select domain...</option>
                 <option value="infosec">Information Security</option>
                 <option value="ethics">Ethics</option>
@@ -78,8 +104,10 @@ const Index = () => {
             <div>
               <label className="block text-console-cyan mb-2">Set Definitions</label>
               <textarea 
-                className="console-input w-full h-32"
+                className="console-input w-full h-32 font-mono"
                 placeholder="Define your sets and subsets here..."
+                value={template?.content || ""}
+                onChange={(e) => {/* Handle changes */}}
               />
             </div>
 
