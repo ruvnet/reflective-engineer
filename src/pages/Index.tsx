@@ -3,20 +3,27 @@ import { ChevronRight, ChevronDown, Terminal, BookTemplate } from "lucide-react"
 import { useTemplate } from "../services/templateService";
 import { useToast } from "@/components/ui/use-toast";
 
+const CATEGORIES = {
+  "Mathematical Logic": "mathematical-logic",
+  "Abstract Algebra": "abstract-algebra",
+  "Set Theory": "set-theory",
+  "Symbolic Systems": "symbolic-systems",
+  "Real-World Simulations": "systematic-suppression"
+} as const;
+
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [currentTemplate, setCurrentTemplate] = useState("");
+  const [currentTemplate, setCurrentTemplate] = useState("systematic-suppression");
   const { toast } = useToast();
   
-  const { data: template, isLoading } = useTemplate(
-    currentTemplate || "systematic-suppression"
-  );
+  const { data: template, isLoading } = useTemplate(currentTemplate);
 
-  const loadTemplate = (templateId: string) => {
+  const loadTemplate = (category: keyof typeof CATEGORIES) => {
+    const templateId = CATEGORIES[category];
     setCurrentTemplate(templateId);
     toast({
       title: "Template Loaded",
-      description: "The template has been loaded into the editor."
+      description: `Loading ${category} template...`
     });
   };
 
@@ -53,17 +60,11 @@ const Index = () => {
             </button>
           </div>
           <ul className="space-y-2">
-            {[
-              "Mathematical Logic",
-              "Abstract Algebra",
-              "Set Theory",
-              "Symbolic Systems",
-              "Real-World Simulations"
-            ].map((category) => (
+            {Object.keys(CATEGORIES).map((category) => (
               <li key={category}>
                 <button 
                   className="w-full text-left console-button flex items-center gap-2"
-                  onClick={() => loadTemplate("systematic-suppression")}
+                  onClick={() => loadTemplate(category as keyof typeof CATEGORIES)}
                 >
                   <BookTemplate className="w-4 h-4" />
                   {category}
@@ -75,51 +76,55 @@ const Index = () => {
 
         {/* Main Workspace */}
         <section className="flex-1 glass-panel p-6 animate-matrix-fade">
-          <div className="space-y-6">
-            <div>
-              <label className="block text-console-cyan mb-2">Prompt Overview</label>
-              <textarea 
-                className="console-input w-full h-24"
-                placeholder="Describe the purpose or goal of the prompt..."
-                value={template?.overview || ""}
-                onChange={(e) => {/* Handle changes */}}
-              />
-            </div>
+          {isLoading ? (
+            <div className="text-console-cyan">Loading template...</div>
+          ) : (
+            <div className="space-y-6">
+              <div>
+                <label className="block text-console-cyan mb-2">Prompt Overview</label>
+                <textarea 
+                  className="console-input w-full h-24"
+                  placeholder="Describe the purpose or goal of the prompt..."
+                  value={template?.overview || ""}
+                  onChange={(e) => {/* Handle changes */}}
+                />
+              </div>
 
-            <div>
-              <label className="block text-console-cyan mb-2">Domain Selection</label>
-              <select 
-                className="console-input w-full"
-                value={template?.domain || ""}
-                onChange={(e) => {/* Handle changes */}}
-              >
-                <option value="">Select domain...</option>
-                <option value="infosec">Information Security</option>
-                <option value="ethics">Ethics</option>
-                <option value="ai">AI Systems</option>
-                <option value="society">Societal Issues</option>
-              </select>
-            </div>
+              <div>
+                <label className="block text-console-cyan mb-2">Domain Selection</label>
+                <select 
+                  className="console-input w-full"
+                  value={template?.domain || ""}
+                  onChange={(e) => {/* Handle changes */}}
+                >
+                  <option value="">Select domain...</option>
+                  <option value="infosec">Information Security</option>
+                  <option value="ethics">Ethics</option>
+                  <option value="ai">AI Systems</option>
+                  <option value="society">Societal Issues</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="block text-console-cyan mb-2">Set Definitions</label>
-              <textarea 
-                className="console-input w-full h-32 font-mono"
-                placeholder="Define your sets and subsets here..."
-                value={template?.content || ""}
-                onChange={(e) => {/* Handle changes */}}
-              />
-            </div>
+              <div>
+                <label className="block text-console-cyan mb-2">Set Definitions</label>
+                <textarea 
+                  className="console-input w-full h-32 font-mono"
+                  placeholder="Define your sets and subsets here..."
+                  value={template?.content || ""}
+                  onChange={(e) => {/* Handle changes */}}
+                />
+              </div>
 
-            <div className="flex flex-wrap gap-4">
-              <button className="console-button flex-1">
-                Preview
-              </button>
-              <button className="console-button flex-1">
-                Generate
-              </button>
+              <div className="flex flex-wrap gap-4">
+                <button className="console-button flex-1">
+                  Preview
+                </button>
+                <button className="console-button flex-1">
+                  Generate
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </section>
       </main>
     </div>
