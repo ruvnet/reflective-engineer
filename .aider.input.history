@@ -110,3 +110,6 @@
 # 2024-11-28 16:47:50.609650
 +update index.html 
 +description
+
+# 2024-11-28 16:58:19.991819
++/architect the mobile hamburger menu in the head is missing, also make sure the initial home page tile is truncated on mobile to fit the menu
