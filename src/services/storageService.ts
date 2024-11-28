@@ -29,7 +29,7 @@ export const savePrompt = (prompt: Omit<SavedPrompt, 'id' | 'timestamp'>) => {
   };
   prompts.push(newPrompt);
   localStorage.setItem(SAVED_PROMPTS_KEY, JSON.stringify(prompts));
-  window.dispatchEvent(new Event('storage'));
+  window.dispatchEvent(new Event('storageChanged'));
   return newPrompt;
 };
 

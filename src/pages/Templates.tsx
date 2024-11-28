@@ -19,6 +19,10 @@ export default function Templates() {
   const [builtInTemplates, setBuiltInTemplates] = useState<Template[]>([]);
   const [savedTemplates, setSavedTemplates] = useState<SavedPrompt[]>([]);
 
+  const loadSavedTemplates = () => {
+    setSavedTemplates(getSavedPrompts());
+  };
+
   useEffect(() => {
     const importTemplates = async () => {
       const templateModules = import.meta.glob<string>('../templates/*.md', { 
@@ -44,26 +48,25 @@ export default function Templates() {
       }
 
       setBuiltInTemplates(loadedTemplates);
-      
-      // Load saved templates
-      const loadSavedTemplates = () => {
-        setSavedTemplates(getSavedPrompts());
-      };
-
       loadSavedTemplates();
-
-      // Listen for storage changes
-      const handleStorageChange = (e: StorageEvent) => {
-        if (e.key === SAVED_PROMPTS_KEY) {
-          loadSavedTemplates();
-        }
-      };
-
-      window.addEventListener('storage', handleStorageChange);
-      return () => window.removeEventListener('storage', handleStorageChange);
     };
 
     importTemplates();
+  }, []);
+
+  // Listen for both storage event and custom event
+  useEffect(() => {
+    const handleStorageChange = () => {
+      loadSavedTemplates();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('storageChanged', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('storageChanged', handleStorageChange);
+    };
   }, []);
 
   return (
