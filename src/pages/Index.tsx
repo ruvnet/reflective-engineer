@@ -19,6 +19,19 @@ const CATEGORIES = {
   "Topology": "topology"
 } as const;
 
+const OUTPUT_TYPES = {
+  "Code": "Generate code implementation",
+  "Summary": "Provide a concise summary",
+  "Calculus": "Show mathematical calculations and steps",
+  "Analysis": "Detailed analysis and explanation",
+  "Examples": "Provide practical examples",
+  "Visualization": "Describe visual representation",
+  "Tutorial": "Step-by-step tutorial",
+  "Comparison": "Compare and contrast analysis",
+  "Implementation": "Implementation guidelines",
+  "Documentation": "Technical documentation"
+} as const;
+
 const DOMAINS = {
   "Computer Science": [
     "Information Security",
@@ -116,6 +129,7 @@ const Index = () => {
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [overview, setOverview] = useState("");
   const [content, setContent] = useState("");
+  const [selectedOutputType, setSelectedOutputType] = useState<keyof typeof OUTPUT_TYPES>("Analysis");
   
   const hasApiKey = useLocalStorage('symbolic-scribe-settings', false);
   const { toast } = useToast();
@@ -220,6 +234,7 @@ const Index = () => {
     const promptParts = [
       `Domain: ${domain}`,
       `Category: ${Object.keys(CATEGORIES).find(key => CATEGORIES[key as keyof typeof CATEGORIES] === currentTemplate)}`,
+      `Output Type: ${selectedOutputType} (${OUTPUT_TYPES[selectedOutputType]})`,
       `Overview: ${overview}`,
       `Content:\n${content}`
     ];
@@ -300,6 +315,19 @@ const Index = () => {
                     <option value="">Select domain category...</option>
                     {Object.keys(DOMAINS).map((category) => (
                       <option key={category} value={category}>{category}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-console-cyan mb-2">Output Type</label>
+                  <select 
+                    className="console-input w-full"
+                    value={selectedOutputType}
+                    onChange={(e) => setSelectedOutputType(e.target.value as keyof typeof OUTPUT_TYPES)}
+                  >
+                    {Object.entries(OUTPUT_TYPES).map(([type, description]) => (
+                      <option key={type} value={type}>{type} - {description}</option>
                     ))}
                   </select>
                 </div>
