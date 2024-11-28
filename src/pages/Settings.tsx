@@ -218,15 +218,15 @@ const Settings = () => {
                   )}
                   <div className="flex items-center gap-2 mt-2 text-gray-400">
                     <Lock className="w-4 h-4" />
-                    <span className="text-sm">Keys entered here are encrypted and stored only in your browser's local storage</span>
+                    <span className="text-sm">Keys entered here are encrypted and stored only in your browser's local storage. View the <a href="https://github.com/ruvnet/symbolic-scribe" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">source code</a> for details.</span>
                   </div>
                   <p className="text-sm text-gray-400 mt-1">
-                    Get your API key from <a href="https://openrouter.ai/keys" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">openrouter.ai/keys</a>
+                    Get your API key from <a href="https://openrouter.ai/keys" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">OpenRouter</a>
                   </p>
                   <p className="text-sm text-gray-400 mt-1">
                     {DEFAULT_API_KEY 
                       ? "You can override the default API key by entering your own key above"
-                      : "No default API key found in environment. Please enter your OpenRouter API key"}
+                      : "No default API key found. Please enter your OpenRouter API key to get started."}
                   </p>
                 </div>
 
