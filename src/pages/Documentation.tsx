@@ -37,6 +37,10 @@ export default function Documentation() {
                 <Shield className="w-4 h-4 mr-2" />
                 InfoSec
               </TabsTrigger>
+              <TabsTrigger value="red-teaming" className="glass-panel data-[state=active]:border-console-cyan">
+                <Shield className="w-4 h-4 mr-2" />
+                Red Teaming
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="getting-started" className="space-y-6">
@@ -342,6 +346,114 @@ Let V = {v | v is a validation function}
                       <li>Review access logs in OpenRouter dashboard</li>
                       <li>Update security controls as needed</li>
                     </ol>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="red-teaming" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <Shield className="w-5 h-5" />
+                  Red Teaming Methodology
+                </h2>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Preparation Phase</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Initial Setup
+1. Model Architecture Analysis
+2. Framework Selection
+3. Test Case Design
+4. Safety Protocol Implementation`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Testing Vectors</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Core Testing Approaches
+1. Semantic Injection Analysis
+2. Boundary Testing
+3. Context Window Manipulation
+4. Mathematical Encoding Tests
+5. Chain-of-Thought Analysis`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Mathematical Framework Analysis</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Framework Components
+Let M = {m | m is a mathematical transformation}
+Let V = {v | v is a validation function}
+Let S = {s | s is a security control}
+
+∀m ∈ M, ∃v ∈ V: v(m(x)) = v(x)
+// Every transformation must be validated`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Documentation & Analysis</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Analysis Framework
+1. Systematic Recording
+   - Test case details
+   - Results and observations
+   - Vulnerability patterns
+
+2. Impact Assessment
+   - Security implications
+   - Risk categorization
+   - Mitigation priorities
+
+3. Pattern Recognition
+   - Common vulnerability types
+   - Attack vector analysis
+   - Defense strategy mapping`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Ethical Guidelines</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Ethical Framework
+1. Responsible Disclosure
+   - Follow established protocols
+   - Coordinate with stakeholders
+   - Document findings securely
+
+2. Harm Prevention
+   - Containment measures
+   - Testing boundaries
+   - Safety checkpoints
+
+3. Collaborative Improvement
+   - Share findings responsibly
+   - Contribute to defense strategies
+   - Update methodologies`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Defense Strategy Development</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Strategy Components
+Let D be defensive measures
+Let T be threat vectors
+Let R be mitigation relation
+
+∀t ∈ T, ∃d ∈ D: (d,t) ∈ R
+// Every threat has a corresponding defense
+
+# Implementation Steps
+1. Identify vulnerability patterns
+2. Develop mitigation strategies
+3. Implement security controls
+4. Validate effectiveness
+5. Document and share findings`}
+                    </pre>
                   </div>
                 </div>
               </div>
