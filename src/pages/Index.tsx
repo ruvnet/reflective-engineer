@@ -319,18 +319,6 @@ const Index = () => {
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-console-cyan mb-2">Output Type</label>
-                  <select 
-                    className="console-input w-full"
-                    value={selectedOutputType}
-                    onChange={(e) => setSelectedOutputType(e.target.value as keyof typeof OUTPUT_TYPES)}
-                  >
-                    {Object.entries(OUTPUT_TYPES).map(([type, description]) => (
-                      <option key={type} value={type}>{type} - {description}</option>
-                    ))}
-                  </select>
-                </div>
 
                 {selectedDomainCategory && (
                   <div>
@@ -380,6 +368,19 @@ const Index = () => {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                 />
+              </div>
+
+              <div>
+                <label className="block text-console-cyan mb-2">Output Type</label>
+                <select 
+                  className="console-input w-full"
+                  value={selectedOutputType}
+                  onChange={(e) => setSelectedOutputType(e.target.value as keyof typeof OUTPUT_TYPES)}
+                >
+                  {Object.entries(OUTPUT_TYPES).map(([type, description]) => (
+                    <option key={type} value={type}>{type} - {description}</option>
+                  ))}
+                </select>
               </div>
 
               <div className="flex flex-wrap gap-4">
