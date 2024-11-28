@@ -222,7 +222,7 @@ const Settings = () => {
                   </div>
                   <p className="text-sm text-gray-400 mt-1">
                     <span className="flex items-center gap-1">
-                      Get your API key from <a href="https://openrouter.ai/keys" className="text-console-cyan hover:underline flex items-center gap-1" target="_blank" rel="noopener noreferrer">OpenRouter <Key className="w-3 h-3" /></a>
+                      <Key className="w-3 h-3" /> Get your API key from <a href="https://openrouter.ai/keys" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">OpenRouter</a>
                     </span>
                   </p>
                   <p className="text-sm text-gray-400 mt-1">
