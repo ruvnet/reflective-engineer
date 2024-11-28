@@ -199,38 +199,138 @@ R = (Actions, ⊕, ⊗)
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Logical Framework</h3>
-                    <p className="text-console-text">
-                      Formal logic for reasoning about system properties and behaviors:
+                    <p className="text-console-text mb-4">
+                      A comprehensive system for formal reasoning about AI behaviors and security properties:
                     </p>
-                    <ul className="list-disc list-inside space-y-2 mt-2 ml-4">
-                      <li>Propositional Logic: Basic truth values and operations</li>
-                      <li>Predicate Logic: Quantified statements about system properties</li>
-                      <li>Modal Logic: Reasoning about necessity and possibility</li>
-                    </ul>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-console-green mb-2">Propositional Logic</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Basic Security Properties
+Let S = "System is secure"
+Let A = "Attack is successful"
+Let D = "Defense is active"
+
+# Logical Operations
+¬A         // Attack prevention
+D → S      // Defense implies security
+S ∧ ¬A     // Security with no successful attacks
+D ∨ B      // Either defense or backup is active`}
+                        </pre>
+                      </div>
+
+                      <div>
+                        <h4 className="text-console-green mb-2">Predicate Logic</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Quantified Security Statements
+∀x ∈ Inputs: Safe(x)           // All inputs are safe
+∃d ∈ Defenses: Blocks(d, a)    // Some defense blocks attack a
+∀a ∃d: Mitigates(d, a)        // Every attack has a mitigation
+∀s ∈ States: ¬Vulnerable(s)    // No state is vulnerable`}
+                        </pre>
+                      </div>
+
+                      <div>
+                        <h4 className="text-console-green mb-2">Modal Logic</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Necessity and Possibility
+□Safe(s)      // System is necessarily safe
+◇Breach(s)    // Breach is possible
+□(A → B)      // Necessarily, A implies B
+¬◇Exploit(x)  // Exploit is impossible`}
+                        </pre>
+                      </div>
+                    </div>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Topological Framework</h3>
-                    <p className="text-console-text">
-                      Spatial relationships and continuous transformations:
+                    <p className="text-console-text mb-4">
+                      Advanced framework for analyzing security boundaries and transformations:
                     </p>
-                    <ul className="list-disc list-inside space-y-2 mt-2 ml-4">
-                      <li>Open/Closed Sets: Boundary conditions</li>
-                      <li>Continuous Maps: Smooth transitions between states</li>
-                      <li>Homeomorphisms: Structure-preserving transformations</li>
-                    </ul>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-console-green mb-2">Security Boundaries</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Open and Closed Sets
+Let X be the security state space
+Let U ⊂ X be an open set of safe states
+Let C = X\U be the closed set of unsafe states
+
+# Boundary Analysis
+∂U = C̄ ∩ Ū    // Security boundary
+int(U)        // Interior (definitely safe)
+cl(C)         // Closure (potentially unsafe)`}
+                        </pre>
+                      </div>
+
+                      <div>
+                        <h4 className="text-console-green mb-2">Continuous Transformations</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Security Mappings
+f: X → Y       // State transition function
+f⁻¹(Safe)     // Preimage of safe states
+f(Unsafe)      // Image of unsafe states
+
+# Continuity Properties
+∀ε>0 ∃δ>0: d(x,y)<δ ⟹ d(f(x),f(y))<ε
+// Small input changes → small output changes`}
+                        </pre>
+                      </div>
+                    </div>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Complex Analysis Framework</h3>
-                    <p className="text-console-text">
-                      Handling multiple interrelated variables:
+                    <p className="text-console-text mb-4">
+                      Sophisticated tools for analyzing multi-dimensional security relationships:
                     </p>
-                    <ul className="list-disc list-inside space-y-2 mt-2 ml-4">
-                      <li>Complex Functions: Multi-dimensional relationships</li>
-                      <li>Analytic Functions: Well-behaved transformations</li>
-                      <li>Contour Integration: Path-dependent analysis</li>
-                    </ul>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-console-green mb-2">Security Functions</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Complex Security Mapping
+f(z) = Security(z) + i·Risk(z)
+// z represents system state
+// Real part: security level
+// Imaginary part: risk level
+
+# Analytic Properties
+∂f/∂z̄ = 0    // Cauchy-Riemann equations
+∮ f(z)dz = 0  // Path independence
+f'(z) exists  // Differentiability`}
+                        </pre>
+                      </div>
+
+                      <div>
+                        <h4 className="text-console-green mb-2">Path Analysis</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Attack Path Integration
+∫γ f(z)dz     // Path integral along attack γ
+Res(f,a)      // Residue at vulnerability a
+
+# Conformal Mapping
+w = f(z)      // Security domain mapping
+f⁻¹(Safe)     // Safe region preimage`}
+                        </pre>
+                      </div>
+
+                      <div>
+                        <h4 className="text-console-green mb-2">Application Tutorial</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Step 1: Model the Security Space
+z = x + iy    // x: defense level, y: attack surface
+
+# Step 2: Define Security Function
+f(z) = 1/(z - a) // a: known vulnerability
+
+# Step 3: Analyze Behavior
+|f(z)| → ∞ as z → a    // Vulnerability detection
+arg(f(z))             // Attack angle analysis
+∂|f|/∂x = 0           // Critical points`}
+                        </pre>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
