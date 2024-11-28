@@ -1,158 +1,120 @@
 # Symbolic Scribe
 
-A modern web application for generating and managing mathematical and symbolic reasoning prompts, powered by OpenRouter AI.
+A specialized prompt engineering tool that uses mathematical frameworks to generate precise, structured prompts for AI interactions.
 
-## Overview
+## Key Features & Benefits
 
-Symbolic Scribe is a specialized tool designed to help users create, manage, and utilize prompts for mathematical and symbolic reasoning. It provides a sophisticated interface for working with various mathematical domains, from abstract algebra to topology, while leveraging advanced language models through OpenRouter's API.
+### Mathematical Framework Integration
+- **Set Theory Templates**: Model complex relationships and hierarchies
+- **Category Theory**: Define abstract transformations and mappings
+- **Abstract Algebra**: Structure group operations and symmetries
+- **Topology**: Explore continuous transformations and invariants
+- **Complex Analysis**: Handle multi-dimensional relationships
 
-## Features
+### Practical Applications
+- **Information Security**: Model threat vectors and attack surfaces
+- **Ethical Analysis**: Structure moral frameworks and constraints
+- **AI Safety**: Define system boundaries and safety properties
+- **Domain Adaptation**: Apply mathematical rigor to any field
 
-- **Template Management**: Pre-built templates for various mathematical domains:
-  - Abstract Algebra
-  - Category Theory
-  - Complex Analysis
-  - Mathematical Logic
-  - Number Theory
-  - Set Theory
-  - Symbolic Systems
-  - Topology
+### User Experience
+- **Interactive Console**: Terminal-style interface with modern aesthetics
+- **Real-time Preview**: Test prompts with multiple AI models
+- **Template Library**: Pre-built frameworks for common use cases
+- **Mobile Responsive**: Full functionality on all device sizes
+- **Local Storage**: Secure saving of prompts and preferences
 
-- **AI Integration**:
-  - OpenRouter API integration for access to multiple AI models
-  - Configurable model selection
-  - Secure API key management
+## Security Features
 
-- **Modern UI**:
-  - Responsive design with dark mode
-  - Interactive console-style interface
-  - Real-time template previews
-  - Toast notifications for user feedback
+### API Key Management
+- Encrypted local storage of API keys
+- Optional environment variable configuration
+- No server-side key storage
+- Automatic key validation
 
-## Tech Stack
+### Data Privacy
+- Client-side only processing
+- No external data transmission except to OpenRouter API
+- No tracking or analytics
+- Configurable model selection
 
-- React 18
-- TypeScript
-- Vite
-- Tailwind CSS
-- shadcn/ui
-- OpenRouter AI SDK
-- React Query
-- React Router
+## Quick Start
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18 or higher
-- npm or pnpm
-
-### Installation
-
-1. Clone the repository:
+1. **Installation**
 ```bash
 git clone https://github.com/yourusername/symbolic-scribe.git
 cd symbolic-scribe
-```
-
-2. Install dependencies:
-```bash
 npm install
-# or
-pnpm install
 ```
 
-3. Configure environment variables:
+2. **Configuration**
 ```bash
 cp .env.sample .env
-```
-Edit `.env` and add your OpenRouter API key:
-```
-VITE_OPENROUTER_KEY=your_api_key_here
-VITE_ENCRYPTION_KEY=your_encryption_key_here
+# Edit .env with your OpenRouter API key
 ```
 
-4. Start the development server:
+3. **Development**
 ```bash
 npm run dev
-# or
-pnpm dev
 ```
 
-The application will be available at `http://localhost:8080`
-
-## Development
-
-### Project Structure
-
-```
-src/
-├── components/     # Reusable UI components
-├── hooks/         # Custom React hooks
-├── lib/           # Utility functions and helpers
-├── pages/         # Page components
-├── services/      # API and service integrations
-└── templates/     # Mathematical domain templates
+4. **Production Build**
+```bash
+npm run build
+npm run preview
 ```
 
-### Key Components
+## Usage Guide
 
-- `src/pages/Index.tsx`: Main template interface
-- `src/pages/Settings.tsx`: OpenRouter configuration
-- `src/services/settingsService.ts`: API key and settings management
-- `src/services/templateService.ts`: Template loading and processing
+### Basic Prompt Generation
+1. Select a mathematical framework template
+2. Choose your target domain
+3. Define your variables and relationships
+4. Generate structured prompts
 
-### Adding New Templates
+### Template Customization
+1. Navigate to Templates page
+2. Select a base template
+3. Modify variables and relationships
+4. Save for future use
 
-1. Create a new markdown file in `src/templates/`
-2. Include required frontmatter:
-```markdown
----
-title: Your Template Title
-domain: your-domain
-category: Your Category
-overview: Brief description of the template
----
+### Testing & Iteration
+1. Use the Preview function to test prompts
+2. Select different models for comparison
+3. Refine based on responses
+4. Export final versions
 
-Template content here...
-```
+## InfoSec Overview
 
-### Styling
+### Threat Model
+- Client-side only architecture
+- No persistent server storage
+- Encrypted API key storage
+- Input sanitization
 
-The project uses Tailwind CSS with custom utility classes for the console theme:
-
-- `glass-panel`: Glassmorphic container style
-- `console-input`: Terminal-style input fields
-- `console-button`: Command button styling
-- `console-checkbox`: Custom checkbox design
+### Best Practices
+- Regular API key rotation
+- Use environment variables in production
+- Monitor API usage
+- Review generated prompts for sensitive data
 
 ## Contributing
 
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Development Setup
 1. Fork the repository
-2. Create a feature branch:
-```bash
-git checkout -b feature/your-feature-name
-```
+2. Create a feature branch
+3. Install dependencies
+4. Make your changes
+5. Run tests
+6. Submit a PR
 
-3. Make your changes and commit:
-```bash
-git commit -m "feat: add your feature description"
-```
+## Support
 
-4. Push to your fork:
-```bash
-git push origin feature/your-feature-name
-```
-
-5. Open a Pull Request
-
-### Contribution Guidelines
-
-- Follow the existing code style and conventions
-- Add appropriate documentation for new features
-- Include tests for new functionality
-- Update the README if necessary
-- Follow conventional commits specification
+- Documentation: `/docs` page in app
+- Issues: GitHub issue tracker
+- Community: Discord server (coming soon)
 
 ## License
 
@@ -160,7 +122,7 @@ MIT License - see LICENSE file for details
 
 ## Acknowledgments
 
-- [OpenRouter](https://openrouter.ai/) for AI model access
-- [shadcn/ui](https://ui.shadcn.com/) for UI components
-- [Tailwind CSS](https://tailwindcss.com/) for styling
-- [Vite](https://vitejs.dev/) for build tooling
+- OpenRouter for AI model access
+- shadcn/ui for component library
+- Tailwind CSS for styling
+- Vite for build tooling
