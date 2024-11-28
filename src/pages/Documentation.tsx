@@ -345,32 +345,166 @@ arg(f(z))             // Attack angle analysis
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Security Analysis Workflow</h3>
-                    <ol className="list-decimal list-inside space-y-2 ml-4">
-                      <li>Define the security domain using set theory</li>
-                      <li>Model threat vectors as morphisms</li>
-                      <li>Apply categorical composition for attack chains</li>
-                      <li>Generate security policy functors</li>
-                    </ol>
+                    <div className="space-y-4">
+                      <ol className="list-decimal list-inside space-y-2 ml-4">
+                        <li>Define the security domain using set theory</li>
+                        <li>Model threat vectors as morphisms</li>
+                        <li>Apply categorical composition for attack chains</li>
+                        <li>Generate security policy functors</li>
+                      </ol>
+                      
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <h4 className="text-console-green mb-2">Tutorial Example:</h4>
+                        <pre className="font-mono text-sm">
+{`# 1. Define Security Domain
+Let S = {s₁, s₂, ..., sₙ} be system states
+Let A = {a₁, a₂, ..., aₘ} be attack vectors
+Let D = {d₁, d₂, ..., dₖ} be defenses
+
+# 2. Model Threat Vectors
+φᵢ: S → S where φᵢ represents attack aᵢ
+ψⱼ: S → S where ψⱼ represents defense dⱼ
+
+# 3. Compose Attack Chains
+γ = φₙ ∘ φₙ₋₁ ∘ ... ∘ φ₁
+// Full attack sequence
+
+# 4. Generate Policy Functors
+F: AttackCat → DefenseCat
+F(φᵢ) = ψⱼ where ψⱼ mitigates φᵢ`}</pre>
+                      </div>
+                    </div>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Ethical Analysis Workflow</h3>
-                    <ol className="list-decimal list-inside space-y-2 ml-4">
-                      <li>Define ethical principles as axioms</li>
-                      <li>Model stakeholder relationships using category theory</li>
-                      <li>Apply logical frameworks for consistency checking</li>
-                      <li>Generate ethical constraint functors</li>
-                    </ol>
+                    <div className="space-y-4">
+                      <ol className="list-decimal list-inside space-y-2 ml-4">
+                        <li>Define ethical principles as axioms</li>
+                        <li>Model stakeholder relationships using category theory</li>
+                        <li>Apply logical frameworks for consistency checking</li>
+                        <li>Generate ethical constraint functors</li>
+                      </ol>
+
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <h4 className="text-console-green mb-2">Implementation Guide:</h4>
+                        <pre className="font-mono text-sm">
+{`# 1. Ethical Axioms
+A₁: "Do no harm"
+A₂: "Respect privacy"
+A₃: "Ensure fairness"
+
+# 2. Stakeholder Category
+Objects: Users, System, Data
+Morphisms: Interactions
+f: Users → Data (data access)
+g: System → Users (service provision)
+
+# 3. Consistency Checking
+∀x ∈ Actions: 
+  Satisfies(x, A₁) ∧ 
+  Satisfies(x, A₂) ∧ 
+  Satisfies(x, A₃)
+
+# 4. Constraint Functors
+E: ActionCat → EthicsCat
+E(f) must preserve axioms`}</pre>
+                      </div>
+                    </div>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">AI System Analysis</h3>
-                    <ol className="list-decimal list-inside space-y-2 ml-4">
-                      <li>Define system behaviors using abstract algebra</li>
-                      <li>Model state spaces topologically</li>
-                      <li>Apply complex analysis for multi-agent interactions</li>
-                      <li>Generate system constraint morphisms</li>
-                    </ol>
+                    <div className="space-y-4">
+                      <ol className="list-decimal list-inside space-y-2 ml-4">
+                        <li>Define system behaviors using abstract algebra</li>
+                        <li>Model state spaces topologically</li>
+                        <li>Apply complex analysis for multi-agent interactions</li>
+                        <li>Generate system constraint morphisms</li>
+                      </ol>
+
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <h4 className="text-console-green mb-2">Practical Example:</h4>
+                        <pre className="font-mono text-sm">
+{`# 1. Behavior Algebra
+(B, ∘) where B is behavior set
+Identity: e (neutral behavior)
+Inverse: b⁻¹ (behavior reversal)
+
+# 2. State Space Topology
+X = (States, τ)
+Open sets U ∈ τ: safe states
+Closed sets: potentially unsafe
+
+# 3. Multi-Agent Analysis
+f(z) = Σ aᵢzⁱ where:
+- z: system state
+- aᵢ: agent influences
+
+# 4. Constraints
+μ: B → C where:
+- B: behaviors
+- C: constraints
+Preserves safety properties`}</pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Testing Workflow Tutorial</h3>
+                    <div className="space-y-4">
+                      <p className="text-console-text">
+                        A step-by-step guide to systematic testing using mathematical frameworks:
+                      </p>
+
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <h4 className="text-console-green mb-2">1. Setup Phase</h4>
+                        <pre className="font-mono text-sm">
+{`# Define Test Domain
+T = {t₁, t₂, ..., tₙ} // Test cases
+P = {p₁, p₂, ..., pₘ} // Properties to test
+R = {r₁, r₂, ..., rₖ} // Expected results
+
+# Create Test Category
+Objects: States
+Morphisms: Test transitions
+Identity: Initial state
+Composition: Test sequences`}</pre>
+                      </div>
+
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <h4 className="text-console-green mb-2">2. Execution Phase</h4>
+                        <pre className="font-mono text-sm">
+{`# Test Functor
+F: TestCat → ResultCat
+∀t ∈ T: F(t) ∈ R
+
+# Property Verification
+∀p ∈ P: Verify(p, F(t))
+Record(Results(F(t)))
+
+# Coverage Analysis
+C = |F(T)| / |R| * 100
+Track(C, "coverage")`}</pre>
+                      </div>
+
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <h4 className="text-console-green mb-2">3. Analysis Phase</h4>
+                        <pre className="font-mono text-sm">
+{`# Result Analysis
+Let A = {(t,r) | t ∈ T, r = F(t)}
+Group(A, "by_property")
+Analyze(Patterns(A))
+
+# Report Generation
+∀p ∈ P:
+  Report(
+    Coverage(p),
+    Failures(p),
+    Recommendations(p)
+  )`}</pre>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
