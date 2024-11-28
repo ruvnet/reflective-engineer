@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { ChevronRight, ChevronDown, BookTemplate, AlertCircle, Plus } from "lucide-react";
+import { ChevronRight, ChevronDown, BookTemplate, AlertCircle } from "lucide-react";
 import { useTemplate } from "../services/templateService";
 import { useToast } from "../components/ui/use-toast";
 import { loadSettings, fetchAvailableModels, testPrompt, OpenRouterModel } from "../services/settingsService";
 import { Link } from "react-router-dom";
 import MainNav from "../components/MainNav";
 import PreviewDialog from "../components/PreviewDialog";
+import GenerateDialog from "../components/GenerateDialog";
 
 const CATEGORIES = {
   "Mathematical Logic": "mathematical-logic",
@@ -125,6 +126,7 @@ const Index = () => {
   const [customDomain, setCustomDomain] = useState("");
   const [isCustomDomain, setIsCustomDomain] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isGenerateOpen, setIsGenerateOpen] = useState(false);
   const [availableModels, setAvailableModels] = useState<OpenRouterModel[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [overview, setOverview] = useState("");
@@ -393,6 +395,7 @@ const Index = () => {
                 </button>
                 <button 
                   className="console-button flex-1"
+                  onClick={() => setIsGenerateOpen(true)}
                   disabled={!hasApiKey || !getCurrentDomain()}
                 >
                   Generate
@@ -409,6 +412,19 @@ const Index = () => {
         models={availableModels}
         prompt={generatePrompt()}
         onTest={handleTestPrompt}
+      />
+
+      <GenerateDialog
+        isOpen={isGenerateOpen}
+        onClose={() => setIsGenerateOpen(false)}
+        prompt={{
+          domain: getCurrentDomain(),
+          category: Object.keys(CATEGORIES).find(key => CATEGORIES[key as keyof typeof CATEGORIES] === currentTemplate) || '',
+          outputType: selectedOutputType,
+          outputDescription: OUTPUT_TYPES[selectedOutputType],
+          overview: overview,
+          content: content
+        }}
       />
     </div>
   );
