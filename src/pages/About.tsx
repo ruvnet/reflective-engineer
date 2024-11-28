@@ -104,6 +104,60 @@ export default function About() {
             </div>
 
             <div className="glass-panel p-6 mt-8 bg-background/95">
+              <h2 className="text-xl font-code text-console-cyan mb-4">Red-Teaming Methodology</h2>
+              <div className="space-y-4">
+                <p className="text-console-text dark:text-gray-300">
+                  Our red-teaming framework employs a systematic approach to identify and document potential vulnerabilities 
+                  in AI systems through mathematical frameworks and symbolic reasoning. The methodology consists of several 
+                  key phases:
+                </p>
+
+                <div className="space-y-6 mt-4">
+                  <div>
+                    <h3 className="text-lg font-code text-console-cyan mb-2">1. Preparation Phase</h3>
+                    <ul className="list-disc pl-6 space-y-2 text-console-text">
+                      <li>Model Analysis: Comprehensive evaluation of target model's architecture and known constraints</li>
+                      <li>Framework Selection: Choose appropriate mathematical frameworks based on testing objectives</li>
+                      <li>Test Case Design: Development of structured test cases using symbolic reasoning</li>
+                      <li>Safety Protocol Implementation: Establish containment measures and ethical boundaries</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-code text-console-cyan mb-2">2. Testing Vectors</h3>
+                    <ul className="list-disc pl-6 space-y-2 text-console-text">
+                      <li>Semantic Injection: Testing for vulnerabilities in natural language understanding</li>
+                      <li>Boundary Analysis: Probing edge cases in model responses</li>
+                      <li>Context Manipulation: Testing context window limitations and dependencies</li>
+                      <li>Mathematical Encoding: Using symbolic systems to encode potentially harmful content</li>
+                      <li>Chain-of-Thought Analysis: Testing reasoning paths and logical vulnerabilities</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-code text-console-cyan mb-2">3. Documentation & Analysis</h3>
+                    <ul className="list-disc pl-6 space-y-2 text-console-text">
+                      <li>Systematic Recording: Detailed documentation of all test cases and results</li>
+                      <li>Impact Assessment: Evaluation of potential security implications</li>
+                      <li>Pattern Recognition: Identification of common vulnerability patterns</li>
+                      <li>Defense Strategy Development: Formulation of mitigation strategies</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-code text-console-cyan mb-2">4. Ethical Considerations</h3>
+                    <ul className="list-disc pl-6 space-y-2 text-console-text">
+                      <li>Responsible Disclosure: Following established vulnerability disclosure protocols</li>
+                      <li>Harm Prevention: Ensuring testing doesn't create unintended consequences</li>
+                      <li>Collaborative Improvement: Sharing findings with the AI safety community</li>
+                      <li>Continuous Refinement: Regular updates to testing methodology based on new insights</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="glass-panel p-6 mt-8 bg-background/95">
               <h2 className="text-xl font-code text-console-cyan mb-4">Responsible Usage & Collaboration</h2>
               <p className="text-console-text dark:text-gray-300">
                 This tool is designed for protection, not exploitation. We welcome contributions from security researchers, 
