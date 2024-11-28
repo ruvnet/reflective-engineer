@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { X, Copy, Download, Save } from "lucide-react";
+import { savePrompt } from "../services/storageService";
 
 interface GenerateDialogProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ type FormatTab = 'markdown' | 'json' | 'toml';
 
 const GenerateDialog = ({ isOpen, onClose, prompt }: GenerateDialogProps) => {
   const [activeFormat, setActiveFormat] = useState<FormatTab>('markdown');
+  const [title, setTitle] = useState('');
   const contentRef = useRef<HTMLPreElement>(null);
 
   if (!isOpen) return null;
@@ -89,10 +91,19 @@ ${prompt.content}
       <div className="glass-panel w-full max-w-3xl max-h-[80vh] overflow-hidden flex flex-col m-4">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <h2 className="text-xl text-console-cyan font-code">Generated Prompt</h2>
+          <div className="flex-1">
+            <h2 className="text-xl text-console-cyan font-code mb-2">Generated Prompt</h2>
+            <input
+              type="text"
+              placeholder="Enter template title..."
+              className="console-input w-full"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
           <button 
             onClick={onClose}
-            className="console-button p-1"
+            className="console-button p-1 ml-4"
           >
             <X className="w-5 h-5" />
           </button>
@@ -140,6 +151,18 @@ ${prompt.content}
           </button>
           <button 
             className="console-button flex items-center gap-2"
+            onClick={() => {
+              if (!title.trim()) {
+                alert('Please enter a title for the template');
+                return;
+              }
+              savePrompt({
+                title: title.trim(),
+                format: activeFormat,
+                prompt
+              });
+              onClose();
+            }}
           >
             <Save className="w-4 h-4" />
             Save
