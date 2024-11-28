@@ -217,3 +217,9 @@
 
 # 2024-11-28 17:44:41.066176
 +make sure when removing or deleting the templates from the ui it automatically gets removed
+
+# 2024-11-28 17:52:20.638289
++/add src/lib/utils.ts
+
+# 2024-11-28 17:52:28.989589
++/add src/hooks/use-toast.ts
