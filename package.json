@@ -8,7 +8,11 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --maxWorkers=2"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
