@@ -113,3 +113,107 @@
 
 # 2024-11-28 16:58:19.991819
 +/architect the mobile hamburger menu in the head is missing, also make sure the initial home page tile is truncated on mobile to fit the menu
+
+# 2024-11-28 17:11:15.801842
++/ask update the home page to make the input for Set Definitions editable. and the preview prompt in the modal editable. and adjustable height with max
+
+# 2024-11-28 17:12:15.715062
++implement  update the home page to make the input for Set Definitions editable. and the preview prompt in the modal editable. and adjustable height with max
+
+# 2024-11-28 17:14:04.110384
++/undo
+
+# 2024-11-28 17:14:13.756427
++implement  update the home page to make the input for Set Definitions editable. and the preview prompt in the modal editable. and adjustable height with max. the previous updagte didn't work. 
+
+# 2024-11-28 17:15:43.191955
++/undo
+
+# 2024-11-28 17:16:29.920099
++/add src/pages/Index.tsx src/components/PreviewDialog.tsx
+
+# 2024-11-28 17:17:02.536631
++/ask why can't i add or edit the text in the prompt overview, and Set Definitions fields on home
+
+# 2024-11-28 17:17:52.457700
++update input so i can  add or edit the text in the prompt overview, and Set Definitions fields on home
+
+# 2024-11-28 17:18:48.618584
++make the Domain Category default to infosec
+
+# 2024-11-28 17:20:43.399028
++/ask add a new field under Domain Category input, that is drop down that allows you select various ouput descriptions such as code,summaries, calculus and other output types. this will be included in the prompt preview modal.
+
+# 2024-11-28 17:21:26.508105
++implment changes will:                                                                                                                
++
++ 1 Add a new dropdown for output types with descriptive options                                                                    
++ 2 Include the selected output type in the prompt preview                                                                          
++ 3 Default to "Analysis" as the initial output type                                                                                
++ 4 Show both the output type name and its description in the dropdown                                                              
++ 5 Include the output type and its description in the generated prompt                                                             
++
+
+# 2024-11-28 17:24:13.852787
++move the Output Type and field below Set Definitions
++
+
+# 2024-11-28 17:31:27.154875
++/ask give me a detailed plan for the generate button and modal. it should include options to save to user storage, and tabs to copy and paste the prompts in markdown, json, and toml. 
+
+# 2024-11-28 17:32:10.412794
++/add src/page/
+
+# 2024-11-28 17:32:20.840961
++/add src/services/
+
+# 2024-11-28 17:32:44.431401
++/architect give me a detailed plan for the generate button and modal. it should include options to save to user storage, and tabs to copy and paste the prompts in markdown, json, and toml. 
+
+# 2024-11-28 17:35:08.737950
++/ask how can i add a title field for the generate modal that saves to user storage and updates the templates pages with any saved templates.
+
+# 2024-11-28 17:36:52.859717
++ implment:  add a title field for the generate modal that saves to user storage and updates the templates pages with any saved templates.
+
+# 2024-11-28 17:38:07.453395
++/undo 
+
+# 2024-11-28 17:39:03.114984
++[plugin:vite:react-swc] × Unexpected token `div`. Expected jsx identifier
++    ╭─[/workspaces/symbolic-scribe/src/pages/Templates.tsx:70:1]
++ 67 │   }, []);
++ 68 │ 
++ 69 │   return (
++ 70 │     <div className="min-h-screen flex flex-col">
++    ·      ───
++ 71 │       <MainNav title="Template Library" />
++ 72 │       
++ 73 │       <main className="flex-1 p-4">
++    ╰────
++
++
++Caused by:
++    Syntax Error
++/workspaces/symbolic-scribe/src/pages/Templates.tsx:70:1
+
+# 2024-11-28 17:40:33.478832
++/ask why do i need see the title option in the generate modal and the saved templates are displaying: Saved Template - Invalid Date
+
+# 2024-11-28 17:41:15.607612
++implement previous suggestions
+
+# 2024-11-28 17:42:41.799665
++/ask how can add the ability to remove saved templates from the template and local user storage.
+
+# 2024-11-28 17:43:13.851823
++changes will:                                                                                                                
++
++ 1 Add a delete function to remove templates from localStorage                                                                     
++ 2 Add a delete button to each saved template card                                                                                 
++ 3 Show a confirmation dialog before deletion                                                                                      
++ 4 Automatically update the UI when a template is deleted                                                                          
++ 5 Add a hover effect on the delete button with a red tint        
+
+# 2024-11-28 17:44:41.066176
++make sure when removing or deleting the templates from the ui it automatically gets removed
