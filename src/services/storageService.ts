@@ -29,5 +29,13 @@ export const savePrompt = (prompt: Omit<SavedPrompt, 'id' | 'timestamp'>) => {
   };
   prompts.push(newPrompt);
   localStorage.setItem(SAVED_PROMPTS_KEY, JSON.stringify(prompts));
+  window.dispatchEvent(new Event('storage'));
   return newPrompt;
+};
+
+export const deletePrompt = (id: string): void => {
+  const prompts = getSavedPrompts();
+  const filteredPrompts = prompts.filter(prompt => prompt.id !== id);
+  localStorage.setItem(SAVED_PROMPTS_KEY, JSON.stringify(filteredPrompts));
+  window.dispatchEvent(new Event('storage'));
 };

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import MainNav from "../components/MainNav";
-import { BookTemplate } from "lucide-react";
-import { SavedPrompt, getSavedPrompts, SAVED_PROMPTS_KEY } from "../services/storageService";
+import { BookTemplate, Trash2 } from "lucide-react";
+import { SavedPrompt, getSavedPrompts, deletePrompt, SAVED_PROMPTS_KEY } from "../services/storageService";
 
 interface Template {
   title: string;
@@ -107,10 +107,26 @@ export default function Templates() {
                 {savedTemplates.map((template) => (
                   <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow">
                     <CardHeader>
-                      <CardTitle className="text-console-cyan">{template.title}</CardTitle>
-                      <CardDescription className="text-console-green">
-                        Saved Template - {new Date(template.timestamp).toLocaleDateString()}
-                      </CardDescription>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-console-cyan">{template.title}</CardTitle>
+                          <CardDescription className="text-console-green">
+                            Saved Template - {new Date(template.timestamp).toLocaleDateString()}
+                          </CardDescription>
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            if (window.confirm('Are you sure you want to delete this template?')) {
+                              deletePrompt(template.id);
+                            }
+                          }}
+                          className="console-button p-2 hover:bg-red-900/20"
+                          title="Delete template"
+                        >
+                          <Trash2 className="w-4 h-4 text-red-400" />
+                        </button>
+                      </div>
                     </CardHeader>
                     <CardContent>
                       <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4">
