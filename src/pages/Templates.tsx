@@ -85,7 +85,7 @@ export default function Templates() {
             <h2 className="text-xl font-code text-console-cyan mb-4">Built-in Templates</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {builtInTemplates.map((template) => (
-                <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow">
+                <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
                   <CardHeader>
                     <CardTitle className="text-console-cyan">{template.title}</CardTitle>
                     <CardDescription className="text-console-green">
@@ -93,7 +93,7 @@ export default function Templates() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4">
+                    <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
                       <pre className="text-sm font-code text-console-text">{template.content}</pre>
                     </ScrollArea>
                   </CardContent>
@@ -108,7 +108,7 @@ export default function Templates() {
               <h2 className="text-xl font-code text-console-cyan mb-4">Saved Templates</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 {savedTemplates.map((template) => (
-                  <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow">
+                  <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
@@ -132,7 +132,7 @@ export default function Templates() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4">
+                      <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
                         <pre className="text-sm font-code text-console-text">
                           {template.prompt.overview}
                           {'\n\n'}
