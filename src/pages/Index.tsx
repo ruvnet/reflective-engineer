@@ -298,6 +298,7 @@ const Index = () => {
             <div className="space-y-6">
               <div>
                 <label className="block text-console-cyan mb-2">Prompt Overview</label>
+                <p className="text-sm text-gray-400 mb-2">Define the high-level purpose and goals of your mathematical framework</p>
                 <textarea 
                   className="console-input w-full h-24"
                   placeholder="Describe the purpose or goal of the prompt..."
@@ -309,6 +310,7 @@ const Index = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-console-cyan mb-2">Domain Category</label>
+                  <p className="text-sm text-gray-400 mb-2">Select the broad category your mathematical framework will target</p>
                   <select 
                     className="console-input w-full"
                     value={selectedDomainCategory}
@@ -325,6 +327,7 @@ const Index = () => {
                 {selectedDomainCategory && (
                   <div>
                     <label className="block text-console-cyan mb-2">Domain Selection</label>
+                    <p className="text-sm text-gray-400 mb-2">Choose a specific domain or create a custom one for your analysis</p>
                     <select 
                       className="console-input w-full"
                       value={isCustomDomain ? "custom" : selectedDomain}
@@ -364,6 +367,7 @@ const Index = () => {
 
               <div>
                 <label className="block text-console-cyan mb-2">Set Definitions</label>
+                <p className="text-sm text-gray-400 mb-2">Define your mathematical structures, sets, and their relationships</p>
                 <textarea 
                   className="console-input w-full h-32 font-mono"
                   placeholder="Define your sets and subsets here..."
@@ -374,6 +378,7 @@ const Index = () => {
 
               <div>
                 <label className="block text-console-cyan mb-2">Output Type</label>
+                <p className="text-sm text-gray-400 mb-2">Specify how you want the mathematical framework to be processed</p>
                 <select 
                   className="console-input w-full"
                   value={selectedOutputType}
