@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Save, Loader2 } from "lucide-react";
+import { Save, Loader2, Info, Lock, Trash2 } from "lucide-react";
 import MainNav from "../components/MainNav";
 import { useToast } from "../components/ui/use-toast";
 import { 
@@ -7,26 +7,40 @@ import {
   OpenRouterModel,
   loadSettings,
   saveSettings,
+  clearSettings,
   fetchAvailableModels,
   testApiKey
 } from "../services/settingsService";
 
+const DEFAULT_API_KEY = import.meta.env.VITE_OPENROUTER_KEY;
+const SETTINGS_KEY = 'symbolic-scribe-settings';
+
+// Helper to dispatch settings change event
+const notifySettingsChange = () => {
+  window.dispatchEvent(new CustomEvent('settingsChanged'));
+};
+
 const Settings = () => {
-  const [apiKey, setApiKey] = useState("");
+  const [apiKey, setApiKey] = useState<string>(DEFAULT_API_KEY || "");
   const [selectedModel, setSelectedModel] = useState("");
   const [models, setModels] = useState<OpenRouterModel[]>([]);
   const [enabledModels, setEnabledModels] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isTestingKey, setIsTestingKey] = useState(false);
+  const [isUsingDefaultKey, setIsUsingDefaultKey] = useState(Boolean(DEFAULT_API_KEY));
+  const [hasStoredKey, setHasStoredKey] = useState(Boolean(localStorage.getItem(SETTINGS_KEY)));
   const { toast } = useToast();
 
   // Load saved settings
   useEffect(() => {
     const settings = loadSettings();
     if (settings) {
+      const isDefault = settings.apiKey === DEFAULT_API_KEY;
+      setIsUsingDefaultKey(isDefault);
       setApiKey(settings.apiKey);
       setSelectedModel(settings.defaultModel);
       setEnabledModels(settings.enabledModels);
+      setHasStoredKey(Boolean(localStorage.getItem(SETTINGS_KEY)));
       
       // If we have an API key, fetch models
       if (settings.apiKey) {
@@ -59,6 +73,7 @@ const Settings = () => {
   const handleApiKeyChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const newKey = e.target.value;
     setApiKey(newKey);
+    setIsUsingDefaultKey(newKey === DEFAULT_API_KEY);
     
     // Clear validation timeout if it exists
     if (window.apiKeyTimeout) {
@@ -109,6 +124,9 @@ const Settings = () => {
 
     try {
       saveSettings(settings);
+      setHasStoredKey(true);
+      setIsUsingDefaultKey(apiKey === DEFAULT_API_KEY);
+      notifySettingsChange();
       toast({
         title: "Success",
         description: "Settings saved successfully",
@@ -121,6 +139,34 @@ const Settings = () => {
         duration: 3000
       });
     }
+  };
+
+  const handleClear = () => {
+    const defaultSettings = clearSettings();
+    setHasStoredKey(false);
+    
+    if (defaultSettings) {
+      // If we have default settings (from .env), use them
+      setApiKey(defaultSettings.apiKey);
+      setSelectedModel(defaultSettings.defaultModel);
+      setEnabledModels(defaultSettings.enabledModels);
+      setIsUsingDefaultKey(true);
+      loadModels(defaultSettings.apiKey);
+    } else {
+      // If no default settings, clear everything
+      setApiKey("");
+      setSelectedModel("");
+      setEnabledModels([]);
+      setModels([]);
+      setIsUsingDefaultKey(false);
+    }
+
+    notifySettingsChange();
+    toast({
+      title: "Success",
+      description: "Stored settings cleared successfully",
+      duration: 3000
+    });
   };
 
   return (
@@ -141,7 +187,7 @@ const Settings = () => {
                     <input
                       type="password"
                       className="console-input w-full pr-10"
-                      placeholder="Enter your OpenRouter API key"
+                      placeholder={DEFAULT_API_KEY ? "Using default API key from environment" : "Enter your OpenRouter API key"}
                       value={apiKey}
                       onChange={handleApiKeyChange}
                     />
@@ -149,8 +195,23 @@ const Settings = () => {
                       <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin text-gray-400" />
                     )}
                   </div>
+                  {isUsingDefaultKey && DEFAULT_API_KEY && (
+                    <div className="flex items-center gap-2 mt-2 text-console-green">
+                      <Info className="w-4 h-4" />
+                      <span className="text-sm">Using default API key from environment</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2 mt-2 text-gray-400">
+                    <Lock className="w-4 h-4" />
+                    <span className="text-sm">Keys entered here are encrypted and stored only in your browser's local storage</span>
+                  </div>
                   <p className="text-sm text-gray-400 mt-1">
                     Get your API key from <a href="https://openrouter.ai/keys" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">openrouter.ai/keys</a>
+                  </p>
+                  <p className="text-sm text-gray-400 mt-1">
+                    {DEFAULT_API_KEY 
+                      ? "You can override the default API key by entering your own key above"
+                      : "No default API key found in environment. Please enter your OpenRouter API key"}
                   </p>
                 </div>
 
@@ -213,7 +274,15 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-between items-center gap-4">
+              <button
+                className="console-button flex items-center space-x-2 bg-red-900/30 hover:bg-red-900/50"
+                onClick={handleClear}
+                disabled={isLoading || isTestingKey || !hasStoredKey}
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>Clear Stored Key</span>
+              </button>
               <button
                 className="console-button flex items-center space-x-2"
                 onClick={handleSave}
