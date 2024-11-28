@@ -298,6 +298,7 @@ const Index = () => {
             <div className="space-y-6">
               <div>
                 <label className="block text-console-cyan mb-2">Prompt Overview</label>
+                <p className="text-sm text-gray-400 mb-2">Define your red teaming objectives and target system analysis goals</p>
                 <textarea 
                   className="console-input w-full h-24"
                   placeholder="Describe the purpose or goal of the prompt..."
@@ -309,6 +310,7 @@ const Index = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-console-cyan mb-2">Domain Category</label>
+                  <p className="text-sm text-gray-400 mb-2">Choose the security domain or system type to analyze</p>
                   <select 
                     className="console-input w-full"
                     value={selectedDomainCategory}
@@ -325,6 +327,7 @@ const Index = () => {
                 {selectedDomainCategory && (
                   <div>
                     <label className="block text-console-cyan mb-2">Domain Selection</label>
+                    <p className="text-sm text-gray-400 mb-2">Select a specific attack surface or define a custom target system</p>
                     <select 
                       className="console-input w-full"
                       value={isCustomDomain ? "custom" : selectedDomain}
@@ -364,6 +367,7 @@ const Index = () => {
 
               <div>
                 <label className="block text-console-cyan mb-2">Set Definitions</label>
+                <p className="text-sm text-gray-400 mb-2">Define your attack vectors, security boundaries, and system interactions</p>
                 <textarea 
                   className="console-input w-full h-32 font-mono"
                   placeholder="Define your sets and subsets here..."
@@ -374,6 +378,7 @@ const Index = () => {
 
               <div>
                 <label className="block text-console-cyan mb-2">Output Type</label>
+                <p className="text-sm text-gray-400 mb-2">Specify how you want the security analysis to be processed</p>
                 <select 
                   className="console-input w-full"
                   value={selectedOutputType}

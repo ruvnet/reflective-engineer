@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Save, Loader2, Info, Lock, Trash2 } from "lucide-react";
+import { Save, Loader2, Info, Lock, Trash2, Key, Database, Github, AlertCircle } from "lucide-react";
 import MainNav from "../components/MainNav";
 import { useToast } from "../components/ui/use-toast";
 import { 
@@ -175,10 +175,25 @@ const Settings = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-4">
-        <div className="glass-panel p-6 max-w-2xl mx-auto">
+        <div className="glass-panel p-6 max-w-2xl mx-auto space-y-8">
+          {/* GitHub Link */}
+          <div className="flex justify-end">
+            <a 
+              href="https://github.com/ruvnet/symbolic-scribe"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="console-button flex items-center gap-2"
+            >
+              <Github className="w-4 h-4" />
+              View Source
+            </a>
+          </div>
           <div className="space-y-6">
             <div>
-              <h2 className="text-xl text-console-cyan font-code mb-4">OpenRouter Configuration</h2>
+              <h2 className="text-xl text-console-cyan font-code mb-4 flex items-center gap-2">
+                <Key className="w-5 h-5" />
+                OpenRouter Configuration
+              </h2>
               
               <div className="space-y-4">
                 <div>
@@ -203,20 +218,25 @@ const Settings = () => {
                   )}
                   <div className="flex items-center gap-2 mt-2 text-gray-400">
                     <Lock className="w-4 h-4" />
-                    <span className="text-sm">Keys entered here are encrypted and stored only in your browser's local storage</span>
+                    <span className="text-sm">Keys entered here are encrypted and stored only in your browser's local storage. View the <a href="https://github.com/ruvnet/symbolic-scribe" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">source code</a> for details.</span>
                   </div>
                   <p className="text-sm text-gray-400 mt-1">
-                    Get your API key from <a href="https://openrouter.ai/keys" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">openrouter.ai/keys</a>
+                    <span className="flex items-center gap-1">
+                      <Key className="w-3 h-3" /> Get your API key from <a href="https://openrouter.ai/keys" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">OpenRouter</a>
+                    </span>
                   </p>
                   <p className="text-sm text-gray-400 mt-1">
                     {DEFAULT_API_KEY 
                       ? "You can override the default API key by entering your own key above"
-                      : "No default API key found in environment. Please enter your OpenRouter API key"}
+                      : <span className="flex items-center gap-1"><AlertCircle className="w-4 h-4 text-yellow-500" /> No default API key found. Please enter your OpenRouter API key to get started.</span>}
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-console-cyan mb-2">Default Model</label>
+                  <label className="block text-console-cyan mb-2 flex items-center gap-2">
+                    <Database className="w-4 h-4" />
+                    Default Model
+                  </label>
                   <select
                     className="console-input w-full"
                     value={selectedModel}
