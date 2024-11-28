@@ -107,8 +107,8 @@ const useLocalStorage = (key: string, initialValue: boolean) => {
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [currentTemplate, setCurrentTemplate] = useState("systematic-suppression");
-  const [selectedDomainCategory, setSelectedDomainCategory] = useState("");
-  const [selectedDomain, setSelectedDomain] = useState("");
+  const [selectedDomainCategory, setSelectedDomainCategory] = useState("InfoSec");
+  const [selectedDomain, setSelectedDomain] = useState("MathPrompt Attacks");
   const [customDomain, setCustomDomain] = useState("");
   const [isCustomDomain, setIsCustomDomain] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
