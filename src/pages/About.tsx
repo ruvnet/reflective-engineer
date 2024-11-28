@@ -72,9 +72,9 @@ export default function About() {
               </Card>
             </div>
 
-            <div className="glass-panel p-6 mt-8">
+            <div className="glass-panel p-6 mt-8 bg-background/95">
               <h2 className="text-xl font-code text-console-cyan mb-4">Project Goals</h2>
-              <ul className="space-y-4 text-console-text">
+              <ul className="space-y-4 text-console-text dark:text-gray-300">
                 <li className="flex items-start gap-2">
                   <span className="text-console-cyan">•</span>
                   Enhance prompt engineering through mathematical rigor and structured frameworks
@@ -94,9 +94,9 @@ export default function About() {
               </ul>
             </div>
 
-            <div className="glass-panel p-6 mt-8">
+            <div className="glass-panel p-6 mt-8 bg-background/95">
               <h2 className="text-xl font-code text-console-cyan mb-4">Get Involved</h2>
-              <p className="text-console-text">
+              <p className="text-console-text dark:text-gray-300">
                 We welcome contributions from developers, mathematicians, and domain experts. Whether you're
                 interested in adding new templates, improving existing ones, or enhancing the application's
                 functionality, your input is valuable to the project's growth and evolution.
