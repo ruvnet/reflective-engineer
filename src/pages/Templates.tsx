@@ -126,21 +126,6 @@ export default function Templates() {
               </div>
             </div>
           )}
-              <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-console-cyan">{template.title}</CardTitle>
-                  <CardDescription className="text-console-green">
-                    Mathematical Framework Template
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4">
-                    <pre className="text-sm font-code text-console-text">{template.content}</pre>
-                  </ScrollArea>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </section>
       </main>
     </div>
