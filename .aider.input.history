@@ -68,3 +68,45 @@
 
 # 2024-11-28 16:33:22.157396
 +/architect update readme.md with more details with a user focus including features, benefits, testing, infosec overview and install, and usage
+
+# 2024-11-28 16:37:24.207485
++/architect add infosec tab and section to documentation page
+
+# 2024-11-28 16:40:42.740848
++update infosec documentation  with futher details. Symbolic Mathematics has emerged as a powerful technique for jailbreaking and injecting prompts into Large Language Models (LLMs), exploiting their advanced capabilities in mathematical reasoning to bypass safety mechanisms.
++MathPrompt Attack
++Core Technique
++MathPrompt transforms harmful natural language prompts into symbolic mathematics problems that evade detection8. This method achieves an alarming 73.6% success rate across 13 state-of-the-art LLMs, compared to just 1% with unmodified harmful prompts8.
++Key Components
++Set Theory
++Abstract Algebra
++Symbolic Logic
++How It Works
++Encoding Process
++The attack uses a two-step approach:
++Natural language prompts are transformed into mathematical expressions
++These encoded mathematical prompts are presented to target LLMs8
++Mathematical Mapping
++Sets represent categories of actions
++Group operations model sequences of actions
++Logical predicates express conditions between actions4
++Vulnerability Factors
++Semantic Shift
++Analysis of embedding vectors reveals that mathematical encoding significantly alters the semantic representation of prompts, making them unrecognizable to safety mechanisms8.
++Model Limitations
++Current safety measures primarily focus on natural language inputs and fail to generalize to mathematical representations of language8. This creates a critical gap in AI safety mechanisms that attackers can exploit.
++Impact and Implications
++Security Concerns
++Bypasses content moderation features
++Enables generation of harmful content
++Undermines existing safety mechanisms6
++Defense Challenges
++The effectiveness of this technique highlights the need for:
++More comprehensive safety measures
++Expanded red-teaming efforts
++Robust safeguards across all input types8
++This vulnerability demonstrates that current approaches to AI safety must evolve to address sophisticated attack vectors that leverage the models' own capabilities in symbolic reasoning and mathematical manipulation.
+
+# 2024-11-28 16:47:50.609650
++update index.html 
++description
