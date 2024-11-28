@@ -114,6 +114,8 @@ const Index = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [availableModels, setAvailableModels] = useState<OpenRouterModel[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
+  const [overview, setOverview] = useState("");
+  const [content, setContent] = useState("");
   
   const hasApiKey = useLocalStorage('symbolic-scribe-settings', false);
   const { toast } = useToast();
@@ -130,10 +132,12 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (template?.domain) {
+    if (template) {
       setSelectedDomain(template.domain);
+      setOverview(template.overview || "");
+      setContent(template.content || "");
     }
-  }, [template?.domain]);
+  }, [template]);
 
   const handleDomainCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDomainCategory(e.target.value);
@@ -216,8 +220,8 @@ const Index = () => {
     const promptParts = [
       `Domain: ${domain}`,
       `Category: ${Object.keys(CATEGORIES).find(key => CATEGORIES[key as keyof typeof CATEGORIES] === currentTemplate)}`,
-      `Overview: ${template.overview || ""}`,
-      `Content:\n${template.content || ""}`
+      `Overview: ${overview}`,
+      `Content:\n${content}`
     ];
     
     return promptParts.join('\n\n');
@@ -280,8 +284,8 @@ const Index = () => {
                 <textarea 
                   className="console-input w-full h-24"
                   placeholder="Describe the purpose or goal of the prompt..."
-                  value={template?.overview || ""}
-                  onChange={(e) => {/* Handle changes */}}
+                  value={overview}
+                  onChange={(e) => setOverview(e.target.value)}
                 />
               </div>
 
@@ -345,8 +349,8 @@ const Index = () => {
                 <textarea 
                   className="console-input w-full h-32 font-mono"
                   placeholder="Define your sets and subsets here..."
-                  value={template?.content || ""}
-                  onChange={(e) => {/* Handle changes */}}
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
                 />
               </div>
 
