@@ -12,7 +12,7 @@ export const useTemplate = (templateId: string) => {
   return useQuery({
     queryKey: ["template", templateId],
     queryFn: async () => {
-      const response = await fetch(`/src/templates/${templateId}.md`);
+      const response = await fetch(`/templates/${templateId}.md`);
       const text = await response.text();
       const [frontmatter, ...contentParts] = text.split('---\n').filter(Boolean);
       

@@ -65,3 +65,6 @@
 # 2024-11-28 16:05:34.879997
 +git rm --cached .env
 +
+
+# 2024-11-28 16:33:22.157396
++/architect update readme.md with more details with a user focus including features, benefits, testing, infosec overview and install, and usage
