@@ -51,8 +51,9 @@ export default function Documentation() {
                 </h2>
                 <div className="space-y-4 text-console-text">
                   <p>
-                    The Symbolic Scribe helps you create structured mathematical prompts for AI interactions.
-                    Follow these steps to get started:
+                    The Symbolic Scribe is a powerful tool for testing AI system security through mathematical frameworks 
+                    and symbolic reasoning. Whether you're conducting security research, red teaming exercises, or 
+                    developing defensive strategies, this guide will help you get started:
                   </p>
                   <ol className="list-decimal list-inside space-y-2 ml-4">
                     <li>Choose a template from the Templates page</li>
