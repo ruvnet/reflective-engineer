@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ScrollArea } from "@/components/ui/scroll-area";
 import MainNav from "../components/MainNav";
 import { BookTemplate } from "lucide-react";
+import { SavedPrompt, getSavedPrompts, SAVED_PROMPTS_KEY } from "../services/storageService";
 
 interface Template {
   title: string;
@@ -15,7 +16,8 @@ type GlobModule = {
 }
 
 export default function Templates() {
-  const [templates, setTemplates] = useState<Template[]>([]);
+  const [builtInTemplates, setBuiltInTemplates] = useState<Template[]>([]);
+  const [savedTemplates, setSavedTemplates] = useState<SavedPrompt[]>([]);
 
   useEffect(() => {
     const importTemplates = async () => {
@@ -41,7 +43,24 @@ export default function Templates() {
         });
       }
 
-      setTemplates(loadedTemplates);
+      setBuiltInTemplates(loadedTemplates);
+      
+      // Load saved templates
+      const loadSavedTemplates = () => {
+        setSavedTemplates(getSavedPrompts());
+      };
+
+      loadSavedTemplates();
+
+      // Listen for storage changes
+      const handleStorageChange = (e: StorageEvent) => {
+        if (e.key === SAVED_PROMPTS_KEY) {
+          loadSavedTemplates();
+        }
+      };
+
+      window.addEventListener('storage', handleStorageChange);
+      return () => window.removeEventListener('storage', handleStorageChange);
     };
 
     importTemplates();
@@ -58,8 +77,55 @@ export default function Templates() {
             <h1 className="text-2xl font-code text-console-cyan">Available Templates</h1>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {templates.map((template) => (
+          {/* Built-in Templates */}
+          <div className="mb-8">
+            <h2 className="text-xl font-code text-console-cyan mb-4">Built-in Templates</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {builtInTemplates.map((template) => (
+                <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <CardTitle className="text-console-cyan">{template.title}</CardTitle>
+                    <CardDescription className="text-console-green">
+                      Mathematical Framework Template
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4">
+                      <pre className="text-sm font-code text-console-text">{template.content}</pre>
+                    </ScrollArea>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Saved Templates */}
+          {savedTemplates.length > 0 && (
+            <div>
+              <h2 className="text-xl font-code text-console-cyan mb-4">Saved Templates</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                {savedTemplates.map((template) => (
+                  <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <CardTitle className="text-console-cyan">{template.title}</CardTitle>
+                      <CardDescription className="text-console-green">
+                        Saved Template - {new Date(template.timestamp).toLocaleDateString()}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4">
+                        <pre className="text-sm font-code text-console-text">
+                          {template.prompt.overview}
+                          {'\n\n'}
+                          {template.prompt.content}
+                        </pre>
+                      </ScrollArea>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
               <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <CardTitle className="text-console-cyan">{template.title}</CardTitle>
