@@ -120,38 +120,70 @@ export default function Documentation() {
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Set-Theoretic Approach</h3>
                     <p className="text-console-text mb-2">
-                      Uses set theory to define clear boundaries and relationships between concepts:
+                      A foundational approach for modeling security boundaries and attack surfaces:
                     </p>
                     <pre className="bg-black/30 p-4 rounded-md text-console-text">
-{`Let S = {x | x is a security vulnerability}
-Let P = {y | y is a patch addressing x ∈ S}
-Define R as the relation: R ⊆ S × P`}
+{`# Security Domain Modeling
+Let A = {x | x is an attack vector}
+Let D = {y | y is a defense mechanism}
+Let V = {z | z is a vulnerability}
+
+# Relationship Mapping
+R₁ = {(a,v) ∈ A × V | a exploits v}
+R₂ = {(d,v) ∈ D × V | d mitigates v}
+
+# Coverage Analysis
+∀v ∈ V, ∃d ∈ D: (d,v) ∈ R₂
+// Ensure all vulnerabilities have mitigations`}
                     </pre>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Category Theory Approach</h3>
                     <p className="text-console-text mb-2">
-                      Models relationships and transformations between different structures:
+                      Advanced framework for analyzing system transformations and attack chains:
                     </p>
                     <pre className="bg-black/30 p-4 rounded-md text-console-text">
-{`Category C of System States
-Objects: Valid system configurations
-Morphisms: State transitions
-Functors: Security policies`}
+{`# Attack Chain Category
+Objects: System States
+Morphisms: Attack Transitions
+Identity: No-op (system unchanged)
+Composition: f ∘ g (chained attacks)
+
+# Defense Category
+Objects: Security Controls
+Morphisms: Defense Updates
+Functor F: AttackCat → DefenseCat
+// Maps attacks to corresponding defenses
+
+# Properties
+∀ attack ∈ Morphisms, ∃ defense ∈ F(Morphisms)
+// Every attack has a corresponding defense`}
                     </pre>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Abstract Algebra Approach</h3>
                     <p className="text-console-text mb-2">
-                      Uses algebraic structures to model system behaviors:
+                      Powerful method for encoding attack patterns and system behaviors:
                     </p>
                     <pre className="bg-black/30 p-4 rounded-md text-console-text">
-{`Group G of System Operations
-Identity: No-op
-Inverse: Rollback operations
-Composition: Sequential operations`}
+{`# Attack Pattern Group
+Group A = (Actions, ∘)
+- Identity: Safe state
+- Operation ∘: Chain attacks
+- Inverse: Rollback/mitigation
+
+# Homomorphism Properties
+φ: A → DefenseGroup
+φ(a ∘ b) = φ(a) ∘ φ(b)
+// Defense composition matches attack composition
+
+# Ring Structure
+R = (Actions, ⊕, ⊗)
+- Addition ⊕: Parallel attacks
+- Multiplication ⊗: Sequential attacks
+- Distributive: a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c)`}
                     </pre>
                   </div>
                 </div>
