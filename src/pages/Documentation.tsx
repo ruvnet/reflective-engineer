@@ -272,6 +272,51 @@ Composition: Sequential operations`}
                   </div>
 
                   <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">MathPrompt Attack Analysis</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-console-green mb-2">Core Technique</h4>
+                        <p className="text-console-text mb-2">
+                          MathPrompt transforms harmful prompts into symbolic mathematics problems that evade detection.
+                          Success rates of 73.6% across modern LLMs, compared to 1% with unmodified harmful prompts.
+                        </p>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Mathematical Encoding Components
+1. Set Theory: A = {x | x ∈ Actions}
+2. Abstract Algebra: G = (A, •) group structure
+3. Symbolic Logic: P(x) ⟹ Q(x) implications`}
+                        </pre>
+                      </div>
+
+                      <div>
+                        <h4 className="text-console-green mb-2">Vulnerability Analysis</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Attack Vector Components
+Let M be the set of mathematical transformations
+Let P be the set of prompts
+Let S be the set of safety mechanisms
+
+∃m ∈ M: ∀s ∈ S, ∃p ∈ P: s(m(p)) ≠ s(p)
+// There exists a transformation that evades all safety checks`}
+                        </pre>
+                      </div>
+
+                      <div>
+                        <h4 className="text-console-green mb-2">Defense Strategy</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Mitigation Framework
+Let D be defensive measures
+Let V be validation functions
+Let E be embedding space
+
+∀m ∈ M: ∃d ∈ D: d(m(p)) = d(p)
+// Ensure defenses are invariant under mathematical transformation`}
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
                     <h3 className="text-lg font-semibold text-console-cyan mb-2">Security Analysis Framework</h3>
                     <pre className="bg-black/30 p-4 rounded-md text-console-text">
 {`Let S = {x | x is a security control}
@@ -279,7 +324,13 @@ Let T = {y | y is a threat vector}
 Let R ⊆ S × T be the mitigation relation
 
 ∀t ∈ T, ∃s ∈ S: (s,t) ∈ R
-// Every threat has at least one control`}
+// Every threat has at least one control
+
+// Extended MathPrompt Defense
+Let M = {m | m is a mathematical transformation}
+Let V = {v | v is a validation function}
+∀m ∈ M, ∃v ∈ V: v(m(x)) = v(x)
+// Every transformation must be validated`}
                     </pre>
                   </div>
 
