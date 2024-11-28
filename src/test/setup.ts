@@ -1,5 +1,17 @@
 import '@testing-library/jest-dom';
 
+// Mock Vite's import.meta.env
+const env = {
+  VITE_ENCRYPTION_KEY: 'test-encryption-key',
+  VITE_OPENROUTER_KEY: 'test-api-key',
+};
+
+global.import = {
+  meta: {
+    env
+  }
+} as any;
+
 // Mock window.location
 delete window.location;
 window.location = {
@@ -13,8 +25,10 @@ const localStorageMock = {
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
+  length: 0,
+  key: jest.fn(),
 };
-global.localStorage = localStorageMock;
+global.localStorage = localStorageMock as Storage;
 
 // Mock crypto
 global.crypto = {

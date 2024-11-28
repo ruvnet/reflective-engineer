@@ -8,7 +8,16 @@ import {
 } from '../settingsService';
 import OpenAI from 'openai';
 
-jest.mock('openai');
+// Mock OpenAI class and its methods
+jest.mock('openai', () => {
+  return {
+    default: jest.fn().mockImplementation(() => ({
+      models: {
+        list: jest.fn()
+      }
+    }))
+  };
+});
 
 describe('Settings Service', () => {
   beforeEach(() => {
@@ -34,16 +43,15 @@ describe('Settings Service', () => {
     });
 
     it('should handle default API key from environment', () => {
-      process.env.VITE_OPENROUTER_KEY = 'default-key';
       const settings = loadSettings();
-      expect(settings?.apiKey).toBe('default-key');
+      expect(settings?.apiKey).toBe('test-api-key'); // Using value from test/setup.ts
     });
 
     it('should clear settings correctly', () => {
       saveSettings(testSettings);
       const cleared = clearSettings();
       expect(localStorage.getItem('symbolic-scribe-settings')).toBeNull();
-      expect(cleared?.apiKey).toBe(process.env.VITE_OPENROUTER_KEY || '');
+      expect(cleared?.apiKey).toBe('test-api-key'); // Using value from test/setup.ts
     });
   });
 
@@ -62,8 +70,9 @@ describe('Settings Service', () => {
         }]
       };
 
-      (OpenAI as jest.MockedClass<typeof OpenAI>).prototype.models.list
-        .mockResolvedValue(mockModels);
+      const mockOpenAI = new OpenAI({});
+      (mockOpenAI.models.list as jest.Mock).mockResolvedValue(mockModels);
+      (OpenAI as jest.MockedClass<typeof OpenAI>).mockImplementation(() => mockOpenAI);
 
       const models = await fetchAvailableModels('test-key');
       
@@ -76,16 +85,18 @@ describe('Settings Service', () => {
     });
 
     it('should validate API key', async () => {
-      (OpenAI as jest.MockedClass<typeof OpenAI>).prototype.models.list
-        .mockResolvedValue({ data: [] });
+      const mockOpenAI = new OpenAI({});
+      (mockOpenAI.models.list as jest.Mock).mockResolvedValue({ data: [] });
+      (OpenAI as jest.MockedClass<typeof OpenAI>).mockImplementation(() => mockOpenAI);
 
       const isValid = await testApiKey('test-key');
       expect(isValid).toBe(true);
     });
 
     it('should handle invalid API key', async () => {
-      (OpenAI as jest.MockedClass<typeof OpenAI>).prototype.models.list
-        .mockRejectedValue(new Error('Invalid API key'));
+      const mockOpenAI = new OpenAI({});
+      (mockOpenAI.models.list as jest.Mock).mockRejectedValue(new Error('Invalid API key'));
+      (OpenAI as jest.MockedClass<typeof OpenAI>).mockImplementation(() => mockOpenAI);
 
       const isValid = await testApiKey('invalid-key');
       expect(isValid).toBe(false);

@@ -223,3 +223,109 @@
 
 # 2024-11-28 17:52:28.989589
 +/add src/hooks/use-toast.ts
+
+# 2024-11-28 17:53:28.931935
++/ask how can i create some unit tests for the openrouter api and other capabilities in the system uisng jest
+
+# 2024-11-28 17:55:19.508265
++/architect based on previous suggestions,  how can i create some unit tests for the openrouter api and other capabilities in the system uisng jest
+
+# 2024-11-28 18:06:58.724009
++/run npm test
+
+# 2024-11-28 19:04:19.582449
++the document and about page content background for Project Goals show as white on dark mode on mobile.
+
+# 2024-11-28 19:07:11.883950
++documentation is still a white background on dark mode, use dark grey for content boxes
+
+# 2024-11-28 19:07:30.485348
++documentation is still a white background on dark mode, use dark grey for content boxes., about is fixed
+
+# 2024-11-28 19:08:22.506721
++update about to text to integrate the following, keep existing content. but make marketing oriented . Almost all LLMS are susceptibility to prompt injections and other exploits. That’s why I built this new open source application—to help test, identify, and mitigate vulnerabilities within Ai systems. 
++
++The goal is to understand how various types of attacks work and develop defenses against them.
++
++Prompt injections manipulate input prompts to force undesired outputs or actions, bypassing safety mechanisms. Semantic shifts, like transforming harmful requests into symbolic representations, can evade detection by safety filters. Even innocuous queries can be exploited through chaining prompts or embedding harmful logic. 
++
++Symbolic reasoning and related methods leverage mathematical and logical structures to test and exploit vulnerabilities in language models by transforming natural language into abstract representations. Techniques such as encoding prompts using set theory, abstract algebra, or symbolic logic allow for bypassing traditional safety measures that rely on natural language pattern recognition. 
++
++For example, harmful prompts can be rephrased as mathematical expressions, enabling them to evade content moderation systems. Symbolic reasoning also enables the modeling of logical relationships, action sequences, and dependencies, providing a framework to test and exploit weaknesses systematically. By analyzing the embeddings and semantic shifts caused by these encodings, attackers can identify loopholes in safety mechanisms. 
++
++These methods extend beyond simple prompt manipulation, incorporating approaches like chaining, embedding logic, and using structural transformations to uncover vulnerabilities. The goal in deploying these techniques, however, is not exploitation but understanding—giving developers a robust set of tools to design better safeguards and build models resilient against such sophisticated attack vectors.
++
++These techniques expose gaps in even the most advanced models.
++
++To enhance its functionality, I’ve integrated the Open Router API, allowing users to test these vulnerabilities across dozens—possibly hundreds—of different LLMs. This approach provides a comprehensive way to evaluate every prompt method under various conditions. 
++
++The application is easy to deploy using your preferred provider, and for security, I’ve designed it to encrypt your API key and store it locally. If you're still concerned, you can find the source code on my GitHub and deploy it yourself.
++
++Let me be clear: this tool is for protection, not exploitation. I’m sharing it to improve safety, not to encourage misuse. With great power comes great responsibility. Use this tool wisely, and let’s work together to make AI safer for everyone.
++
++If you’re interested, join the discussion today at 12 Eastern during the live AI Hacker Space session. Zoom link below—don’t miss it!
+
+# 2024-11-28 19:09:43.466403
++add red-teaming section to documentation section, be complete and verbose.
+
+# 2024-11-28 19:10:24.058636
++/add package.json            src/components/GenerateDialog.tsx src/components/PreviewDialog.tsx src/hooks/use-toast.ts         
++src/lib/utils.ts        src/page                          src/pages/About.tsx              src/pages/Index.tsx            
++src/pages/Templates.tsx src/services/settingsService.ts   src/services/storageService.ts   src/services/templateService.ts
++typescript   
+
+# 2024-11-28 19:10:38.275377
++add red-teaming section/tab to documentation page, be complete and verbose.
+
+# 2024-11-28 19:11:59.681978
++/architect add red teaming tab and content to documentation page, not about us.
+
+# 2024-11-28 19:14:03.952723
++update settings page with icons for each and link to github for source code. https://github.com/ruvnet/symbolic-scribe/
+
+# 2024-11-28 19:16:33.731771
++update and include link to github repo. Keys entered here are encrypted and stored only in your browser's local storage
++Get your API key from openrouter.ai/keys
++
++No default API key found in environment. Please enter your OpenRouter API key
+
+# 2024-11-28 19:17:16.353826
++add icons Get your API key from OpenRouter
++
++No default API key found. Please enter your OpenRouter API key to get started.
+
+# 2024-11-28 19:18:14.304234
++add icon next to Get your API key from
++
+
+# 2024-11-28 19:19:47.134779
++/architect improve Quick Start Guide intro 
+
+# 2024-11-28 19:22:02.363471
++add smaller text brief  descriptions under titles on home for Prompt Overview, Domain Category, Domain Selection, Definitions, Output Type
++
+
+# 2024-11-28 19:23:46.058508
++update descriptions to be less mathatical and more focused on read teaming terms
+
+# 2024-11-28 19:24:51.357820
++/architect improve documentation section, more verbose and tutorial oriented.
+
+# 2024-11-28 19:27:10.502177
++improve Prompt Approaches
++Frameworks
++Workflows
++InfoSec
++Red Teaming
++Quick Start Guide
++
+
+# 2024-11-28 19:28:21.342663
++improve Mathematical Frameworks
++with detailed tutorial and overview of all functionality.
+
+# 2024-11-28 19:29:34.336680
++/add src/
+
+# 2024-11-28 19:29:52.660433
++improve Common Workflows documentation and tutorials
