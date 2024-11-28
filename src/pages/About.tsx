@@ -17,10 +17,15 @@ export default function About() {
           <div className="space-y-6">
             <div className="prose prose-invert max-w-none">
               <p className="text-console-text text-lg">
-                Symbolic Scribe is an advanced prompt engineering tool that leverages mathematical frameworks
-                to generate structured, precise prompts for various domains. By combining rigorous mathematical
-                principles with domain-specific knowledge, it helps create more effective and consistent
-                interactions with AI systems.
+                Symbolic Scribe is a cutting-edge security testing platform designed to identify and mitigate vulnerabilities in AI systems. 
+                By leveraging advanced mathematical frameworks and symbolic reasoning, it provides a comprehensive toolkit for testing 
+                prompt injection vulnerabilities and other exploits across various language models.
+              </p>
+              <p className="text-console-text text-lg mt-4">
+                With integration to the Open Router API, Symbolic Scribe enables testing across dozens of different LLMs, 
+                providing a robust platform for evaluating prompt security under diverse conditions. The application 
+                prioritizes security by encrypting API keys and storing them locally, with full source code transparency 
+                for additional trust and verification.
               </p>
             </div>
 
@@ -29,14 +34,14 @@ export default function About() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Brain className="w-5 h-5 text-console-cyan" />
-                    <span className="text-console-cyan">Mathematical Foundation</span>
+                    <span className="text-console-cyan">Advanced Security Testing</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-console-text">
-                    Built on fundamental mathematical principles including set theory, abstract algebra,
-                    and category theory to ensure logical consistency and structural integrity in prompt
-                    generation.
+                    Leverages symbolic reasoning and mathematical frameworks to systematically test and identify 
+                    vulnerabilities in AI systems, enabling the development of stronger safety mechanisms and 
+                    more resilient models.
                   </p>
                 </CardContent>
               </Card>
@@ -73,33 +78,42 @@ export default function About() {
             </div>
 
             <div className="glass-panel p-6 mt-8 bg-background/95">
-              <h2 className="text-xl font-code text-console-cyan mb-4">Project Goals</h2>
+              <h2 className="text-xl font-code text-console-cyan mb-4">Mission & Goals</h2>
               <ul className="space-y-4 text-console-text dark:text-gray-300">
                 <li className="flex items-start gap-2">
                   <span className="text-console-cyan">•</span>
-                  Enhance prompt engineering through mathematical rigor and structured frameworks
+                  Identify and mitigate vulnerabilities in AI systems through systematic testing
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-console-cyan">•</span>
-                  Provide consistent and reliable templates for various domains and use cases
+                  Develop robust defenses against prompt injections and semantic attacks
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-console-cyan">•</span>
-                  Foster better understanding of AI system interactions through formal methods
+                  Enable comprehensive security testing across multiple LLM platforms
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-console-cyan">•</span>
-                  Create a collaborative platform for advancing prompt engineering techniques
+                  Foster responsible security research and collaborative defense strategies
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-console-cyan">•</span>
+                  Advance the field of AI safety through open-source tools and methodologies
                 </li>
               </ul>
             </div>
 
             <div className="glass-panel p-6 mt-8 bg-background/95">
-              <h2 className="text-xl font-code text-console-cyan mb-4">Get Involved</h2>
+              <h2 className="text-xl font-code text-console-cyan mb-4">Responsible Usage & Collaboration</h2>
               <p className="text-console-text dark:text-gray-300">
-                We welcome contributions from developers, mathematicians, and domain experts. Whether you're
-                interested in adding new templates, improving existing ones, or enhancing the application's
-                functionality, your input is valuable to the project's growth and evolution.
+                This tool is designed for protection, not exploitation. We welcome contributions from security researchers, 
+                AI developers, and ethical hackers committed to improving AI safety. Join our community in developing better 
+                safeguards and making AI systems more secure for everyone.
+              </p>
+              <p className="text-console-text dark:text-gray-300 mt-4">
+                Through techniques like symbolic reasoning, mathematical encoding, and systematic vulnerability testing, 
+                we can identify and address security gaps in even the most advanced models. Together, we can build a 
+                more secure future for AI technology.
               </p>
             </div>
           </div>
