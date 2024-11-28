@@ -222,8 +222,31 @@ Composition: Sequential operations`}
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Best Practices</h3>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Advanced Security Measures</h3>
                     <div className="space-y-4">
+                      <div>
+                        <h4 className="text-console-green mb-2">Mathematical Input Analysis</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+            {`# Input Validation Pipeline
+            1. Parse mathematical structures
+            2. Analyze semantic embeddings
+            3. Compare with known attack patterns
+            4. Validate transformations
+            5. Check for semantic shifts`}
+                        </pre>
+                      </div>
+
+                      <div>
+                        <h4 className="text-console-green mb-2">Embedding Space Monitoring</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+            {`# Vector Analysis
+            1. Track embedding distances
+            2. Monitor semantic clusters
+            3. Detect anomalous mappings
+            4. Validate transformations
+            5. Check consistency`}
+                        </pre>
+                      </div>
                       <div>
                         <h4 className="text-console-green mb-2">API Key Management</h4>
                         <pre className="bg-black/30 p-4 rounded-md text-console-text">
