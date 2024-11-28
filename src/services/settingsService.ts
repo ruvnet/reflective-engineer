@@ -23,7 +23,7 @@ export interface OpenRouterModel {
 }
 
 // Initialize OpenAI client with OpenRouter base URL
-const createOpenRouterClient = (apiKey: string) => {
+export const createOpenRouterClient = (apiKey: string) => {
   return new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
     apiKey,
