@@ -1,7 +1,7 @@
 import MainNav from "../components/MainNav";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, BookOpen, Code, Wand2, Network, Brain, GitBranch, Workflow } from "lucide-react";
+import { FileText, BookOpen, Code, Wand2, Network, Brain, GitBranch, Workflow, Shield } from "lucide-react";
 
 export default function Documentation() {
   return (
@@ -32,6 +32,10 @@ export default function Documentation() {
               <TabsTrigger value="workflows" className="glass-panel data-[state=active]:border-console-cyan">
                 <Workflow className="w-4 h-4 mr-2" />
                 Workflows
+              </TabsTrigger>
+              <TabsTrigger value="infosec" className="glass-panel data-[state=active]:border-console-cyan">
+                <Shield className="w-4 h-4 mr-2" />
+                InfoSec
               </TabsTrigger>
             </TabsList>
 
@@ -184,6 +188,85 @@ Composition: Sequential operations`}
                       <li>Model state spaces topologically</li>
                       <li>Apply complex analysis for multi-agent interactions</li>
                       <li>Generate system constraint morphisms</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="infosec" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <Shield className="w-5 h-5" />
+                  Security Considerations
+                </h2>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">API Key Security</h3>
+                    <ul className="list-disc list-inside space-y-2 ml-4">
+                      <li>Client-side encryption of API keys using AES-256</li>
+                      <li>Optional environment variable configuration</li>
+                      <li>No server-side storage of sensitive data</li>
+                      <li>Automatic key validation and rotation support</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Data Privacy</h3>
+                    <ul className="list-disc list-inside space-y-2 ml-4">
+                      <li>All processing happens client-side</li>
+                      <li>No data persistence beyond local storage</li>
+                      <li>Minimal external API communication</li>
+                      <li>No tracking or analytics</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Best Practices</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-console-green mb-2">API Key Management</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Recommended key rotation schedule
+1. Generate new key monthly
+2. Update environment variables
+3. Verify key functionality
+4. Remove old key access`}
+                        </pre>
+                      </div>
+                      
+                      <div>
+                        <h4 className="text-console-green mb-2">Prompt Security</h4>
+                        <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Prompt security checklist
+1. Review for sensitive data
+2. Validate mathematical structures
+3. Check for injection vectors
+4. Test with minimal permissions`}
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Security Analysis Framework</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`Let S = {x | x is a security control}
+Let T = {y | y is a threat vector}
+Let R ⊆ S × T be the mitigation relation
+
+∀t ∈ T, ∃s ∈ S: (s,t) ∈ R
+// Every threat has at least one control`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Incident Response</h3>
+                    <ol className="list-decimal list-inside space-y-2 ml-4">
+                      <li>Immediately rotate compromised API keys</li>
+                      <li>Clear local storage if necessary</li>
+                      <li>Review access logs in OpenRouter dashboard</li>
+                      <li>Update security controls as needed</li>
                     </ol>
                   </div>
                 </div>
