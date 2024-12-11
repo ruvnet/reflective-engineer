@@ -120,46 +120,111 @@ export default function Documentation() {
                 </h2>
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Mathematical Framework Analysis</h3>
-                    <p className="text-console-text mb-2">
-                      Reflective Engineer uses rigorous mathematical frameworks to analyze and optimize prompts:
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Overview</h3>
+                    <p className="text-console-text mb-4">
+                      Reflective Engineer employs advanced mathematical frameworks and formal methods to analyze, optimize, and validate prompts. Our approach combines rigorous theoretical foundations with practical engineering principles:
                     </p>
-                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
-{`# Core Framework Components
-1. Set Theory Modeling
-   - Define prompt spaces
-   - Map transformations
-   - Analyze relationships
-
-2. Category Theory Application
-   - Model prompt morphisms
-   - Study compositional properties
-   - Validate transformations
-
-3. Abstract Algebra Structures
-   - Group operations on prompts
-   - Ring structure analysis
-   - Field extensions`}</pre>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                      <div className="glass-panel p-4">
+                        <h4 className="text-console-green mb-2">Theoretical Foundations</h4>
+                        <ul className="list-disc list-inside space-y-1 text-console-text">
+                          <li>Set Theory & Logic</li>
+                          <li>Category Theory</li>
+                          <li>Abstract Algebra</li>
+                          <li>Topology</li>
+                          <li>Complex Analysis</li>
+                        </ul>
+                      </div>
+                      <div className="glass-panel p-4">
+                        <h4 className="text-console-green mb-2">Engineering Principles</h4>
+                        <ul className="list-disc list-inside space-y-1 text-console-text">
+                          <li>Formal Verification</li>
+                          <li>Systematic Testing</li>
+                          <li>Performance Analysis</li>
+                          <li>Safety Constraints</li>
+                          <li>Quality Assurance</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Optimization Techniques</h3>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Mathematical Framework Analysis</h3>
+                    <p className="text-console-text mb-2">
+                      Core mathematical structures and transformations used in prompt engineering:
+                    </p>
                     <pre className="bg-black/30 p-4 rounded-md text-console-text">
-{`# Optimization Framework
+{`# Formal Foundations
+1. Set Theory Structures
+   P = {p | p is a valid prompt}
+   T: P → P (transformations)
+   R ⊆ P × P (relations)
+
+2. Category Theory Models
+   F: Dom → Cod (prompt functors)
+   η: F ⇒ G (natural transformations)
+   ∀p∈P: η(p) preserves properties
+
+3. Algebraic Structures
+   (P, •) forms monoid under composition
+   Ring R = (P, ⊕, ⊗) for operations
+   Field extensions for optimization`}</pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Optimization Framework</h3>
+                    <p className="text-console-text mb-2">
+                      Systematic approach to prompt optimization using mathematical principles:
+                    </p>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Optimization Process
 1. Domain Analysis
-   - Context mapping
-   - Constraint identification
-   - Goal formalization
+   D = (X, τ) topological space
+   f: D → R continuous mapping
+   ∇f gradient for optimization
 
-2. Structure Optimization
-   - Mathematical coherence
-   - Logical flow
-   - Semantic clarity
+2. Structure Refinement
+   φ: P → P' transformation
+   ∀p∈P: Quality(φ(p)) > Quality(p)
+   Maintain: Coherence ∧ Safety
 
-3. Validation Methods
-   - Formal verification
-   - Cross-model testing
-   - Performance metrics`}</pre>
+3. Validation System
+   V = {v | v is validator}
+   ∀v∈V: v(p) → {true, false}
+   Coverage(V) → [0,1]`}</pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Implementation Strategy</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="glass-panel p-4">
+                        <h4 className="text-console-green mb-2">Analysis Phase</h4>
+                        <ul className="list-disc list-inside space-y-1 text-console-text text-sm">
+                          <li>Domain Mapping</li>
+                          <li>Constraint Identification</li>
+                          <li>Structure Definition</li>
+                          <li>Safety Requirements</li>
+                        </ul>
+                      </div>
+                      <div className="glass-panel p-4">
+                        <h4 className="text-console-green mb-2">Development Phase</h4>
+                        <ul className="list-disc list-inside space-y-1 text-console-text text-sm">
+                          <li>Framework Application</li>
+                          <li>Transformation Design</li>
+                          <li>Optimization Process</li>
+                          <li>Quality Assurance</li>
+                        </ul>
+                      </div>
+                      <div className="glass-panel p-4">
+                        <h4 className="text-console-green mb-2">Validation Phase</h4>
+                        <ul className="list-disc list-inside space-y-1 text-console-text text-sm">
+                          <li>Formal Verification</li>
+                          <li>Property Testing</li>
+                          <li>Performance Analysis</li>
+                          <li>Safety Validation</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
