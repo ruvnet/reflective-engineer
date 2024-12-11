@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Info } from "lucide-react";
+import { Wand2 } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 import { testPrompt } from "../services/settingsService";
 import { loadSettings } from "../services/settingsService";
@@ -26,7 +26,22 @@ const PromptOptimizer = ({ domain, overview, content, onUpdate }: PromptOptimize
       return;
     }
 
+    if (!settings.defaultModel) {
+      toast({
+        title: "Model Required",
+        description: "Please select a default model in settings first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsOptimizing(true);
+    toast({
+      title: "Optimization Started",
+      description: "Using AI to enhance clarity, improve mathematical framework, and strengthen logical structure...",
+      duration: 3000,
+    });
+
     let optimizedResponse = "";
 
     try {
@@ -52,7 +67,7 @@ Return the response in the following format:
 
       await testPrompt(
         settings.apiKey,
-        "gpt-4o", // Using the recommended model for best results
+        settings.defaultModel,
         optimizationPrompt,
         (chunk) => {
           optimizedResponse += chunk;
@@ -68,8 +83,9 @@ Return the response in the following format:
       onUpdate(newOverview, newContent);
 
       toast({
-        title: "Prompt Optimized",
-        description: "The prompt has been enhanced based on your selections.",
+        title: "Optimization Complete",
+        description: "Your prompt has been enhanced with improved clarity, mathematical framework, and logical structure.",
+        duration: 5000,
       });
     } catch (error) {
       toast({
@@ -86,10 +102,15 @@ Return the response in the following format:
     <button
       onClick={optimizePrompt}
       disabled={isOptimizing}
-      className="console-button p-2 ml-2"
-      title="Optimize prompt using AI"
+      className="console-button flex items-center gap-2 px-3 py-1"
+      title="AI-powered prompt optimization that:
+• Enhances clarity and specificity
+• Improves mathematical framework
+• Strengthens logical structure
+• Maintains original intent"
     >
-      <Info className="w-4 h-4" />
+      <Wand2 className={`w-4 h-4 ${isOptimizing ? 'animate-pulse' : ''}`} />
+      <span>{isOptimizing ? "Optimizing..." : "Optimize"}</span>
     </button>
   );
 };
