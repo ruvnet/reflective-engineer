@@ -21,6 +21,7 @@ const PreviewDialog = ({ isOpen, onClose, models, prompt, onTest }: PreviewDialo
   const [activeTab, setActiveTab] = useState<ViewTab>('preview');
   const responseEndRef = useRef<HTMLDivElement>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
+  const [abortController, setAbortController] = useState<AbortController | null>(null);
 
   const scrollToBottom = () => {
     responseEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -45,14 +46,23 @@ const PreviewDialog = ({ isOpen, onClose, models, prompt, onTest }: PreviewDialo
     setStep('response');
     setActiveTab('response');
 
+    // Create new AbortController for this test
+    const controller = new AbortController();
+    setAbortController(controller);
+
     try {
       await onTest(selectedModel, prompt, (chunk) => {
         setResponse(prev => prev + chunk);
-      });
+      }, controller.signal);
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        setResponse(prev => prev + '\n\n[Generation stopped by user]');
+        return;
+      }
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setIsLoading(false);
+      setAbortController(null);
     }
   };
 
