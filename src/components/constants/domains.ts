@@ -1,4 +1,5 @@
 export const CATEGORIES = {
+  // Mathematical Frameworks
   "Mathematical Logic": "mathematical-logic",
   "Set Theory": "set-theory",
   "Category Theory": "category-theory",
@@ -7,7 +8,57 @@ export const CATEGORIES = {
   "Complex Analysis": "complex-analysis",
   "Symbolic Systems": "symbolic-systems",
   "System Analysis": "system-dynamics",
-  "Number Theory": "number-theory"
+  "Number Theory": "number-theory",
+
+  // Basic Prompting Frameworks
+  "Zero-Shot": "zero-shot",
+  "Few-Shot": "few-shot",
+  "Chain of Thought": "chain-of-thought",
+  "Role Playing": "role-playing",
+  "Step by Step": "step-by-step",
+  "Direct Instruction": "direct-instruction",
+  "Task Decomposition": "task-decomposition",
+
+  // Advanced Prompting Frameworks
+  "Tree of Thoughts": "tree-of-thoughts",
+  "ReAct": "react-framework",
+  "Self-Consistency": "self-consistency",
+  "Chain of Verification": "chain-of-verification",
+  "Meta-Prompting": "meta-prompting",
+  "Recursive Prompting": "recursive-prompting",
+  "Socratic Method": "socratic-method",
+
+  // Cutting Edge Frameworks
+  "Constitutional AI": "constitutional-ai",
+  "Automatic Reasoning": "automatic-reasoning",
+  "Multi-Agent": "multi-agent",
+  "Recursive Refinement": "recursive-refinement",
+  "Adversarial Prompting": "adversarial-prompting",
+  "Emergent Abilities": "emergent-abilities",
+  "Self-Reflection": "self-reflection",
+  
+  // Specialized Frameworks
+  "Retrieval Augmented": "retrieval-augmented",
+  "Context Distillation": "context-distillation",
+  "Prompt Chaining": "prompt-chaining",
+  "Knowledge Graphs": "knowledge-graphs",
+  "Semantic Control": "semantic-control",
+  "Temporal Reasoning": "temporal-reasoning",
+  "Causal Inference": "causal-inference",
+
+  // Safety Frameworks
+  "Red Teaming": "red-teaming",
+  "Prompt Injection": "prompt-injection",
+  "Jailbreak Prevention": "jailbreak-prevention",
+  "Output Sanitization": "output-sanitization",
+  "Bias Detection": "bias-detection",
+
+  // Optimization Frameworks
+  "Token Optimization": "token-optimization",
+  "Context Window": "context-window",
+  "Prompt Compression": "prompt-compression",
+  "Response Shaping": "response-shaping",
+  "Temperature Control": "temperature-control"
 } as const;
 
 export const OUTPUT_TYPES = {
