@@ -127,7 +127,7 @@ export const testApiKey = async (apiKey: string): Promise<boolean> => {
 };
 
 // Test prompt with selected model
-export const testPrompt = async (apiKey: string, modelId: string, prompt: string, onChunk: (chunk: string) => void): Promise<void> => {
+export const testPrompt = async (apiKey: string, modelId: string, prompt: string, onChunk: (chunk: string) => void, signal?: AbortSignal): Promise<void> => {
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -137,6 +137,7 @@ export const testPrompt = async (apiKey: string, modelId: string, prompt: string
         'X-Title': 'Symbolic Scribe',
         'Content-Type': 'application/json'
       },
+      signal,
       body: JSON.stringify({
         model: modelId,
         messages: [

@@ -55,10 +55,18 @@ const OptimizationDialog = ({
 
     try {
       let fullResponse = '';
-      await onOptimize(optimizationPrompt, (chunk) => {
-        fullResponse += chunk;
-        setResponse(fullResponse);
-      }, controller.signal);
+      try {
+        await onOptimize(optimizationPrompt, (chunk) => {
+          fullResponse += chunk;
+          setResponse(fullResponse);
+        }, controller.signal);
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') {
+          setResponse(prev => prev + '\n\n[Generation stopped by user]');
+          return;
+        }
+        throw error;
+      }
 
       // After optimization is complete, parse the response
       const overviewMatch = fullResponse.match(/---OVERVIEW---([\s\S]*?)(?:---CONTENT---|$)/);
