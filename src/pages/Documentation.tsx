@@ -16,10 +16,14 @@ export default function Documentation() {
           </div>
 
           <Tabs defaultValue="getting-started" className="space-y-6">
-            <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-transparent h-auto p-0">
+            <TabsList className="grid grid-cols-2 md:grid-cols-5 gap-4 bg-transparent h-auto p-0">
               <TabsTrigger value="getting-started" className="glass-panel data-[state=active]:border-console-cyan">
                 <BookOpen className="w-4 h-4 mr-2" />
                 Getting Started
+              </TabsTrigger>
+              <TabsTrigger value="mathematical" className="glass-panel data-[state=active]:border-console-cyan">
+                <Network className="w-4 h-4 mr-2" />
+                Mathematics
               </TabsTrigger>
               <TabsTrigger value="approaches" className="glass-panel data-[state=active]:border-console-cyan">
                 <Brain className="w-4 h-4 mr-2" />
@@ -42,6 +46,105 @@ export default function Documentation() {
                 Red Teaming
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="mathematical" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <Network className="w-5 h-5" />
+                  Mathematical Frameworks
+                </h2>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Mathematical Logic</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Propositional Logic
+P ∧ Q → R     // Conjunction and implication
+¬P ∨ Q        // Disjunction and negation
+P ↔ Q         // Biconditional
+
+# Predicate Logic
+∀x P(x)       // Universal quantification
+∃x P(x)       // Existential quantification
+∀x ∃y R(x,y)  // Nested quantifiers`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Set Theory</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Basic Operations
+A ∪ B         // Union
+A ∩ B         // Intersection
+A \ B         // Set difference
+A'            // Complement
+
+# Set Relations
+x ∈ A         // Element of
+A ⊆ B         // Subset
+A × B         // Cartesian product`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Category Theory</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Basic Concepts
+f: A → B      // Morphism
+g ∘ f         // Composition
+id_A          // Identity morphism
+
+# Universal Properties
+F: C → D      // Functor
+η: F ⇒ G      // Natural transformation
+F ⊣ G         // Adjunction`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Abstract Algebra</h3>
+                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Group Theory
+(G, •)        // Group structure
+H ≤ G         // Subgroup
+G/H           // Quotient group
+
+# Ring Theory
+(R, +, ×)     // Ring structure
+R[x]          // Polynomial ring
+I ⊲ R         // Ring ideal`}
+                    </pre>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Implementation Guide</h3>
+                    <div className="space-y-4">
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <h4 className="text-console-green mb-2">Usage Example:</h4>
+                        <pre className="font-mono text-sm">
+{`# Mathematical Framework Application
+1. Select appropriate mathematical domain
+2. Apply relevant theorems and properties
+3. Construct formal proofs or derivations
+4. Validate mathematical consistency
+5. Document mathematical reasoning`}
+                        </pre>
+                      </div>
+
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <h4 className="text-console-green mb-2">Best Practices:</h4>
+                        <pre className="font-mono text-sm">
+{`1. Maintain formal rigor
+2. Use precise notation
+3. Document assumptions
+4. Verify proofs
+5. Cross-reference theorems`}
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
 
             <TabsContent value="getting-started" className="space-y-6">
               <div className="glass-panel p-6">
