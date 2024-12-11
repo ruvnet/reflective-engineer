@@ -837,14 +837,107 @@ Let V = {v | v is a validation function}
                   Basic Prompting Techniques
                 </h2>
                 <div className="space-y-4">
-                  <p className="text-console-text">
-                    Learn fundamental prompt engineering techniques and best practices. For more advanced techniques, see the <button 
-                      onClick={() => document.querySelector('[value="advanced-prompting"]')?.click()} 
-                      className="text-console-cyan hover:underline"
-                    >
-                      Advanced Prompting
-                    </button> section.
-                  </p>
+                  <div className="space-y-6">
+                    <p className="text-console-text">
+                      Master the fundamentals of prompt engineering with mathematical precision. For more advanced techniques, see the <button 
+                        onClick={() => document.querySelector('[value="advanced-prompting"]')?.click()} 
+                        className="text-console-cyan hover:underline"
+                      >
+                        Advanced Prompting
+                      </button> section.
+                    </p>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">Core Components</h3>
+                      <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Basic Prompt Structure
+P = {context, instruction, input, output}
+where:
+- context defines scope and constraints
+- instruction specifies desired action
+- input provides necessary data
+- output defines expected format`}
+                      </pre>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">Pattern Templates</h3>
+                      <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Common Patterns
+1. Direct Instruction
+   "Generate {output} based on {input}"
+
+2. Context Setting
+   "Given {context}, perform {instruction}"
+
+3. Format Specification
+   "Output should follow format:
+    {format_template}"
+
+4. Constraint Definition
+   "Ensure result satisfies:
+    ∀x ∈ output: C(x) = true"`}
+                      </pre>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">Best Practices</h3>
+                      <div className="space-y-4">
+                        <div className="bg-black/30 p-4 rounded-md text-console-text">
+                          <h4 className="text-console-green mb-2">Clarity:</h4>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Use precise, unambiguous language</li>
+                            <li>Break complex tasks into steps</li>
+                            <li>Define terms explicitly</li>
+                            <li>Specify constraints clearly</li>
+                          </ul>
+                        </div>
+
+                        <div className="bg-black/30 p-4 rounded-md text-console-text">
+                          <h4 className="text-console-green mb-2">Structure:</h4>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Maintain logical flow</li>
+                            <li>Use consistent formatting</li>
+                            <li>Group related elements</li>
+                            <li>Include validation criteria</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">Implementation Guide</h3>
+                      <pre className="bg-black/30 p-4 rounded-md text-console-text">
+{`# Step-by-Step Process
+1. Define Objective
+   goal = {specific, measurable, achievable}
+
+2. Structure Components
+   prompt = context + instruction + constraints
+
+3. Validate Format
+   assert format_matches(output, expected)
+
+4. Test & Refine
+   while not optimal(result):
+     adjust(parameters)
+     retest(prompt)`}
+                      </pre>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">Common Pitfalls</h3>
+                      <div className="bg-black/30 p-4 rounded-md text-console-text">
+                        <ul className="list-disc list-inside space-y-1">
+                          <li>Ambiguous instructions</li>
+                          <li>Missing context</li>
+                          <li>Unclear constraints</li>
+                          <li>Inconsistent formatting</li>
+                          <li>Overcomplex requests</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </TabsContent>
