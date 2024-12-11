@@ -6,7 +6,7 @@ export const CATEGORIES = {
   "Topology": "topology",
   "Complex Analysis": "complex-analysis",
   "Symbolic Systems": "symbolic-systems",
-  "Real-World Simulations": "systematic-suppression",
+  "System Analysis": "system-dynamics",
   "Number Theory": "number-theory"
 } as const;
 
