@@ -12,7 +12,7 @@ export const useTemplate = (templateId: string) => {
   return useQuery({
     queryKey: ["template", templateId],
     queryFn: async () => {
-      const response = await fetch(`/templates/${templateId}.md`);
+      const response = await fetch(`/public/templates/${templateId}.md`);
       if (!response.ok) {
         throw new Error(`Failed to fetch template: ${response.statusText}`);
       }
