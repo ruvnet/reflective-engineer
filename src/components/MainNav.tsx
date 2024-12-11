@@ -1,28 +1,26 @@
-import { Link } from "react-router-dom";
-import { Terminal, Menu, X } from "lucide-react";
-import { useState } from "react";
+import React from 'react';
+import { Terminal, Menu } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const navItems = [
-  { name: "Home", path: "/" },
-  { name: "Templates", path: "/templates" },
-  { name: "Documentation", path: "/docs" },
-  { name: "Settings", path: "/settings" },
-  { name: "About", path: "/about" }
+const NAV_ITEMS = [
+  { label: 'Settings', path: '/settings' },
+  { label: 'Documentation', path: '/documentation' },
+  { label: 'About', path: '/about' },
 ];
 
 interface MainNavProps {
-  title: React.ReactNode;
+  title: string;
 }
 
 const MainNav = ({ title }: MainNavProps) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   return (
-    <header className="glass-panel p-6 m-4">
+    <nav className="glass-panel p-4 sticky top-0 z-50">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4 flex-1 min-w-0">
           <Terminal className="w-6 h-6 text-console-cyan flex-shrink-0" />
-          <h1 className="typing-container font-code text-xl truncate flex items-center">
+          <h1 className="typing-container font-code text-xl truncate">
             {title}
           </h1>
         </div>
@@ -30,46 +28,41 @@ const MainNav = ({ title }: MainNavProps) => {
         {/* Mobile Menu Button */}
         <button
           className="md:hidden console-button p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {mobileMenuOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Menu className="w-5 h-5" />
-          )}
+          <Menu className="w-6 h-6" />
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6">
-          {navItems.map((item) => (
-            <Link 
-              key={item.name}
+        <div className="hidden md:flex items-center space-x-4">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.path}
               to={item.path}
-              className="console-button"
+              className="console-button px-4 py-2"
             >
-              {item.name}
+              {item.label}
             </Link>
           ))}
-        </nav>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <nav className="md:hidden mt-4 space-y-2">
-          {navItems.map((item) => (
-            <Link 
-              key={item.name}
+      {isMobileMenuOpen && (
+        <div className="md:hidden mt-4 space-y-2">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.path}
               to={item.path}
-              className="console-button w-full text-left block"
-              onClick={() => setMobileMenuOpen(false)}
+              className="console-button block px-4 py-2 w-full text-left"
+              onClick={() => setIsMobileMenuOpen(false)}
             >
-              {item.name}
+              {item.label}
             </Link>
           ))}
-        </nav>
+        </div>
       )}
-    </header>
+    </nav>
   );
 };
 
