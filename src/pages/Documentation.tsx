@@ -115,79 +115,51 @@ export default function Documentation() {
 
             <TabsContent value="approaches" className="space-y-6">
               <div className="glass-panel p-6">
-                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
-                  <Brain className="w-5 h-5" />
+                <h2 className="text-xl font-code text-console-cyan mb-4">
                   Prompt Engineering Approaches
                 </h2>
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Set-Theoretic Approach</h3>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Mathematical Framework Analysis</h3>
                     <p className="text-console-text mb-2">
-                      A foundational approach for modeling security boundaries and attack surfaces:
+                      Reflective Engineer uses rigorous mathematical frameworks to analyze and optimize prompts:
                     </p>
                     <pre className="bg-black/30 p-4 rounded-md text-console-text">
-{`# Security Domain Modeling
-Let A = {x | x is an attack vector}
-Let D = {y | y is a defense mechanism}
-Let V = {z | z is a vulnerability}
+{`# Core Framework Components
+1. Set Theory Modeling
+   - Define prompt spaces
+   - Map transformations
+   - Analyze relationships
 
-# Relationship Mapping
-R₁ = {(a,v) ∈ A × V | a exploits v}
-R₂ = {(d,v) ∈ D × V | d mitigates v}
+2. Category Theory Application
+   - Model prompt morphisms
+   - Study compositional properties
+   - Validate transformations
 
-# Coverage Analysis
-∀v ∈ V, ∃d ∈ D: (d,v) ∈ R₂
-// Ensure all vulnerabilities have mitigations`}
-                    </pre>
+3. Abstract Algebra Structures
+   - Group operations on prompts
+   - Ring structure analysis
+   - Field extensions`}</pre>
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Category Theory Approach</h3>
-                    <p className="text-console-text mb-2">
-                      Advanced framework for analyzing system transformations and attack chains:
-                    </p>
+                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Optimization Techniques</h3>
                     <pre className="bg-black/30 p-4 rounded-md text-console-text">
-{`# Attack Chain Category
-Objects: System States
-Morphisms: Attack Transitions
-Identity: No-op (system unchanged)
-Composition: f ∘ g (chained attacks)
+{`# Optimization Framework
+1. Domain Analysis
+   - Context mapping
+   - Constraint identification
+   - Goal formalization
 
-# Defense Category
-Objects: Security Controls
-Morphisms: Defense Updates
-Functor F: AttackCat → DefenseCat
-// Maps attacks to corresponding defenses
+2. Structure Optimization
+   - Mathematical coherence
+   - Logical flow
+   - Semantic clarity
 
-# Properties
-∀ attack ∈ Morphisms, ∃ defense ∈ F(Morphisms)
-// Every attack has a corresponding defense`}
-                    </pre>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold text-console-cyan mb-2">Abstract Algebra Approach</h3>
-                    <p className="text-console-text mb-2">
-                      Powerful method for encoding attack patterns and system behaviors:
-                    </p>
-                    <pre className="bg-black/30 p-4 rounded-md text-console-text">
-{`# Attack Pattern Group
-Group A = (Actions, ∘)
-- Identity: Safe state
-- Operation ∘: Chain attacks
-- Inverse: Rollback/mitigation
-
-# Homomorphism Properties
-φ: A → DefenseGroup
-φ(a ∘ b) = φ(a) ∘ φ(b)
-// Defense composition matches attack composition
-
-# Ring Structure
-R = (Actions, ⊕, ⊗)
-- Addition ⊕: Parallel attacks
-- Multiplication ⊗: Sequential attacks
-- Distributive: a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c)`}
-                    </pre>
+3. Validation Methods
+   - Formal verification
+   - Cross-model testing
+   - Performance metrics`}</pre>
                   </div>
                 </div>
               </div>
