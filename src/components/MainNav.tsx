@@ -11,7 +11,7 @@ const navItems = [
 ];
 
 interface MainNavProps {
-  title: string;
+  title: React.ReactNode;
 }
 
 const MainNav = ({ title }: MainNavProps) => {
@@ -22,9 +22,9 @@ const MainNav = ({ title }: MainNavProps) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4 flex-1 min-w-0">
           <Terminal className="w-6 h-6 text-console-cyan flex-shrink-0" />
-          <h1 className="typing-container font-code text-xl truncate">
-          {title}
-        </h1>
+          <h1 className="typing-container font-code text-xl truncate flex items-center">
+            {title}
+          </h1>
         </div>
 
         {/* Mobile Menu Button */}

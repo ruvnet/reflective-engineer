@@ -8,6 +8,7 @@ import MainNav from "../components/MainNav";
 import PreviewDialog from "../components/PreviewDialog";
 import GenerateDialog from "../components/GenerateDialog";
 import Sidebar from "../components/Sidebar";
+import PromptOptimizer from "../components/PromptOptimizer";
 import { CATEGORIES, OUTPUT_TYPES, DOMAINS } from "../components/constants/domains";
 
 const useLocalStorage = (key: string, initialValue: boolean) => {
@@ -163,9 +164,24 @@ const Index = () => {
     return promptParts.join('\n\n');
   };
 
+  const handlePromptUpdate = (newOverview: string, newContent: string) => {
+    setOverview(newOverview);
+    setContent(newContent);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      <MainNav title="Reflective Engineer" />
+      <MainNav title={
+        <div className="flex items-center">
+          Reflective Engineer
+          <PromptOptimizer
+            domain={getCurrentDomain()}
+            overview={overview}
+            content={content}
+            onUpdate={handlePromptUpdate}
+          />
+        </div>
+      } />
 
       {!hasApiKey && (
         <div className="bg-yellow-900/30 border-l-4 border-yellow-500 p-4">
