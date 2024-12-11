@@ -246,7 +246,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <MainNav title="Symbolic Reasoning Prompt Generator" />
+      <MainNav title="Reflective Engineer" />
 
       {!hasApiKey && (
         <div className="bg-yellow-900/30 border-l-4 border-yellow-500 p-4">
