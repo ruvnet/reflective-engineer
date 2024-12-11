@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronRight, ChevronDown, BookTemplate, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { useTemplate } from "../services/templateService";
 import { useToast } from "../components/ui/use-toast";
 import { loadSettings, fetchAvailableModels, testPrompt, OpenRouterModel } from "../services/settingsService";
@@ -7,89 +7,8 @@ import { Link } from "react-router-dom";
 import MainNav from "../components/MainNav";
 import PreviewDialog from "../components/PreviewDialog";
 import GenerateDialog from "../components/GenerateDialog";
-
-const CATEGORIES = {
-  "Mathematical Logic": "mathematical-logic",
-  "Abstract Algebra": "abstract-algebra",
-  "Set Theory": "set-theory",
-  "Symbolic Systems": "symbolic-systems",
-  "Real-World Simulations": "systematic-suppression",
-  "Complex Analysis": "complex-analysis",
-  "Number Theory": "number-theory",
-  "Category Theory": "category-theory",
-  "Topology": "topology"
-} as const;
-
-const OUTPUT_TYPES = {
-  "Code": "Generate code implementation",
-  "Summary": "Provide a concise summary",
-  "Calculus": "Show mathematical calculations and steps",
-  "Analysis": "Detailed analysis and explanation",
-  "Examples": "Provide practical examples",
-  "Visualization": "Describe visual representation",
-  "Tutorial": "Step-by-step tutorial",
-  "Comparison": "Compare and contrast analysis",
-  "Implementation": "Implementation guidelines",
-  "Documentation": "Technical documentation"
-} as const;
-
-const DOMAINS = {
-  "Computer Science": [
-    "Information Security",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Database Systems",
-    "Computer Networks",
-    "Software Engineering",
-    "Cryptography",
-    "Distributed Systems"
-  ],
-  "Social Sciences": [
-    "Ethics",
-    "Sociology",
-    "Psychology",
-    "Economics",
-    "Political Science",
-    "Anthropology",
-    "Law"
-  ],
-  "Natural Sciences": [
-    "Physics",
-    "Chemistry",
-    "Biology",
-    "Environmental Science",
-    "Astronomy",
-    "Geology"
-  ],
-  "Engineering": [
-    "Electrical Engineering",
-    "Mechanical Engineering",
-    "Civil Engineering",
-    "Chemical Engineering",
-    "Aerospace Engineering",
-    "Robotics"
-  ],
-  "Business": [
-    "Finance",
-    "Marketing",
-    "Operations Management",
-    "Strategic Planning",
-    "Risk Management",
-    "Business Analytics"
-  ],
-  "InfoSec": [
-    "MathPrompt Attacks",
-    "Symbolic Injection",
-    "Model Safety Analysis",
-    "Semantic Vulnerabilities",
-    "Content Moderation Bypass",
-    "Safety Mechanism Analysis",
-    "Red Team Testing",
-    "Mathematical Encoding",
-    "Vector Embedding Analysis",
-    "Defense Strategies"
-  ]
-} as const;
+import Sidebar from "../components/Sidebar";
+import { CATEGORIES, OUTPUT_TYPES, DOMAINS } from "../components/constants/domains";
 
 const useLocalStorage = (key: string, initialValue: boolean) => {
   const [value, setValue] = useState(initialValue);
@@ -121,8 +40,8 @@ const useLocalStorage = (key: string, initialValue: boolean) => {
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [currentTemplate, setCurrentTemplate] = useState("systematic-suppression");
-  const [selectedDomainCategory, setSelectedDomainCategory] = useState("InfoSec");
-  const [selectedDomain, setSelectedDomain] = useState("MathPrompt Attacks");
+  const [selectedDomainCategory, setSelectedDomainCategory] = useState("Prompt Engineering");
+  const [selectedDomain, setSelectedDomain] = useState("Chain of Thought");
   const [customDomain, setCustomDomain] = useState("");
   const [isCustomDomain, setIsCustomDomain] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -266,30 +185,11 @@ const Index = () => {
       )}
 
       <main className="flex-1 flex flex-col md:flex-row gap-4 p-4">
-        <aside className={`glass-panel p-4 md:w-64 animate-matrix-fade ${sidebarOpen ? 'block' : 'hidden md:block'}`}>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-console-cyan font-code">Categories</h2>
-            <button 
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden console-button p-1"
-            >
-              {sidebarOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-            </button>
-          </div>
-          <ul className="space-y-2">
-            {Object.keys(CATEGORIES).map((category) => (
-              <li key={category}>
-                <button 
-                  className="w-full text-left console-button flex items-center gap-2"
-                  onClick={() => loadTemplate(category as keyof typeof CATEGORIES)}
-                >
-                  <BookTemplate className="w-4 h-4" />
-                  {category}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </aside>
+        <Sidebar 
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          loadTemplate={loadTemplate}
+        />
 
         <section className="flex-1 glass-panel p-6 animate-matrix-fade">
           {isLoading ? (
@@ -298,10 +198,10 @@ const Index = () => {
             <div className="space-y-6">
               <div>
                 <label className="block text-console-cyan mb-2">Prompt Overview</label>
-                <p className="text-sm text-gray-400 mb-2">Define your red teaming objectives and target system analysis goals</p>
+                <p className="text-sm text-gray-400 mb-2">Define your prompt engineering goals and desired model behavior</p>
                 <textarea 
                   className="console-input w-full h-24"
-                  placeholder="Describe the purpose or goal of the prompt..."
+                  placeholder="Describe the purpose or goal of your prompt..."
                   value={overview}
                   onChange={(e) => setOverview(e.target.value)}
                 />
@@ -310,7 +210,7 @@ const Index = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-console-cyan mb-2">Domain Category</label>
-                  <p className="text-sm text-gray-400 mb-2">Choose the security domain or system type to analyze</p>
+                  <p className="text-sm text-gray-400 mb-2">Choose the primary domain for your prompt engineering task</p>
                   <select 
                     className="console-input w-full"
                     value={selectedDomainCategory}
@@ -323,11 +223,10 @@ const Index = () => {
                   </select>
                 </div>
 
-
                 {selectedDomainCategory && (
                   <div>
                     <label className="block text-console-cyan mb-2">Domain Selection</label>
-                    <p className="text-sm text-gray-400 mb-2">Select a specific attack surface or define a custom target system</p>
+                    <p className="text-sm text-gray-400 mb-2">Select a specific prompt engineering focus or define a custom domain</p>
                     <select 
                       className="console-input w-full"
                       value={isCustomDomain ? "custom" : selectedDomain}
@@ -366,11 +265,11 @@ const Index = () => {
               </div>
 
               <div>
-                <label className="block text-console-cyan mb-2">Set Definitions</label>
-                <p className="text-sm text-gray-400 mb-2">Define your attack vectors, security boundaries, and system interactions</p>
+                <label className="block text-console-cyan mb-2">Mathematical Framework</label>
+                <p className="text-sm text-gray-400 mb-2">Define your prompt structure using mathematical frameworks</p>
                 <textarea 
                   className="console-input w-full h-32 font-mono"
-                  placeholder="Define your sets and subsets here..."
+                  placeholder="Define your mathematical framework here..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                 />
@@ -378,7 +277,7 @@ const Index = () => {
 
               <div>
                 <label className="block text-console-cyan mb-2">Output Type</label>
-                <p className="text-sm text-gray-400 mb-2">Specify how you want the security analysis to be processed</p>
+                <p className="text-sm text-gray-400 mb-2">Specify how you want the prompt to be processed</p>
                 <select 
                   className="console-input w-full"
                   value={selectedOutputType}
