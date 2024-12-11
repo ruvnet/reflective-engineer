@@ -3,6 +3,7 @@ import { Wand2 } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 import { testPrompt } from "../services/settingsService";
 import { loadSettings } from "../services/settingsService";
+import OptimizationDialog from "./OptimizationDialog";
 
 interface PromptOptimizerProps {
   domain: string;
@@ -13,9 +14,10 @@ interface PromptOptimizerProps {
 
 const PromptOptimizer = ({ domain, overview, content, onUpdate }: PromptOptimizerProps) => {
   const [isOptimizing, setIsOptimizing] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  const optimizePrompt = async () => {
+  const handleOptimizeClick = () => {
     const settings = loadSettings();
     if (!settings?.apiKey) {
       toast({
@@ -35,17 +37,26 @@ const PromptOptimizer = ({ domain, overview, content, onUpdate }: PromptOptimize
       return;
     }
 
+    setIsDialogOpen(true);
+  };
+
+  const handleOptimize = async (prompt: string, onChunk: (chunk: string) => void) => {
     setIsOptimizing(true);
-    toast({
-      title: "Optimization Started",
-      description: "Using AI to enhance clarity, improve mathematical framework, and strengthen logical structure...",
-      duration: 3000,
-    });
-
-    let optimizedResponse = "";
-
+    const settings = loadSettings();
+    
     try {
-      const optimizationPrompt = `As an AI prompt engineering expert, analyze and optimize the following prompt for ${domain}:
+      await testPrompt(
+        settings!.apiKey,
+        settings!.defaultModel,
+        prompt,
+        onChunk
+      );
+    } finally {
+      setIsOptimizing(false);
+    }
+  };
+
+  const optimizationPrompt = `As an AI prompt engineering expert, analyze and optimize the following prompt for ${domain}:
 
 Overview:
 ${overview}
@@ -65,53 +76,33 @@ Return the response in the following format:
 ---CONTENT---
 [Optimized content]`;
 
-      await testPrompt(
-        settings.apiKey,
-        settings.defaultModel,
-        optimizationPrompt,
-        (chunk) => {
-          optimizedResponse += chunk;
-        }
-      );
-
-      const overviewMatch = optimizedResponse.match(/---OVERVIEW---([\s\S]*?)(?:---CONTENT---|$)/);
-      const contentMatch = optimizedResponse.match(/---CONTENT---([\s\S]*?)$/);
-
-      const newOverview = overviewMatch ? overviewMatch[1].trim() : overview;
-      const newContent = contentMatch ? contentMatch[1].trim() : content;
-
-      onUpdate(newOverview, newContent);
-
-      toast({
-        title: "Optimization Complete",
-        description: "Your prompt has been enhanced with improved clarity, mathematical framework, and logical structure.",
-        duration: 5000,
-      });
-    } catch (error) {
-      toast({
-        title: "Optimization Failed",
-        description: error instanceof Error ? error.message : "An error occurred during optimization",
-        variant: "destructive",
-      });
-    } finally {
-      setIsOptimizing(false);
-    }
-  };
-
   return (
-    <button
-      onClick={optimizePrompt}
-      disabled={isOptimizing}
-      className="console-button flex items-center gap-2 px-3 py-1"
-      title="AI-powered prompt optimization that:
+    <>
+      <button
+        onClick={handleOptimizeClick}
+        disabled={isOptimizing}
+        className="console-button flex items-center gap-2 px-3 py-1"
+        title="AI-powered prompt optimization that:
 • Enhances clarity and specificity
 • Improves mathematical framework
 • Strengthens logical structure
 • Maintains original intent"
-    >
-      <Wand2 className={`w-4 h-4 ${isOptimizing ? 'animate-pulse' : ''}`} />
-      <span>{isOptimizing ? "Optimizing..." : "Optimize"}</span>
-    </button>
+      >
+        <Wand2 className={`w-4 h-4 ${isOptimizing ? 'animate-pulse' : ''}`} />
+        <span>{isOptimizing ? "Optimizing..." : "Optimize"}</span>
+      </button>
+
+      <OptimizationDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        domain={domain}
+        originalOverview={overview}
+        originalContent={content}
+        optimizationPrompt={optimizationPrompt}
+        onOptimize={handleOptimize}
+        onUpdate={onUpdate}
+      />
+    </>
   );
 };
 
