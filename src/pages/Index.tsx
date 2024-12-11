@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, ChevronDown } from "lucide-react";
 import { useTemplate } from "../services/templateService";
 import { useToast } from "../components/ui/use-toast";
 import { loadSettings, fetchAvailableModels, testPrompt, OpenRouterModel } from "../services/settingsService";
