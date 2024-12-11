@@ -12,7 +12,7 @@ export default function Documentation() {
         <section className="glass-panel p-6 animate-matrix-fade">
           <div className="flex items-center gap-2 mb-6">
             <FileText className="w-6 h-6 text-console-cyan" />
-            <h1 className="text-2xl font-code text-console-cyan">Documentation</h1>
+            <h1 className="text-2xl font-code text-console-cyan">Reflective Engineer Documentation</h1>
           </div>
 
           <Tabs defaultValue="getting-started" className="space-y-6">
@@ -51,8 +51,8 @@ export default function Documentation() {
                 </h2>
                 <div className="space-y-4 text-console-text">
                   <p>
-                    Welcome to Symbolic Scribe! This tool helps you create and optimize prompts using mathematical frameworks
-                    and symbolic reasoning. Here's how to get started:
+                    Welcome to Reflective Engineer! This advanced platform helps you create, optimize and test prompts using mathematical frameworks
+                    and domain-specific optimization techniques. Here's how to get started:
                   </p>
 
                   <div className="space-y-6">
@@ -60,39 +60,43 @@ export default function Documentation() {
                       <h3 className="text-lg font-semibold text-console-cyan mb-2">1. Initial Setup</h3>
                       <ul className="list-disc list-inside space-y-2 ml-4">
                         <li>Configure your OpenRouter API key in Settings</li>
-                        <li>Select your default model</li>
-                        <li>Enable desired models for testing</li>
-                        <li>Test your configuration</li>
+                        <li>Select your default model for optimization</li>
+                        <li>Enable models for multi-model testing</li>
+                        <li>Verify your configuration</li>
+                        <li>Review available mathematical frameworks</li>
                       </ul>
                     </div>
 
                     <div>
                       <h3 className="text-lg font-semibold text-console-cyan mb-2">2. Creating Prompts</h3>
                       <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>Choose a mathematical or prompt engineering framework</li>
-                        <li>Select your domain and category</li>
-                        <li>Customize the overview and content</li>
-                        <li>Use the optimization features</li>
+                        <li>Select a mathematical framework template</li>
+                        <li>Choose your domain and specialization</li>
+                        <li>Define prompt objectives and structure</li>
+                        <li>Apply domain-specific optimization</li>
+                        <li>Utilize template-based generation</li>
                       </ul>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-console-cyan mb-2">3. Testing and Refinement</h3>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">3. Testing and Validation</h3>
                       <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>Preview prompts with different models</li>
-                        <li>Use the optimization tool for improvements</li>
-                        <li>Save successful templates</li>
-                        <li>Export prompts in various formats</li>
+                        <li>Test prompts across multiple models</li>
+                        <li>Use AI-powered optimization</li>
+                        <li>Validate mathematical coherence</li>
+                        <li>Save and manage templates</li>
+                        <li>Export in multiple formats</li>
                       </ul>
                     </div>
 
                     <div>
                       <h3 className="text-lg font-semibold text-console-cyan mb-2">4. Best Practices</h3>
                       <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>Start with clear objectives</li>
-                        <li>Use appropriate mathematical frameworks</li>
-                        <li>Test across multiple models</li>
-                        <li>Document successful patterns</li>
+                        <li>Define clear mathematical objectives</li>
+                        <li>Select appropriate frameworks</li>
+                        <li>Leverage domain-specific optimization</li>
+                        <li>Conduct thorough multi-model testing</li>
+                        <li>Document and share successful patterns</li>
                       </ul>
                     </div>
 
