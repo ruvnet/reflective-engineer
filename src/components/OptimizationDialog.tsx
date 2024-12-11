@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Loader2, ArrowLeft } from "lucide-react";
+import { X, Loader2, ArrowLeft, Save, Download } from "lucide-react";
 
 interface OptimizationDialogProps {
   isOpen: boolean;
@@ -197,12 +197,51 @@ const OptimizationDialog = ({
               </button>
             </>
           ) : (
-            <button 
-              className="console-button"
-              onClick={onClose}
-            >
-              Close
-            </button>
+            <div className="flex gap-3">
+              <button 
+                className="console-button"
+                onClick={onClose}
+              >
+                Close Without Saving
+              </button>
+              <button
+                className="console-button flex items-center gap-2"
+                onClick={() => {
+                  const overviewMatch = response.match(/---OVERVIEW---([\s\S]*?)(?:---CONTENT---|$)/);
+                  const contentMatch = response.match(/---CONTENT---([\s\S]*?)$/);
+                  
+                  if (overviewMatch && contentMatch) {
+                    const newOverview = overviewMatch[1].trim();
+                    const newContent = contentMatch[1].trim();
+                    onUpdate(newOverview, newContent);
+                    onClose();
+                  }
+                }}
+                disabled={!response || isOptimizing}
+              >
+                <Save className="w-4 h-4" />
+                Update & Save
+              </button>
+              <button
+                className="console-button flex items-center gap-2"
+                onClick={() => {
+                  const content = response;
+                  const blob = new Blob([content], { type: 'text/plain' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `optimized-prompt-${domain.toLowerCase().replace(/\s+/g, '-')}.txt`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                }}
+                disabled={!response || isOptimizing}
+              >
+                <Download className="w-4 h-4" />
+                Export
+              </button>
+            </div>
           )}
         </div>
       </div>
