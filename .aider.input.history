@@ -329,3 +329,236 @@
 
 # 2024-11-28 19:29:52.660433
 +improve Common Workflows documentation and tutorials
+
+# 2024-12-11 22:08:21.685909
++/add src/
+
+# 2024-12-11 22:11:37.840216
++/ask how can i add a more verbose modal to display what's happening when the optimizing button is clicked? simialr to the preview modal.
+
+# 2024-12-11 22:12:45.619595
++implementation:                                                                                                                                                 
++
++ 1 Shows a modal dialog when the optimize button is clicked                                                                                                          
++ 2 Displays the original content in one tab                                                                                                                          
++ 3 Shows the optimization process in real-time in another tab                                                                                                        
++ 4 Includes timestamps for each step                                                                                                                                 
++ 5 Provides visual feedback during the optimization process                                                                                                          
++ 6 Handles errors gracefully                                                                                                                                         
++ 7 Allows users to see both the original and optimized versions                                                                                                      
++ 8 Maintains the same styling and UI consistency as the preview dialog   
+
+# 2024-12-11 22:18:17.972497
++after the prompt is optimized, include a button to save update the form fields, and include export options, and close, if save/update isn't selected the orginal prompt isn't updated in the form fields. 
+
+# 2024-12-11 22:20:11.073481
++/ask is the Mathematical Framework field updated after the prompt is saved?
+
+# 2024-12-11 22:22:17.126186
++can i add a stop button to the optimization and preview modal that stops the llm from it's output
+
+# 2024-12-11 22:23:53.169513
++/undo
+
+# 2024-12-11 22:24:06.262278
++can i add a stop button to the optimization and preview modal that stops the llm from it's output. watch for the error. [plugin:vite:react-swc] × Expected a semicolon
++    ╭─[/workspaces/reflective-engineer/src/components/OptimizationDialog.tsx:59:1]
++ 56 │         setResponse(prev => prev + chunk);
++ 57 │       }, controller.signal);
++ 58 │         setResponse(prev => prev + chunk);
++ 59 │       });
++    ·        ▲
++ 60 │ 
++ 61 │       // After optimization is complete, parse the response
++ 62 │       const overviewMatch = response.match(/---OVERVIEW---([\s\S]*?)(?:---CONTENT---|$)/);
++    ╰────
++  × Expression expected
++    ╭─[/workspaces/reflective-engineer/src/components/OptimizationDialog.tsx:59:1]
++ 56 │         setResponse(prev => prev + chunk);
++ 57 │       }, controller.signal);
++ 58 │         setResponse(prev => prev + chunk);
++ 59 │       });
++    ·        ─
++ 60 │ 
++ 61 │       // After optimization is complete, parse the response
++ 62 │       const overviewMatch = response.match(/---OVERVIEW---([\s\S]*?)(?:---CONTENT---|$)/);
++    ╰────
++
++
++Caused by:
++    Syntax Error
++/workspaces/reflective-engineer/src/components/OptimizationDialog.tsx:59:1
+
+# 2024-12-11 22:24:38.994208
++[plugin:vite:react-swc] × Unexpected token `div`. Expected jsx identifier
++    ╭─[/workspaces/reflective-engineer/src/components/PreviewDialog.tsx:94:1]
++ 91 │   };
++ 92 │ 
++ 93 │   return (
++ 94 │     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
++    ·      ───
++ 95 │       <div className="glass-panel w-full max-w-3xl max-h-[80vh] overflow-hidden flex flex-col m-4">
++ 96 │         {/* Header */}
++ 97 │         <div className="flex items-center justify-between p-4 border-b border-gray-700">
++    ╰────
++
++
++Caused by:
++    Syntax Error
++/workspaces/reflective-engineer/src/components/PreviewDialog.tsx:94:1
+
+# 2024-12-11 22:26:47.323679
++optmize shows blank screen
+
+# 2024-12-11 22:27:21.722742
++/undo
+
+# 2024-12-11 22:27:58.365713
++/architect try again with previous fixes and blank screen issues resolved for adding a stop button to optimize modal.
+
+# 2024-12-11 22:30:22.235393
++Stop generation button doesn't do anything.
+
+# 2024-12-11 22:31:07.842203
++/architect Stop Generation doesn't work
+
+# 2024-12-11 22:32:43.194950
++[plugin:vite:react-swc] × Expected a semicolon
++    ╭─[/workspaces/reflective-engineer/src/components/OptimizationDialog.tsx:79:1]
++ 76 │         const newContent = contentMatch[1].trim();
++ 77 │         onUpdate(newOverview, newContent);
++ 78 │       }
++ 79 │     } catch (err) {
++    ·       ─────
++ 80 │       if (err instanceof Error) {
++ 81 │         // Don't show error message if it was intentionally aborted
++ 82 │         if (err.name !== 'AbortError') {
++    ╰────
++  × Expected a semicolon
++    ╭─[/workspaces/reflective-engineer/src/components/OptimizationDialog.tsx:88:1]
++ 85 │       } else {
++ 86 │         setError("An error occurred");
++ 87 │       }
++ 88 │     } finally {
++    ·       ───────
++ 89 │       setIsOptimizing(false);
++ 90 │       setAbortController(null);
++ 91 │     }
++    ╰────
++  × Expression expected
++    ╭─[/workspaces/reflective-engineer/src/components/OptimizationDialog.tsx:91:1]
++ 88 │     } finally {
++ 89 │       setIsOptimizing(false);
++ 90 │       setAbortController(null);
++ 91 │     }
++    ·     ─
++ 92 │   };
++ 93 │ 
++ 94 │   const formatTimestamp = (date: Date) => {
++    ╰────
++
++
++Caused by:
++    Syntax Error
++/workspaces/reflective-engineer/src/components/OptimizationDialog.tsx:79:1
+
+# 2024-12-11 22:35:24.547219
++/ask what are some other prompting frameworks can i add to side navigation including simple and complex and cutting edge. along with the exisiting mathematical frameworks?
+
+# 2024-12-11 22:36:54.585160
++/architect add additional frameworks and templates md files and add to left nav
+
+# 2024-12-11 22:38:27.173656
++/undo
+
+# 2024-12-11 22:38:52.090939
++reorginize left nav with sections and make the nav items load the templates in the ui
+
+# 2024-12-11 22:39:06.819703
++reorginize left nav with sections and make the nav items load the templates in the ui. use accordians.
+
+# 2024-12-11 22:40:15.436735
++make Mathematical Frameworks left aligned 
+
+# 2024-12-11 22:40:55.110370
++create templates for Zero-Shot
++Few-Shot
++Chain of Thought
++Role Playing
++Step by Step
++Direct Instruction
++Task Decomposition and load when the nav items is selected
+
+# 2024-12-11 22:42:53.456133
++/architect why do some of the left nav frameworks not load into the ui? the mathematical ones, except Number Theory work
+
+# 2024-12-11 22:44:13.476946
++create and link all the prompt framework templates for Basic Prompting
++Advanced Prompting
++Cutting Edge
++Specialized
++Safety
++Optimization
++
+
+# 2024-12-11 22:45:44.413258
++/architect some of the templates are missing from Basic Prompting
++Zero-Shot
++Few-Shot
++Chain of Thought
++Role Playing
++Step by Step
++Direct Instruction
++Task Decomposition
+
+# 2024-12-11 22:46:56.836841
++the following don't load. Basic Prompting
++Zero-Shot
++Few-Shot
++Chain of Thought
++Role Playing
++Step by Step
++Direct Instruction
++Task Decomposition
+
+# 2024-12-11 22:48:10.483919
++use public/templates/ for all templates and recreate all templates in the this folder
+
+# 2024-12-11 22:51:31.586072
++create Recursive Refinement, Adversarial Prompting, Emergent Abilities, Self-Reflection, Chain of Verification, Retrieval Augmented
++Context Distillation
++Prompt Chaining
++Knowledge Graphs
++Semantic Control
++Temporal Reasoning
++Causal Inference, Red Teaming
++Prompt Injection
++Jailbreak Prevention
++Output Sanitization
++Bias Detection, Context Window
++Prompt Compression
++Response Shaping
++Temperature Control in public/templates/ 
+
+# 2024-12-11 22:53:06.786122
++/architect add search to templates page, pagination and list all templates by section
+
+# 2024-12-11 22:54:35.354965
++[plugin:vite:react-swc] × Unexpected token `div`. Expected jsx identifier
++     ╭─[/workspaces/reflective-engineer/src/pages/Templates.tsx:140:1]
++ 137 │   }, []);
++ 138 │ 
++ 139 │   return (
++ 140 │     <div className="min-h-screen flex flex-col">
++     ·      ───
++ 141 │       <MainNav title="Template Library" />
++ 142 │       
++ 143 │       <main className="flex-1 p-4">
++     ╰────
++
++
++Caused by:
++    Syntax Error
++/workspaces/reflective-engineer/src/pages/Templates.tsx:140:1
++Click outside, press Esc key, or fix the code to dismiss.
++You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.
