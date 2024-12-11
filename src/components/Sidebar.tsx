@@ -56,7 +56,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps) =>
       <Accordion type="multiple" className="space-y-2">
         {Object.entries(SECTIONS).map(([section, categories]) => (
           <AccordionItem key={section} value={section} className="border-none">
-            <AccordionTrigger className="text-console-cyan hover:no-underline py-2 px-3 rounded-md hover:bg-gray-800/50">
+            <AccordionTrigger className="text-console-cyan hover:no-underline py-2 px-3 rounded-md hover:bg-gray-800/50 text-left">
               {section}
             </AccordionTrigger>
             <AccordionContent>
