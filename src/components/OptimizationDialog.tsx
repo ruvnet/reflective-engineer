@@ -8,7 +8,7 @@ interface OptimizationDialogProps {
   originalOverview: string;
   originalContent: string;
   optimizationPrompt: string;
-  onOptimize: (prompt: string, onChunk: (chunk: string) => void) => Promise<void>;
+  onOptimize: (prompt: string, onChunk: (chunk: string) => void, signal?: AbortSignal) => Promise<void>;
   onUpdate: (newOverview: string, newContent: string) => void;
 }
 
@@ -29,6 +29,7 @@ const OptimizationDialog = ({
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [error, setError] = useState("");
   const [startTime, setStartTime] = useState<Date | null>(null);
+  const [abortController, setAbortController] = useState<AbortController | null>(null);
   const responseEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -48,14 +49,20 @@ const OptimizationDialog = ({
     setStartTime(new Date());
     setActiveTab('optimization');
 
+    // Create new AbortController for this optimization
+    const controller = new AbortController();
+    setAbortController(controller);
+
     try {
+      let fullResponse = '';
       await onOptimize(optimizationPrompt, (chunk) => {
-        setResponse(prev => prev + chunk);
-      });
+        fullResponse += chunk;
+        setResponse(fullResponse);
+      }, controller.signal);
 
       // After optimization is complete, parse the response
-      const overviewMatch = response.match(/---OVERVIEW---([\s\S]*?)(?:---CONTENT---|$)/);
-      const contentMatch = response.match(/---CONTENT---([\s\S]*?)$/);
+      const overviewMatch = fullResponse.match(/---OVERVIEW---([\s\S]*?)(?:---CONTENT---|$)/);
+      const contentMatch = fullResponse.match(/---CONTENT---([\s\S]*?)$/);
 
       if (overviewMatch && contentMatch) {
         const newOverview = overviewMatch[1].trim();
@@ -63,9 +70,17 @@ const OptimizationDialog = ({
         onUpdate(newOverview, newContent);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      if (err instanceof Error) {
+        // Don't show error message if it was intentionally aborted
+        if (err.name !== 'AbortError') {
+          setError(err.message);
+        }
+      } else {
+        setError("An error occurred");
+      }
     } finally {
       setIsOptimizing(false);
+      setAbortController(null);
     }
   };
 
@@ -198,12 +213,21 @@ const OptimizationDialog = ({
             </>
           ) : (
             <div className="flex gap-3">
-              <button 
-                className="console-button"
-                onClick={onClose}
-              >
-                Close Without Saving
-              </button>
+              {isOptimizing ? (
+                <button 
+                  className="console-button bg-red-900/30 hover:bg-red-900/50"
+                  onClick={() => abortController?.abort()}
+                >
+                  Stop Generation
+                </button>
+              ) : (
+                <button 
+                  className="console-button"
+                  onClick={onClose}
+                >
+                  Close Without Saving
+                </button>
+              )}
               <button
                 className="console-button flex items-center gap-2"
                 onClick={() => {
