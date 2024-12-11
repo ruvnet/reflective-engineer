@@ -171,7 +171,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <MainNav title="Reflective Engineer" />
+      <MainNav title={
+        <div className="flex items-center">
+          Reflective Engineer
+          <PromptOptimizer
+            domain={getCurrentDomain()}
+            overview={overview}
+            content={content}
+            onUpdate={handlePromptUpdate}
+          />
+        </div>
+      } />
 
       {!hasApiKey && (
         <div className="bg-yellow-900/30 border-l-4 border-yellow-500 p-4">
@@ -203,15 +213,7 @@ const Index = () => {
           ) : (
             <div className="space-y-6">
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-console-cyan">Prompt Overview</label>
-                  <PromptOptimizer
-                    domain={getCurrentDomain()}
-                    overview={overview}
-                    content={content}
-                    onUpdate={handlePromptUpdate}
-                  />
-                </div>
+                <label className="block text-console-cyan mb-2">Prompt Overview</label>
                 <p className="text-sm text-gray-400 mb-2">Define your prompt engineering goals and desired model behavior</p>
                 <textarea 
                   className="console-input w-full h-24"
