@@ -32,7 +32,11 @@ export const DOMAINS = {
     "Fine-tuning Strategies",
     "Model Scaling",
     "Training Dynamics",
-    "Inference Optimization"
+    "Inference Optimization",
+    "Model Compression",
+    "Knowledge Distillation",
+    "Multi-task Learning",
+    "Transfer Learning"
   ],
   "Prompt Engineering": [
     "Chain of Thought",
@@ -42,7 +46,13 @@ export const DOMAINS = {
     "Context Windows",
     "Temperature Control",
     "Output Formatting",
-    "Prompt Templates"
+    "Prompt Templates",
+    "Role-based Prompting",
+    "Task Decomposition",
+    "Instruction Tuning",
+    "Prompt Chaining",
+    "In-context Learning",
+    "Retrieval-Augmented Generation"
   ],
   "AI Safety": [
     "Alignment Theory",
@@ -52,7 +62,11 @@ export const DOMAINS = {
     "Reward Modeling",
     "Safety Constraints",
     "Ethical Guidelines",
-    "Risk Assessment"
+    "Risk Assessment",
+    "Adversarial Testing",
+    "Model Monitoring",
+    "Bias Mitigation",
+    "Transparency Measures"
   ],
   "Applications": [
     "Text Generation",
@@ -62,7 +76,13 @@ export const DOMAINS = {
     "Knowledge Extraction",
     "Dialog Systems",
     "Classification Tasks",
-    "Semantic Search"
+    "Semantic Search",
+    "Document Processing",
+    "Image Generation",
+    "Audio Processing",
+    "Machine Translation",
+    "Question Answering",
+    "Summarization"
   ],
   "Research": [
     "Model Architecture",
@@ -72,7 +92,11 @@ export const DOMAINS = {
     "Performance Analysis",
     "Error Analysis",
     "Bias Detection",
-    "Scaling Laws"
+    "Scaling Laws",
+    "Attention Analysis",
+    "Loss Landscapes",
+    "Optimization Methods",
+    "Dataset Curation"
   ],
   "Advanced Techniques": [
     "Constitutional AI",
@@ -82,6 +106,34 @@ export const DOMAINS = {
     "Semantic Control",
     "Output Steering",
     "Context Engineering",
-    "Prompt Chaining"
+    "Prompt Chaining",
+    "Ensemble Methods",
+    "Meta-learning",
+    "Active Learning",
+    "Reinforcement Learning"
+  ],
+  "Model Evaluation": [
+    "Accuracy Metrics",
+    "Fairness Assessment",
+    "Robustness Testing",
+    "Performance Benchmarks",
+    "Error Analysis",
+    "Bias Detection",
+    "Quality Assurance",
+    "User Feedback",
+    "A/B Testing",
+    "Regression Testing"
+  ],
+  "Deployment": [
+    "Model Serving",
+    "API Integration",
+    "Scaling Strategies",
+    "Version Control",
+    "Monitoring Systems",
+    "Error Handling",
+    "Load Balancing",
+    "Cost Optimization",
+    "Security Measures",
+    "Backup Strategies"
   ]
 } as const;
