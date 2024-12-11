@@ -51,58 +51,57 @@ export default function Documentation() {
                 </h2>
                 <div className="space-y-4 text-console-text">
                   <p>
-                    Welcome to Symbolic Scribe! This tool enables security researchers and red team professionals to systematically 
-                    test AI systems using advanced mathematical frameworks and symbolic reasoning. Here's a comprehensive guide 
-                    to get you started:
+                    Welcome to Symbolic Scribe! This tool helps you create and optimize prompts using mathematical frameworks
+                    and symbolic reasoning. Here's how to get started:
                   </p>
 
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold text-console-cyan mb-2">1. Setting Up Your Environment</h3>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">1. Initial Setup</h3>
                       <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>Navigate to the Settings page</li>
-                        <li>Configure your OpenRouter API key</li>
-                        <li>Select your preferred testing models</li>
-                        <li>Verify your configuration with a test prompt</li>
+                        <li>Configure your OpenRouter API key in Settings</li>
+                        <li>Select your default model</li>
+                        <li>Enable desired models for testing</li>
+                        <li>Test your configuration</li>
                       </ul>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-console-cyan mb-2">2. Creating Your First Test</h3>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">2. Creating Prompts</h3>
                       <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>Start from the Templates page</li>
-                        <li>Choose a framework that matches your testing goals</li>
-                        <li>Customize the template for your target system</li>
-                        <li>Define your attack vectors and boundaries</li>
+                        <li>Choose a mathematical or prompt engineering framework</li>
+                        <li>Select your domain and category</li>
+                        <li>Customize the overview and content</li>
+                        <li>Use the optimization features</li>
                       </ul>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-console-cyan mb-2">3. Running Tests</h3>
+                      <h3 className="text-lg font-semibold text-console-cyan mb-2">3. Testing and Refinement</h3>
                       <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>Use the Preview function to test individual prompts</li>
-                        <li>Document responses and unexpected behaviors</li>
-                        <li>Iterate on your approach based on results</li>
-                        <li>Save successful templates for future use</li>
+                        <li>Preview prompts with different models</li>
+                        <li>Use the optimization tool for improvements</li>
+                        <li>Save successful templates</li>
+                        <li>Export prompts in various formats</li>
                       </ul>
                     </div>
 
                     <div>
                       <h3 className="text-lg font-semibold text-console-cyan mb-2">4. Best Practices</h3>
                       <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>Always start with a clear testing objective</li>
-                        <li>Use systematic approaches to document findings</li>
-                        <li>Follow responsible disclosure guidelines</li>
-                        <li>Share defensive insights with the community</li>
+                        <li>Start with clear objectives</li>
+                        <li>Use appropriate mathematical frameworks</li>
+                        <li>Test across multiple models</li>
+                        <li>Document successful patterns</li>
                       </ul>
                     </div>
 
                     <div className="bg-gray-800/50 p-4 rounded-lg">
                       <h4 className="text-console-green mb-2">Pro Tip:</h4>
                       <p>
-                        Start with simpler frameworks and gradually increase complexity as you better understand 
-                        the system's responses. This methodical approach helps identify subtle vulnerabilities 
-                        that might be missed with more complex initial tests.
+                        Use the optimization feature to refine your prompts. It can help improve clarity,
+                        strengthen mathematical frameworks, and enhance overall effectiveness while maintaining
+                        your original intent.
                       </p>
                     </div>
                   </div>
