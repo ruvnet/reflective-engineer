@@ -59,15 +59,8 @@ const OptimizationDialog = ({
         fullResponse += chunk;
         setResponse(fullResponse);
       }, controller.signal);
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        setResponse(prev => prev + '\n\n[Generation stopped by user]');
-        return;
-      }
-      throw error;
-    }
 
-    // After optimization is complete, parse the response
+      // After optimization is complete, parse the response
       const overviewMatch = fullResponse.match(/---OVERVIEW---([\s\S]*?)(?:---CONTENT---|$)/);
       const contentMatch = fullResponse.match(/---CONTENT---([\s\S]*?)$/);
 
