@@ -37,6 +37,30 @@ export default function Documentation() {
                 <Workflow className="w-4 h-4 mr-2" />
                 Workflows
               </TabsTrigger>
+              <TabsTrigger value="basic-prompting" className="glass-panel data-[state=active]:border-console-cyan">
+                <Code className="w-4 h-4 mr-2" />
+                Basic Prompting
+              </TabsTrigger>
+              <TabsTrigger value="advanced-prompting" className="glass-panel data-[state=active]:border-console-cyan">
+                <Wand2 className="w-4 h-4 mr-2" />
+                Advanced Prompting
+              </TabsTrigger>
+              <TabsTrigger value="cutting-edge" className="glass-panel data-[state=active]:border-console-cyan">
+                <Brain className="w-4 h-4 mr-2" />
+                Cutting Edge
+              </TabsTrigger>
+              <TabsTrigger value="specialized" className="glass-panel data-[state=active]:border-console-cyan">
+                <GitBranch className="w-4 h-4 mr-2" />
+                Specialized
+              </TabsTrigger>
+              <TabsTrigger value="safety" className="glass-panel data-[state=active]:border-console-cyan">
+                <Shield className="w-4 h-4 mr-2" />
+                Safety
+              </TabsTrigger>
+              <TabsTrigger value="optimization" className="glass-panel data-[state=active]:border-console-cyan">
+                <Network className="w-4 h-4 mr-2" />
+                Optimization
+              </TabsTrigger>
               <TabsTrigger value="infosec" className="glass-panel data-[state=active]:border-console-cyan">
                 <Shield className="w-4 h-4 mr-2" />
                 InfoSec
@@ -802,6 +826,95 @@ Let V = {v | v is a validation function}
                       <li>Update security controls as needed</li>
                     </ol>
                   </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="basic-prompting" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <Code className="w-5 h-5" />
+                  Basic Prompting Techniques
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-console-text">
+                    Learn fundamental prompt engineering techniques and best practices. For more advanced techniques, see the <button 
+                      onClick={() => document.querySelector('[value="advanced-prompting"]')?.click()} 
+                      className="text-console-cyan hover:underline"
+                    >
+                      Advanced Prompting
+                    </button> section.
+                  </p>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="advanced-prompting" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <Wand2 className="w-5 h-5" />
+                  Advanced Prompting Techniques
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-console-text">
+                    Master advanced prompt engineering patterns and methodologies.
+                  </p>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="cutting-edge" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <Brain className="w-5 h-5" />
+                  Cutting Edge Techniques
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-console-text">
+                    Explore the latest developments in prompt engineering research.
+                  </p>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="specialized" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <GitBranch className="w-5 h-5" />
+                  Specialized Applications
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-console-text">
+                    Domain-specific prompt engineering techniques and applications.
+                  </p>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="safety" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <Shield className="w-5 h-5" />
+                  Safety Considerations
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-console-text">
+                    Best practices for safe and responsible prompt engineering.
+                  </p>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="optimization" className="space-y-6">
+              <div className="glass-panel p-6">
+                <h2 className="text-xl font-code text-console-cyan mb-4 flex items-center gap-2">
+                  <Network className="w-5 h-5" />
+                  Prompt Optimization
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-console-text">
+                    Techniques for optimizing and refining prompts for better results.
+                  </p>
                 </div>
               </div>
             </TabsContent>
