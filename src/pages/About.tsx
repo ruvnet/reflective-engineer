@@ -11,22 +11,22 @@ export default function About() {
         <section className="glass-panel p-6 animate-matrix-fade">
           <div className="flex items-center gap-2 mb-6">
             <Info className="w-6 h-6 text-console-cyan" />
-            <h1 className="text-2xl font-code text-console-cyan">About Symbolic Scribe</h1>
+            <h1 className="text-2xl font-code text-console-cyan">About Reflective Engineer</h1>
           </div>
 
           <div className="space-y-6">
             <div className="prose prose-invert max-w-none">
               <p className="text-console-text text-lg">
-                Symbolic Scribe is an advanced prompt engineering platform created by rUv (github.com/ruvnet) 
-                that leverages mathematical frameworks and symbolic reasoning to develop and test AI prompts. 
-                The platform enables systematic exploration of prompt engineering techniques while providing 
-                tools to analyze and optimize prompts across different language models.
+                Reflective Engineer is an advanced prompt engineering platform created by rUv (github.com/ruvnet) 
+                that specializes in developing sophisticated AI prompts through mathematical frameworks and symbolic reasoning. 
+                The platform enables systematic exploration and optimization of prompts, focusing on advanced techniques 
+                like chain-of-thought reasoning and recursive refinement.
               </p>
               <p className="text-console-text text-lg mt-4">
-                Through integration with the Open Router API, Symbolic Scribe provides access to dozens of 
-                different LLMs, allowing users to test and refine prompts across multiple models. The application 
-                emphasizes security by encrypting API keys and storing them locally, with full source code 
-                transparency available on GitHub.
+                Through integration with the Open Router API, Reflective Engineer provides access to dozens of 
+                leading language models, enabling comprehensive prompt testing and refinement. The platform 
+                emphasizes advanced prompt engineering techniques while maintaining robust security through 
+                local API key encryption and full source code transparency.
               </p>
             </div>
 
@@ -81,7 +81,7 @@ export default function About() {
             <div className="glass-panel p-6 mt-8 bg-background/95">
               <h2 className="text-xl font-code text-console-cyan mb-4">Creator</h2>
               <p className="text-console-text dark:text-gray-300">
-                Symbolic Scribe was created by <a href="https://github.com/ruvnet" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">rUv</a>, 
+                Reflective Engineer was created by <a href="https://github.com/ruvnet" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">rUv</a>, 
                 a developer focused on advancing AI capabilities through innovative tools and frameworks.
               </p>
             </div>
