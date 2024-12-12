@@ -32,36 +32,3 @@ overview: Create a chain that interacts with external APIs and processes their r
 2. Rate Limiting
 3. Error Handling
 4. Response Validation
-
-# Example Implementation
-```typescript
-import { OpenAI } from "langchain/llms/openai";
-import { APIChain } from "langchain/chains";
-import { APIRequestTemplate } from "langchain/prompts";
-
-// Define API configuration
-const apiConfig = {
-  baseURL: "https://api.example.com",
-  headers: {
-    Authorization: "Bearer ${API_KEY}",
-    "Content-Type": "application/json"
-  }
-};
-
-// Create API chain
-const chain = new APIChain({
-  llm: new OpenAI({ temperature: 0 }),
-  apiConfig,
-  requestTemplate: new APIRequestTemplate({
-    method: "POST",
-    path: "/endpoint",
-    template: JSON.stringify({
-      query: "{input}"
-    }),
-    inputVariables: ["input"]
-  }),
-  responseParser: (response) => {
-    return JSON.parse(response).data;
-  }
-});
-```

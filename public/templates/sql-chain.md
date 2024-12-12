@@ -32,31 +32,3 @@ overview: Build a chain that generates and executes SQL queries based on natural
 2. Input Sanitization
 3. Error Handling
 4. Result Formatting
-
-# Example Implementation
-```typescript
-import { OpenAI } from "langchain/llms/openai";
-import { SQLDatabaseChain } from "langchain/chains";
-import { DataSource } from "typeorm";
-
-// Setup database connection
-const dataSource = new DataSource({
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "user",
-  password: "password",
-  database: "mydb"
-});
-
-// Create SQL chain
-const chain = new SQLDatabaseChain({
-  llm: new OpenAI({ temperature: 0 }),
-  database: dataSource,
-  prompt: new PromptTemplate({
-    template: "Generate SQL for: {input}\nSchema: {schema}",
-    inputVariables: ["input", "schema"]
-  }),
-  verbose: true
-});
-```

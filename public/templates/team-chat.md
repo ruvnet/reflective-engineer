@@ -32,31 +32,3 @@ overview: Implement a collaborative chat system for multiple agents to communica
 2. Role Definition
 3. Message Validation
 4. Context Management
-
-# Example Implementation
-```typescript
-import { OpenAI } from "langchain/llms/openai";
-import { TeamChat, ChatAgent } from "langchain/agents";
-import { ConversationMemory } from "langchain/memory";
-
-// Define team members
-const agents = {
-  coordinator: new ChatAgent({ role: "coordinator" }),
-  researcher: new ChatAgent({ role: "researcher" }),
-  writer: new ChatAgent({ role: "writer" })
-};
-
-// Initialize team chat
-const teamChat = new TeamChat({
-  agents,
-  memory: new ConversationMemory(),
-  llm: new OpenAI({ temperature: 0.7 }),
-  maxTurns: 10
-});
-
-// Start conversation
-await teamChat.startDiscussion({
-  topic: "Research project",
-  objective: "Create comprehensive report"
-});
-```
