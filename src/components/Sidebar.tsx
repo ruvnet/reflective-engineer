@@ -64,7 +64,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps): J
   return (
     <div className={`glass-panel p-4 md:w-64 animate-matrix-fade ${sidebarOpen ? 'block' : 'hidden md:block'}`}>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-console-cyan font-code">Framework Library</h2>
+        
         <button 
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="md:hidden console-button p-1"
@@ -74,7 +74,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps): J
       </div>
 
       <div className="mb-8">
-        <h3 className="text-console-cyan font-code mb-4">Framework Library</h3>
+        <h3 className="text-console-cyan font-code mb-4">Prompt Library</h3>
         <Accordion type="multiple" className="space-y-2">
         {Object.entries(SECTIONS).map(([section, categories]) => (
           <AccordionItem key={section} value={section} className="border-none">
