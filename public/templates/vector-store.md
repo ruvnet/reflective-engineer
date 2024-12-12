@@ -33,30 +33,3 @@ overview: Implement a vector store for efficient similarity search and retrieval
 3. Result Ranking
 4. Cache Management
 
-# Example Implementation
-```typescript
-import { OpenAI } from "langchain/llms/openai";
-import { VectorStore } from "langchain/vectorstores";
-import { OpenAIEmbeddings } from "langchain/embeddings";
-
-// Initialize embeddings
-const embeddings = new OpenAIEmbeddings();
-
-// Create vector store
-const store = await VectorStore.fromTexts(
-  ["document1", "document2"],
-  [{ id: 1 }, { id: 2 }],
-  embeddings,
-  {
-    indexName: "documents",
-    metadataKeys: ["id"]
-  }
-);
-
-// Search functionality
-const searchResults = await store.similaritySearch(
-  "query text",
-  5, // k nearest neighbors
-  { filter: { id: { $gt: 0 } } }
-);
-```
