@@ -930,3 +930,9 @@
 +Vector Memory
 +Entity Memory
 +Time-Weighted M
+
+# 2024-12-12 16:16:46.175330
++/architect create a new UI for Agent Library section display based on langchain.js and open router. keep Prompt library section UI as since it works perfectly. use sub modules for new ui code.
+
+# 2024-12-12 16:35:29.058551
++/undo
