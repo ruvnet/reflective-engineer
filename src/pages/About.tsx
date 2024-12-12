@@ -17,15 +17,16 @@ export default function About() {
           <div className="space-y-6">
             <div className="prose prose-invert max-w-none">
               <p className="text-console-text text-lg">
-                Symbolic Scribe is a cutting-edge security testing platform designed to identify and mitigate vulnerabilities in AI systems. 
-                By leveraging advanced mathematical frameworks and symbolic reasoning, it provides a comprehensive toolkit for testing 
-                prompt injection vulnerabilities and other exploits across various language models.
+                Symbolic Scribe is an advanced prompt engineering platform created by rUv (github.com/ruvnet) 
+                that leverages mathematical frameworks and symbolic reasoning to develop and test AI prompts. 
+                The platform enables systematic exploration of prompt engineering techniques while providing 
+                tools to analyze and optimize prompts across different language models.
               </p>
               <p className="text-console-text text-lg mt-4">
-                With integration to the Open Router API, Symbolic Scribe enables testing across dozens of different LLMs, 
-                providing a robust platform for evaluating prompt security under diverse conditions. The application 
-                prioritizes security by encrypting API keys and storing them locally, with full source code transparency 
-                for additional trust and verification.
+                Through integration with the Open Router API, Symbolic Scribe provides access to dozens of 
+                different LLMs, allowing users to test and refine prompts across multiple models. The application 
+                emphasizes security by encrypting API keys and storing them locally, with full source code 
+                transparency available on GitHub.
               </p>
             </div>
 
@@ -75,6 +76,14 @@ export default function About() {
                   </p>
                 </CardContent>
               </Card>
+            </div>
+
+            <div className="glass-panel p-6 mt-8 bg-background/95">
+              <h2 className="text-xl font-code text-console-cyan mb-4">Creator</h2>
+              <p className="text-console-text dark:text-gray-300">
+                Symbolic Scribe was created by <a href="https://github.com/ruvnet" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">rUv</a>, 
+                a developer focused on advancing AI capabilities through innovative tools and frameworks.
+              </p>
             </div>
 
             <div className="glass-panel p-6 mt-8 bg-background/95">
