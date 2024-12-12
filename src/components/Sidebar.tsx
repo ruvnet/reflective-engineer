@@ -8,6 +8,26 @@ interface SidebarProps {
   loadTemplate: (category: keyof typeof CATEGORIES) => void;
 }
 
+// Define agent categories
+const AGENT_SECTIONS = {
+  "Conversational Agents": [
+    "Zero-Shot Agent", "ReAct Agent", "Plan-and-Execute", "OpenAI Functions",
+    "Structured Chat", "XML Agent"
+  ],
+  "Tool-Using Agents": [
+    "Sequential Chain", "Router Chain", "API Chain",
+    "SQL Chain", "Vector Store", "Retrieval QA"
+  ],
+  "Multi-Agent Systems": [
+    "Supervisor Agent", "Autonomous Agents", "Agent Executor",
+    "Team Chat", "Agent Network", "Hierarchical Agents"
+  ],
+  "Memory Systems": [
+    "Buffer Memory", "Summary Memory", "Conversation Memory",
+    "Vector Memory", "Entity Memory", "Time-Weighted Memory"
+  ]
+} as const;
+
 // Group categories by their section
 const SECTIONS = {
   "Mathematical Frameworks": [
@@ -52,8 +72,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps) =>
           {sidebarOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
         </button>
       </div>
-      
-      <Accordion type="multiple" className="space-y-2">
+
+      <div className="mb-8">
+        <h3 className="text-console-cyan font-code mb-4">Framework Library</h3>
+        <Accordion type="multiple" className="space-y-2">
         {Object.entries(SECTIONS).map(([section, categories]) => (
           <AccordionItem key={section} value={section} className="border-none">
             <AccordionTrigger className="text-console-cyan hover:no-underline py-2 px-3 rounded-md hover:bg-gray-800/50 text-left">
@@ -77,6 +99,34 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps) =>
           </AccordionItem>
         ))}
       </Accordion>
+
+      <div className="mt-8">
+        <h3 className="text-console-cyan font-code mb-4">Agent Library</h3>
+        <Accordion type="multiple" className="space-y-2">
+          {Object.entries(AGENT_SECTIONS).map(([section, categories]) => (
+            <AccordionItem key={section} value={section} className="border-none">
+              <AccordionTrigger className="text-console-cyan hover:no-underline py-2 px-3 rounded-md hover:bg-gray-800/50 text-left">
+                {section}
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="space-y-1 ml-2">
+                  {categories.map((category) => (
+                    <li key={category}>
+                      <button 
+                        className="w-full text-left console-button flex items-center gap-2 py-1 px-2"
+                        onClick={() => loadTemplate(category as keyof typeof CATEGORIES)}
+                      >
+                        <BookTemplate className="w-4 h-4" />
+                        {category}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
     </aside>
   );
 };
