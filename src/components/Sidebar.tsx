@@ -126,6 +126,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps): J
             </AccordionItem>
           ))}
         </Accordion>
+        </div>
       </div>
     </div>
   );
