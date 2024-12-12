@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { BookTemplate } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { CATEGORIES } from "./constants/domains";
+import AgentTemplate from "./AgentTemplate";
 import AgentTemplate from "./AgentTemplate";
 
 interface AgentLibraryProps {
@@ -422,6 +423,11 @@ export default function AgentLibrary({ loadTemplate }: AgentLibraryProps) {
     description: string;
     systemPrompt: string;
   } | null>(null);
+  const [selectedAgent, setSelectedAgent] = useState<{
+    name: string;
+    description: string;
+    systemPrompt: string;
+  } | null>(null);
 
   return (
     <div className="space-y-8">
@@ -445,6 +451,7 @@ export default function AgentLibrary({ loadTemplate }: AgentLibraryProps) {
                 <Card 
                   key={agent.name}
                   className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50 cursor-pointer"
+                  onClick={() => setSelectedAgent(agent)}
                   onClick={() => setSelectedAgent(agent)}
                 >
                   <CardHeader>
