@@ -12,7 +12,9 @@ export const useTemplate = (templateId: string) => {
   return useQuery({
     queryKey: ["template", templateId],
     queryFn: async () => {
-      const response = await fetch(`/public/templates/${templateId}.md`);
+      if (!templateId) return null;
+      
+      const response = await fetch(`/templates/${templateId}.md`);
       if (!response.ok) {
         throw new Error(`Failed to fetch template: ${response.statusText}`);
       }
@@ -25,10 +27,17 @@ export const useTemplate = (templateId: string) => {
           .map(line => line.split(': ').map(part => part.trim()))
       );
 
+      console.log("Loaded template:", {
+        templateId,
+        metadata,
+        content: contentParts.join('---\n')
+      });
+
       return {
         ...metadata,
         content: contentParts.join('---\n')
       } as Template;
-    }
+    },
+    enabled: Boolean(templateId)
   });
 };

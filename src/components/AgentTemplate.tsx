@@ -3,6 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 import { createLangGraphService } from "../services/langGraphService";
 import { loadSettings } from "../services/settingsService";
 import { useToast } from "@/hooks/use-toast";
@@ -14,11 +17,34 @@ interface AgentTemplateProps {
   onClose: () => void;
 }
 
+interface AgentConfig {
+  temperature: number;
+  maxTokens: number;
+  topP: number;
+  frequencyPenalty: number;
+  presencePenalty: number;
+}
+
 export default function AgentTemplate({ name, description, systemPrompt, onClose }: AgentTemplateProps) {
+  console.log("Rendering AgentTemplate with:", { name, description });
+
   const [userInput, setUserInput] = useState("");
   const [output, setOutput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isTestModalOpen, setIsTestModalOpen] = useState(false);
+  const [agentConfig, setAgentConfig] = useState<AgentConfig>({
+    temperature: 0.7,
+    maxTokens: 1000,
+    topP: 1,
+    frequencyPenalty: 0,
+    presencePenalty: 0
+  });
   const { toast } = useToast();
+
+  const handleConfigChange = (key: keyof AgentConfig, value: number) => {
+    console.log("Config change:", key, value);
+    setAgentConfig(prev => ({ ...prev, [key]: value }));
+  };
 
   const handleSubmit = async () => {
     const settings = loadSettings();
@@ -36,8 +62,16 @@ export default function AgentTemplate({ name, description, systemPrompt, onClose
       // Create a new LangGraph service instance
       const langGraph = createLangGraphService(settings.apiKey, settings.defaultModel || "openai/gpt-3.5-turbo");
 
-      // Combine system prompt with user input
-      const fullPrompt = `${systemPrompt}\n\nUser Input: ${userInput}`;
+      // Combine system prompt with user input and configuration
+      const fullPrompt = `
+Configuration:
+${JSON.stringify(agentConfig, null, 2)}
+
+System Prompt:
+${systemPrompt}
+
+User Input:
+${userInput}`;
       
       // Process the prompt
       const result = await langGraph.processPrompt(fullPrompt);
@@ -54,6 +88,8 @@ export default function AgentTemplate({ name, description, systemPrompt, onClose
       setIsLoading(false);
     }
   };
+
+  console.log("Current state:", { isTestModalOpen, agentConfig });
 
   return (
     <div className="glass-panel p-6 animate-matrix-fade">
@@ -72,6 +108,64 @@ export default function AgentTemplate({ name, description, systemPrompt, onClose
             </div>
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label className="text-console-cyan">Temperature</Label>
+              <div className="flex items-center gap-4">
+                <Slider
+                  value={[agentConfig.temperature]}
+                  onValueChange={([value]) => handleConfigChange('temperature', value)}
+                  max={1}
+                  step={0.1}
+                  className="flex-1"
+                />
+                <span className="text-console-text w-12 text-right">{agentConfig.temperature}</span>
+              </div>
+            </div>
+
+            <div>
+              <Label className="text-console-cyan">Max Tokens</Label>
+              <div className="flex items-center gap-4">
+                <Slider
+                  value={[agentConfig.maxTokens]}
+                  onValueChange={([value]) => handleConfigChange('maxTokens', value)}
+                  max={4000}
+                  step={100}
+                  className="flex-1"
+                />
+                <span className="text-console-text w-12 text-right">{agentConfig.maxTokens}</span>
+              </div>
+            </div>
+
+            <div>
+              <Label className="text-console-cyan">Top P</Label>
+              <div className="flex items-center gap-4">
+                <Slider
+                  value={[agentConfig.topP]}
+                  onValueChange={([value]) => handleConfigChange('topP', value)}
+                  max={1}
+                  step={0.1}
+                  className="flex-1"
+                />
+                <span className="text-console-text w-12 text-right">{agentConfig.topP}</span>
+              </div>
+            </div>
+
+            <div>
+              <Label className="text-console-cyan">Frequency Penalty</Label>
+              <div className="flex items-center gap-4">
+                <Slider
+                  value={[agentConfig.frequencyPenalty]}
+                  onValueChange={([value]) => handleConfigChange('frequencyPenalty', value)}
+                  max={2}
+                  step={0.1}
+                  className="flex-1"
+                />
+                <span className="text-console-text w-12 text-right">{agentConfig.frequencyPenalty}</span>
+              </div>
+            </div>
+          </div>
+
           <div>
             <label className="block text-console-cyan mb-2">User Input</label>
             <Textarea
@@ -83,6 +177,16 @@ export default function AgentTemplate({ name, description, systemPrompt, onClose
           </div>
 
           <div className="flex gap-4">
+            <Button
+              className="console-button flex-1"
+              onClick={() => {
+                console.log("Opening test modal");
+                setIsTestModalOpen(true);
+              }}
+              disabled={isLoading || !userInput.trim()}
+            >
+              Test Agent
+            </Button>
             <Button
               className="console-button flex-1"
               onClick={handleSubmit}
@@ -111,106 +215,55 @@ export default function AgentTemplate({ name, description, systemPrompt, onClose
           )}
         </CardContent>
       </Card>
-    </div>
-  );
-}
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { useSettings } from "../hooks/useSettings";
-import { LangChainService } from "../services/langchainService";
 
-interface AgentTemplateProps {
-  name: string;
-  description: string;
-  systemPrompt: string;
-  onClose: () => void;
-}
-
-export default function AgentTemplate({ 
-  name, 
-  description, 
-  systemPrompt,
-  onClose 
-}: AgentTemplateProps) {
-  const [input, setInput] = useState("");
-  const [response, setResponse] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { settings } = useSettings();
-
-  const handleSubmit = async () => {
-    try {
-      setIsLoading(true);
-      const service = new LangChainService(
-        settings.apiKey,
-        settings.defaultModel
-      );
-      
-      const result = await service.runAgent(
-        input,
-        `${name}-${Date.now()}`
-      );
-      
-      const lastMessage = result.messages[result.messages.length - 1];
-      setResponse(lastMessage.content);
-    } catch (error) {
-      console.error("Agent error:", error);
-      setResponse("Error running agent. Please check console for details.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-        <p className="text-sm text-gray-500">{description}</p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="bg-gray-100 p-4 rounded">
-            <h3 className="font-medium mb-2">System Prompt</h3>
-            <pre className="whitespace-pre-wrap text-sm">{systemPrompt}</pre>
-          </div>
-          
-          <div className="space-y-2">
-            <Input
-              placeholder="Enter your message..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  handleSubmit();
-                }
-              }}
-            />
-            <Button 
-              onClick={handleSubmit}
-              disabled={isLoading || !input.trim()}
-              className="w-full"
-            >
-              {isLoading ? "Running..." : "Run Agent"}
-            </Button>
-          </div>
-
-          {response && (
-            <div className="bg-gray-100 p-4 rounded">
-              <h3 className="font-medium mb-2">Response</h3>
-              <div className="whitespace-pre-wrap">{response}</div>
+      <Dialog open={isTestModalOpen} onOpenChange={setIsTestModalOpen}>
+        <DialogContent className="glass-panel border-console-cyan">
+          <DialogHeader>
+            <DialogTitle className="text-console-cyan">Test {name}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label className="text-console-cyan">Agent Configuration</Label>
+              <div className="bg-gray-800/50 p-4 rounded-md border border-console-cyan/20">
+                <pre className="text-sm font-mono text-console-text">
+                  {JSON.stringify(agentConfig, null, 2)}
+                </pre>
+              </div>
             </div>
-          )}
-
-          <Button 
-            variant="outline" 
-            onClick={onClose}
-            className="w-full"
-          >
-            Back to Templates
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+            <div>
+              <Label className="text-console-cyan">System Prompt</Label>
+              <div className="bg-gray-800/50 p-4 rounded-md border border-console-cyan/20">
+                <pre className="text-sm font-mono text-console-text whitespace-pre-wrap">
+                  {systemPrompt}
+                </pre>
+              </div>
+            </div>
+            <div>
+              <Label className="text-console-cyan">User Input</Label>
+              <div className="bg-gray-800/50 p-4 rounded-md border border-console-cyan/20">
+                <pre className="text-sm font-mono text-console-text">
+                  {userInput}
+                </pre>
+              </div>
+            </div>
+            <div className="flex justify-end gap-4">
+              <Button
+                className="console-button"
+                onClick={() => setIsTestModalOpen(false)}
+              >
+                Close
+              </Button>
+              <Button
+                className="console-button"
+                onClick={handleSubmit}
+                disabled={isLoading}
+              >
+                {isLoading ? "Testing..." : "Run Test"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
