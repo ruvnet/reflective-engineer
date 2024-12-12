@@ -32,26 +32,3 @@ overview: Create a memory system that weights information based on temporal rele
 2. Weight Calculation
 3. Time Resolution
 4. Update Frequency
-
-# Example Implementation
-```typescript
-import { OpenAI } from "langchain/llms/openai";
-import { TimeWeightedMemory } from "langchain/memory";
-import { exponentialDecay } from "langchain/utils";
-
-// Initialize time-weighted memory
-const memory = new TimeWeightedMemory({
-  decayRate: 0.01,
-  k: 10,
-  returnMessages: true,
-  weightFunction: exponentialDecay,
-  maxTokens: 2000
-});
-
-// Add memory with timestamp
-await memory.saveContext(
-  { input: "User message" },
-  { output: "AI response" },
-  Date.now()
-);
-```

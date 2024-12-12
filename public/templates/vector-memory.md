@@ -32,25 +32,3 @@ overview: Create a vector-based memory system for semantic search and retrieval.
 2. Index Optimization
 3. Search Efficiency
 4. Result Relevance
-
-# Example Implementation
-```typescript
-import { OpenAI } from "langchain/llms/openai";
-import { VectorStoreMemory } from "langchain/memory";
-import { OpenAIEmbeddings } from "langchain/embeddings";
-
-// Initialize vector memory
-const vectorStore = new VectorStoreMemory({
-  embeddings: new OpenAIEmbeddings(),
-  indexName: "conversation_store",
-  textKey: "text",
-  metadataKey: "metadata",
-  k: 4
-});
-
-// Add to memory
-await vectorStore.addMemory(
-  "User message",
-  { timestamp: Date.now() }
-);
-```
