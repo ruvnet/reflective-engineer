@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { BookTemplate } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import MainNav from "../components/MainNav";
+import AgentTemplate from "../components/AgentTemplate";
 import { useTemplate } from "../services/templateService";
-import AgentTemplate from "./AgentTemplate";
-
-interface AgentLibraryProps {
-  loadTemplate: (category: string) => void;
-}
 
 // Define agent categories with descriptions
 const AGENT_SECTIONS = {
@@ -56,7 +53,7 @@ const AGENT_SECTIONS = {
   }
 };
 
-export default function AgentLibrary({ loadTemplate }: AgentLibraryProps) {
+export default function Agents() {
   const [selectedAgent, setSelectedAgent] = useState<{
     id: string;
     name: string;
@@ -68,61 +65,62 @@ export default function AgentLibrary({ loadTemplate }: AgentLibraryProps) {
     selectedAgent ? selectedAgent.id : ''
   );
 
-  console.log("AgentLibrary state:", { selectedAgent, template, isLoading });
-
   return (
-    <div className="space-y-8">
-      {selectedAgent && template ? (
-        <AgentTemplate
-          name={selectedAgent.name}
-          description={selectedAgent.description}
-          systemPrompt={template.content}
-          onClose={() => setSelectedAgent(null)}
-        />
-      ) : (
-        Object.entries(AGENT_SECTIONS).map(([section, { description, agents }]) => (
-          <div key={section} className="glass-panel p-6 animate-matrix-fade">
-            <div className="mb-6">
-              <h2 className="text-2xl font-code text-console-cyan mb-2">{section}</h2>
-              <p className="text-gray-400">{description}</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {agents.map((agent) => (
-                <Card 
-                  key={agent.id}
-                  className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50 cursor-pointer"
-                  onClick={() => {
-                    console.log("Selecting agent:", agent);
-                    setSelectedAgent(agent);
-                  }}
-                >
-                  <CardHeader>
-                    <div className="flex items-center gap-2">
-                      <BookTemplate className="w-5 h-5 text-console-cyan" />
-                      <CardTitle className="text-console-cyan text-lg">{agent.name}</CardTitle>
-                    </div>
-                    <CardDescription className="text-console-green">
-                      {agent.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <button 
-                      className="console-button w-full mt-2"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        loadTemplate(agent.id);
-                      }}
+    <div className="min-h-screen flex flex-col">
+      <MainNav title="Agent Library" />
+      
+      <main className="flex-1 p-4">
+        {selectedAgent && template ? (
+          <AgentTemplate
+            name={selectedAgent.name}
+            description={selectedAgent.description}
+            systemPrompt={template.content}
+            onClose={() => setSelectedAgent(null)}
+          />
+        ) : (
+          <div className="space-y-8">
+            {Object.entries(AGENT_SECTIONS).map(([section, { description, agents }]) => (
+              <section key={section} className="glass-panel p-6 animate-matrix-fade">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-code text-console-cyan mb-2">{section}</h2>
+                  <p className="text-gray-400">{description}</p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {agents.map((agent) => (
+                    <Card 
+                      key={agent.id}
+                      className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50 cursor-pointer"
+                      onClick={() => setSelectedAgent(agent)}
                     >
-                      Configure Agent
-                    </button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                      <CardHeader>
+                        <div className="flex items-center gap-2">
+                          <BookTemplate className="w-5 h-5 text-console-cyan" />
+                          <CardTitle className="text-console-cyan text-lg">{agent.name}</CardTitle>
+                        </div>
+                        <CardDescription className="text-console-green">
+                          {agent.description}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <button 
+                          className="console-button w-full mt-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedAgent(agent);
+                          }}
+                        >
+                          Configure Agent
+                        </button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
-        ))
-      )}
+        )}
+      </main>
     </div>
   );
 }

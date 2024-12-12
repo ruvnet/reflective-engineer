@@ -936,3 +936,27 @@
 
 # 2024-12-12 16:35:29.058551
 +/undo
+
+# 2024-12-12 22:26:36.817744
++/ask why doesn't the agent templates load in the UI?
+
+# 2024-12-12 22:26:57.827623
++fix
+
+# 2024-12-12 22:28:36.456357
++/ask how can i update the ui to use langchain.js for any agent based templates and leave the prompt templates as is? https://langchain-ai.github.io/langgraphjs/
+
+# 2024-12-12 22:29:30.597662
++implement langchain.js and ui adjustments
+
+# 2024-12-12 22:41:45.100077
++remove # Example Implementation from templates
+
+# 2024-12-12 22:42:19.987350
++/architect remove # Example Implementation from all templates
+
+# 2024-12-12 22:43:44.480474
++ remove # Example Implementation from all templates
+
+# 2024-12-12 22:45:30.727472
++/architect improve agent templates.
