@@ -60,7 +60,7 @@ const SECTIONS = {
   ]
 } as const;
 
-const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, loadTemplate }) => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps): JSX.Element => {
   return (
     <div className={`glass-panel p-4 md:w-64 animate-matrix-fade ${sidebarOpen ? 'block' : 'hidden md:block'}`}>
       <div className="flex items-center justify-between mb-6">
