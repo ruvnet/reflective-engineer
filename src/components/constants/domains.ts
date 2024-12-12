@@ -58,7 +58,33 @@ export const CATEGORIES = {
   "Context Window": "context-window",
   "Prompt Compression": "prompt-compression",
   "Response Shaping": "response-shaping",
-  "Temperature Control": "temperature-control"
+  "Temperature Control": "temperature-control",
+
+  // Agent Frameworks
+  "Zero-Shot Agent": "zero-shot-agent",
+  "ReAct Agent": "react-agent",
+  "Plan-and-Execute": "plan-and-execute",
+  "OpenAI Functions": "openai-functions",
+  "Structured Chat": "structured-chat",
+  "XML Agent": "xml-agent",
+  "Sequential Chain": "sequential-chain",
+  "Router Chain": "router-chain",
+  "API Chain": "api-chain",
+  "SQL Chain": "sql-chain",
+  "Vector Store": "vector-store",
+  "Retrieval QA": "retrieval-qa",
+  "Supervisor Agent": "supervisor-agent",
+  "Autonomous Agents": "autonomous-agents",
+  "Agent Executor": "agent-executor",
+  "Team Chat": "team-chat",
+  "Agent Network": "agent-network",
+  "Hierarchical Agents": "hierarchical-agents",
+  "Buffer Memory": "buffer-memory",
+  "Summary Memory": "summary-memory",
+  "Conversation Memory": "conversation-memory",
+  "Vector Memory": "vector-memory",
+  "Entity Memory": "entity-memory",
+  "Time-Weighted Memory": "time-weighted-memory"
 } as const;
 
 export const OUTPUT_TYPES = {
