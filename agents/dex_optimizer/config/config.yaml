@@ -1,0 +1,21 @@
+# Configuration for DEX Swap Optimizer
+
+total_eth: 10  # Total ETH to swap
+
+rules:
+  - description: "Prioritize Uniswap if liquidity > 100 ETH"
+    condition: "Uniswap.liquidity > 100"
+    action: "Use Uniswap route"
+  - description: "Fallback to SushiSwap if Uniswap liquidity insufficient"
+    condition: "Uniswap.liquidity <= 100"
+    action: "Use SushiSwap route"
+
+optimization:
+  slippage_tolerance: 0.005  # 0.5% slippage tolerance
+  max_gas_fees: 0.01  # Maximum gas fees in ETH
+
+decision_tree:
+  scenarios: 1000  # Number of scenarios to simulate
+
+validation:
+  backtest_period: "2023-01-01 to 2023-12-31"
