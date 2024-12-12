@@ -60,9 +60,9 @@ const SECTIONS = {
   ]
 } as const;
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps) => {
+const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, loadTemplate }) => {
   return (
-    <aside className={`glass-panel p-4 md:w-64 animate-matrix-fade ${sidebarOpen ? 'block' : 'hidden md:block'}`}>
+    <div className={`glass-panel p-4 md:w-64 animate-matrix-fade ${sidebarOpen ? 'block' : 'hidden md:block'}`}>
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-console-cyan font-code">Framework Library</h2>
         <button 
@@ -127,7 +127,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps) =>
           ))}
         </Accordion>
       </div>
-    </aside>
+    </div>
   );
 };
 
