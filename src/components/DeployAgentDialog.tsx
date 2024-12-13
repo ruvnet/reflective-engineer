@@ -223,9 +223,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
       config
     });
 
-    console.log("Agent deployed, closing dialog");
-    
-    // Close the dialog after successful deployment
+    // Close the dialog after deployment
     if (onClose) {
       onClose();
     }
