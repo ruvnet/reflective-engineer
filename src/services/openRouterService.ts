@@ -7,8 +7,9 @@ export function createOpenRouterClient(apiKey: string) {
     modelName: "openai/gpt-3.5-turbo",
     configuration: {
       baseHeaders: {
-        "HTTP-Referer": window.location.href,
-        "X-Title": "Reflective Engineer"
+        "HTTP-Referer": "*",
+        "X-Title": "Reflective Engineer",
+        "Origin": "*"
       }
     }
   });
