@@ -77,6 +77,8 @@ export function AgentManagementDialog({
     if (!input.trim() || !agent.executor) return;
     
     setIsExecuting(true);
+    setResponse(""); // Clear previous response
+    
     try {
       // Update the agent's configuration before execution
       agent.config.systemPrompt = systemPrompt;
@@ -86,10 +88,82 @@ export function AgentManagementDialog({
         temperature,
         maxTokens
       };
-      const result = await agent.executor.call({ 
-        input: input // Only pass the input
+
+      const settings = loadSettings();
+      if (!settings?.apiKey) {
+        throw new Error("API key not configured");
+      }
+
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${settings.apiKey}`,
+          "HTTP-Referer": window.location.origin,
+          "X-Title": "Reflective Engineer",
+        },
+        body: JSON.stringify({
+          model: selectedModel,
+          messages: [
+            {
+              role: "system",
+              content: systemPrompt
+            },
+            {
+              role: "user",
+              content: input
+            }
+          ],
+          temperature,
+          max_tokens: maxTokens,
+          stream: true
+        })
       });
-      setResponse(result?.output || "No response");
+
+      if (!response.ok) {
+        throw new Error("Failed to get response from OpenRouter");
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error("No response reader available");
+      
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        // Decode and parse the chunk
+        const chunk = new TextDecoder().decode(value);
+        const lines = chunk.split('\n').filter(line => line.trim());
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const content = line.slice(5);
+            if (content.trim() === '[DONE]') {
+              continue;
+            }
+            try {
+              const data = JSON.parse(content);
+              if (data.choices?.[0]?.delta?.content) {
+                setResponse(prev => {
+                  const newResponse = prev + data.choices[0].delta.content;
+                  // Use requestAnimationFrame to ensure DOM update before scrolling
+                  requestAnimationFrame(() => {
+                    if (responseRef.current?.scrollTo) {
+                      responseRef.current.scrollTo({ 
+                        top: responseRef.current.scrollHeight,
+                        behavior: 'smooth'
+                      });
+                    }
+                  });
+                  return newResponse;
+                });
+              }
+            } catch (error) {
+              console.warn('Failed to parse streaming response chunk:', content);
+            }
+          }
+        }
+      }
     } catch (error) {
       setResponse(`Error: ${error instanceof Error ? error.message : "Failed to execute agent"}`);
     } finally {
