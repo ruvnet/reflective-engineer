@@ -3,7 +3,6 @@ import { loadSettings } from "./settingsService";
 import { AgentExecutor, initializeAgentExecutorWithOptions } from "langchain/agents";
 import { Tool } from "@langchain/core/tools";
 import { BufferMemory } from "langchain/memory";
-import { VectorStoreMemory } from "@langchain/community/memory/vector_store";
 
 export interface Agent {
   id: string;
@@ -44,14 +43,8 @@ class AgentService {
   }
 
   private async createMemory(type: string) {
-    switch (type) {
-      case "buffer":
-        return new BufferMemory();
-      case "vector":
-        return new VectorStoreMemory();
-      default:
-        return new BufferMemory();
-    }
+    // For now, always use buffer memory until we properly set up vector store
+    return new BufferMemory();
   }
 
   async deployAgent(agent: Omit<Agent, 'id' | 'status'>): Promise<Agent> {
