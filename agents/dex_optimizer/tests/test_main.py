@@ -12,9 +12,10 @@ class TestMain(unittest.TestCase):
         config = load_config('config/config.yaml')
         required_fields = [
             'total_eth',
-            'max_slippage',
-            'gas_limit',
-            'dex_list'
+            'rules',
+            'optimization',
+            'decision_tree',
+            'validation'
         ]
         for field in required_fields:
             self.assertIn(field, config, f"Missing required config field: {field}")
@@ -23,11 +24,14 @@ class TestMain(unittest.TestCase):
         """Test that config values are within expected ranges"""
         config = load_config('config/config.yaml')
         self.assertGreater(config['total_eth'], 0, "total_eth should be positive")
-        self.assertGreaterEqual(config['max_slippage'], 0, "max_slippage should be non-negative")
-        self.assertLess(config['max_slippage'], 100, "max_slippage should be less than 100%")
-        self.assertGreater(config['gas_limit'], 0, "gas_limit should be positive")
-        self.assertIsInstance(config['dex_list'], list, "dex_list should be a list")
-        self.assertGreater(len(config['dex_list']), 0, "dex_list should not be empty")
+        self.assertIsInstance(config['rules'], list, "rules should be a list")
+        self.assertGreater(len(config['rules']), 0, "rules should not be empty")
+        
+        # Check optimization settings
+        opt = config['optimization']
+        self.assertGreaterEqual(opt['slippage_tolerance'], 0, "slippage_tolerance should be non-negative")
+        self.assertLess(opt['slippage_tolerance'], 1, "slippage_tolerance should be less than 1")
+        self.assertGreater(opt['max_gas_fees'], 0, "max_gas_fees should be positive")
 
     def test_invalid_config_path(self):
         """Test handling of invalid config file path"""
