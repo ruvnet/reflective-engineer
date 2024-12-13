@@ -789,11 +789,11 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                               messages: [
                                 {
                                   role: "system",
-                                  content: "You are an expert at optimizing prompts for clarity, effectiveness, and efficiency. Consider the following aspects in your optimization:\n\n1. Model Configuration:\n   - Temperature settings (0-1 scale)\n   - Max token allocation\n   - Response length management\n   - Model-specific capabilities\n2. Chain Configuration: Processing flow and execution patterns\n3. Memory System: Context retention and information management\n4. Available Tools: Integration and usage patterns\n\nAnalyze the given prompt and provide only the optimized version, without any explanatory text or preamble."
+                                  content: formData.systemPrompt
                                 },
                                 {
                                   role: "user",
-                                  content: `Please optimize this system prompt for the ${formData.domain} domain:\n\n${formData.systemPrompt}`
+                                  content: "Please optimize this system prompt to be more effective and concise while maintaining its core functionality."
                                 }
                               ],
                               temperature: formData.temperature,
@@ -874,10 +874,16 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                   </div>
                   <Textarea
                     value={formData.systemPrompt}
-                    onChange={(e) => setFormData({ ...formData, systemPrompt: e.target.value })}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      setFormData(prev => ({
+                        ...prev,
+                        systemPrompt: newValue
+                      }));
+                    }}
                     placeholder="Enter system prompt..."
-                    rows={4}
-                    className={errors.systemPrompt ? "border-red-500" : ""}
+                    rows={8}
+                    className={`font-mono text-sm ${errors.systemPrompt ? "border-red-500" : ""}`}
                   />
                   {errors.systemPrompt && (
                     <p className="text-sm text-red-500">{errors.systemPrompt}</p>
