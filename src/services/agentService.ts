@@ -1,4 +1,4 @@
-import { OpenAI } from "@langchain/openai";
+import { ChatOpenAI } from "@langchain/openai";
 import { loadSettings } from "./settingsService";
 import { AgentExecutor, initializeAgentExecutorWithOptions } from "langchain/agents";
 import { Tool } from "@langchain/core/tools";
@@ -60,7 +60,7 @@ class AgentService {
     try {
       const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8080';
       
-      const llm = new OpenAI({
+      const llm = new ChatOpenAI({
         modelName: agent.config.model.name,
         temperature: agent.config.model.temperature,
         maxTokens: agent.config.model.maxTokens,
