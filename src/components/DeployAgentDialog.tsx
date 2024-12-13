@@ -187,14 +187,6 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
       newErrors.description = "Description is required";
     }
 
-    if (!formData.domainCategory) {
-      newErrors.domainCategory = "Domain category is required";
-    }
-
-    if (!formData.domain) {
-      newErrors.domain = "Domain is required";
-    }
-
     if (formData.tools.length === 0) {
       newErrors.tools = "Select at least one tool";
     }
@@ -458,7 +450,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                 <div className="grid gap-4 p-2">
                   <div>
                     <div className="flex items-center">
-                      <label className="text-sm font-medium">Domain Category</label>
+                      <label className="text-sm font-medium">Domain Category (Optional)</label>
                       <InfoTooltip content="Select the primary category for your agent's domain" />
                     </div>
                     <Select
@@ -488,7 +480,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                   {formData.domainCategory && (
                     <div>
                       <div className="flex items-center">
-                        <label className="text-sm font-medium">Domain</label>
+                        <label className="text-sm font-medium">Domain (Optional)</label>
                         <InfoTooltip content="Select the specific domain for your agent" />
                       </div>
                       <Select
@@ -498,8 +490,12 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                             ...prev,
                             domain: value,
                             systemPrompt: prev.systemPrompt ? 
-                              `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.\n\n${prev.systemPrompt}` :
-                              `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.`
+                              (value ? 
+                                `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.\n\n${prev.systemPrompt}` :
+                                prev.systemPrompt) :
+                              (value ? 
+                                `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.` :
+                                `You are a helpful AI assistant that uses available tools to solve problems step by step.`)
                           }));
                         }}
                       >
