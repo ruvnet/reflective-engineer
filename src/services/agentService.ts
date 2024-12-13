@@ -28,6 +28,8 @@ export interface AgentConfig {
   verbose: boolean;
 }
 
+type SupportedAgentType = "chat-zero-shot-react-description";
+
 class AgentService {
   private agents: Map<string, Agent> = new Map();
   private tools: Map<string, Tool> = new Map();
@@ -56,17 +58,20 @@ class AgentService {
     const id = Date.now().toString();
     
     try {
+      const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8080';
+      
       const llm = new OpenAI({
-        baseURL: "https://openrouter.ai/api/v1",
         modelName: agent.config.model.name,
         temperature: agent.config.model.temperature,
         maxTokens: agent.config.model.maxTokens,
         streaming: agent.config.streaming,
+        openAIApiKey: settings.apiKey,
         configuration: {
-          baseHeaders: {
-            "HTTP-Referer": "*",
+          baseURL: "https://openrouter.ai/api/v1",
+          defaultHeaders: {
+            "HTTP-Referer": origin,
             "X-Title": "Reflective Engineer",
-            "Origin": "*"
+            "Origin": origin
           }
         }
       });
@@ -77,14 +82,17 @@ class AgentService {
 
       const memory = await this.createMemory(agent.config.memory);
 
+      // Map the agent type to a supported type
+      const agentType = this.mapAgentType(agent.config.type);
+
       const executor = await initializeAgentExecutorWithOptions(
         selectedTools,
         llm,
         {
-          agentType: agent.config.type,
+          agentType,
           memory,
           verbose: agent.config.verbose,
-          systemMessage: agent.config.systemPrompt,
+          prefix: agent.config.systemPrompt // Using prefix instead of systemMessage
         }
       );
 
@@ -101,6 +109,11 @@ class AgentService {
       console.error('Failed to deploy agent:', error);
       throw new Error('Failed to deploy agent');
     }
+  }
+
+  private mapAgentType(_type: string): SupportedAgentType {
+    // For now, always return chat-zero-shot-react-description as it's the most compatible
+    return "chat-zero-shot-react-description";
   }
 
   async startAgent(id: string): Promise<void> {
