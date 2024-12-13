@@ -362,7 +362,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                       <SelectContent>
                         {Object.keys(AGENT_CATEGORIES["Agent Library"]).map((category) => (
                           <SelectItem key={category} value={category}>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col text-left">
                               <span>{category}</span>
                               <span className="text-xs text-muted-foreground">
                                 {AGENT_DESCRIPTIONS[category]}
