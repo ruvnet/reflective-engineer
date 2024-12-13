@@ -111,13 +111,21 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
         
         for (const line of lines) {
           if (line.startsWith('data: ')) {
-            const data = JSON.parse(line.slice(5));
-            if (data.choices?.[0]?.delta?.content) {
-              setResponse(prev => prev + data.choices[0].delta.content);
-              // Scroll to bottom
-              if (responseRef.current) {
-                responseRef.current.scrollTop = responseRef.current.scrollHeight;
+            const content = line.slice(5);
+            if (content.trim() === '[DONE]') {
+              continue;
+            }
+            try {
+              const data = JSON.parse(content);
+              if (data.choices?.[0]?.delta?.content) {
+                setResponse(prev => prev + data.choices[0].delta.content);
+                // Scroll to bottom
+                if (responseRef.current) {
+                  responseRef.current.scrollTop = responseRef.current.scrollHeight;
+                }
               }
+            } catch (error) {
+              console.warn('Failed to parse streaming response chunk:', content);
             }
           }
         }
