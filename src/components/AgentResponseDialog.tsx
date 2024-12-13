@@ -48,15 +48,79 @@ export function AgentResponseDialog({ agent, isOpen, onClose }: AgentResponseDia
         
         <div className="flex flex-col gap-4 flex-1">
           <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium mb-2 block">System Prompt</label>
-              <Textarea
-                value={systemPrompt}
-                onChange={(e) => setSystemPrompt(e.target.value)}
-                placeholder="System prompt..."
-                className="min-h-[100px]"
-                disabled={agent.status !== "running"}
-              />
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium mb-2 block">Model Settings</label>
+                <div className="grid gap-4 p-4 border rounded-md">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-sm">Model Selection</label>
+                      {isLoadingModels ? (
+                        <Badge variant="outline">Loading...</Badge>
+                      ) : (
+                        <Badge variant="outline">
+                          {currentModel?.name || "Select a model"}
+                        </Badge>
+                      )}
+                    </div>
+                    <select
+                      className="w-full p-2 rounded-md border bg-background"
+                      value={selectedModel}
+                      onChange={(e) => setSelectedModel(e.target.value)}
+                      disabled={isLoadingModels || agent.status === "running"}
+                    >
+                      {isLoadingModels ? (
+                        <option>Loading models...</option>
+                      ) : (
+                        models.map((model) => (
+                          <option key={model.id} value={model.id}>
+                            {model.name}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                    {currentModel && (
+                      <div className="mt-2 text-sm text-muted-foreground">
+                        <p>Context: {currentModel.context_length.toLocaleString()} tokens</p>
+                        <p>Pricing: ${currentModel.pricing.prompt}/1K prompt, ${currentModel.pricing.completion}/1K completion</p>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <label className="text-sm mb-2 block">Temperature: {temperature}</label>
+                    <Slider
+                      min={0}
+                      max={1}
+                      step={0.1}
+                      value={[temperature]}
+                      onValueChange={([value]) => setTemperature(value)}
+                      disabled={agent.status === "running"}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm mb-2 block">Max Tokens: {maxTokens}</label>
+                    <Slider
+                      min={256}
+                      max={currentModel?.context_length || 4096}
+                      step={256}
+                      value={[maxTokens]}
+                      onValueChange={([value]) => setMaxTokens(value)}
+                      disabled={agent.status === "running"}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">System Prompt</label>
+                <Textarea
+                  value={systemPrompt}
+                  onChange={(e) => setSystemPrompt(e.target.value)}
+                  placeholder="System prompt..."
+                  className="min-h-[100px]"
+                  disabled={agent.status === "running"}
+                />
+              </div>
             </div>
             <div>
               <label className="text-sm font-medium mb-2 block">Input</label>
