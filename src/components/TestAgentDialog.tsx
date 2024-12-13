@@ -159,8 +159,11 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
                   const newResponse = prev + data.choices[0].delta.content;
                   // Use requestAnimationFrame to ensure DOM update before scrolling
                   requestAnimationFrame(() => {
-                    if (responseRef.current) {
-                      responseRef.current.scrollTop = responseRef.current.scrollHeight;
+                    if (responseRef.current?.scrollTo) {
+                      responseRef.current.scrollTo({ 
+                        top: responseRef.current.scrollHeight,
+                        behavior: 'smooth'
+                      });
                     }
                   });
                   return newResponse;
@@ -297,9 +300,11 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
                   {isStreaming ? "Streaming..." : "Ready"}
                 </Badge>
               </div>
-              <ScrollArea className="h-[200px] border rounded-md p-4">
+              <ScrollArea 
+                className="h-[200px] border rounded-md p-4"
+                ref={responseRef}
+              >
                 <pre 
-                  ref={responseRef}
                   className="whitespace-pre-wrap font-mono text-sm"
                 >
                   {response || "Response will appear here..."}
