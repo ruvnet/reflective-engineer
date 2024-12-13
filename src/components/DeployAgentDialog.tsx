@@ -719,7 +719,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
             </AccordionItem>
 
 
-            <AccordionItem value="system">
+            <AccordionItem value="system" defaultValue="system">
               <AccordionTrigger>
                 <div className="flex items-center">
                   <Bot className="mr-2 h-4 w-4" />
