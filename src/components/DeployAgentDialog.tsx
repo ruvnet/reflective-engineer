@@ -355,7 +355,9 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                         setFormData(prev => ({
                           ...prev,
                           agentCategory: value,
-                          agentType: "" // Reset template when category changes
+                          agentType: "", // Reset template when category changes
+                          domain: prev.domain, // Preserve domain
+                          domainCategory: prev.domainCategory // Preserve domain category
                         }));
                       }}
                     >
@@ -475,7 +477,9 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                           setFormData(prev => ({
                             ...prev,
                             domain: value,
-                            systemPrompt: `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.\n\n${prev.systemPrompt}`
+                            systemPrompt: prev.systemPrompt ? 
+                              `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.\n\n${prev.systemPrompt}` :
+                              `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.`
                           }));
                         }}
                       >
