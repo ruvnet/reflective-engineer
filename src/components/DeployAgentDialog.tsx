@@ -191,7 +191,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Validating form...");
     if (!validateForm()) {
       console.log("Form validation failed", errors);
@@ -217,10 +217,26 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
 
     console.log("Deploying agent with config:", config);
 
-    onDeploy({
+    await onDeploy({
       name: formData.name,
       description: formData.description,
       config
+    });
+
+    // Reset form data
+    setFormData({
+      name: "",
+      description: "",
+      agentType: "react",
+      model: "gpt-4",
+      temperature: 0.7,
+      maxTokens: 2048,
+      memory: "buffer",
+      tools: ["calculator", "search"],
+      chainType: "llm",
+      systemPrompt: "You are a helpful AI assistant that uses available tools to solve problems step by step.",
+      streaming: true,
+      verbose: false
     });
 
     // Close the dialog after deployment
