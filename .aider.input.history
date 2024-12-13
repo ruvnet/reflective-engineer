@@ -1296,3 +1296,127 @@
 +clickingdeploy creaes aan error and blank page. chunk-TRNWTHID.js?v=c730222a:9129 Uncaught ReferenceError: AgentManagementDialog is not defined
 +    at Agents (Agents.tsx:185:10)
 +
+
+# 2024-12-13 21:23:42.301522
++hide the previous modal when clicking deploy agent
+
+# 2024-12-13 21:24:19.515173
++add delete icon and option to agent cards
+
+# 2024-12-13 21:25:18.333131
++the deploy agent modal doesn't disappear after clicking deploy agent and closing the next modal.
+
+# 2024-12-13 21:26:46.387047
++the settings from the initial deployment modal aren't used in the secondary modal that starts the agent. the input is empoty and should incude the previous prompt.
+
+# 2024-12-13 21:27:51.570066
++/architect the settings from the initial deployment modal aren't used in the secondary modal that starts the agent. the input is empoty and should incude the previous prompt.
+
+# 2024-12-13 21:31:33.076195
++chunk-TRNWTHID.js?v=c730222a:9129 Uncaught ReferenceError: useEffect is not defined
++    at AgentManagementDialog (AgentManagementDialog.tsx:35:3)
++
+
+# 2024-12-13 21:32:42.579766
++execute error. Error: input values have 2 keys, you must specify an input key or pass only 1 key as input
+
+# 2024-12-13 21:34:03.981455
++can i add the icon to open the run/execute modal from the agent cards?
+
+# 2024-12-13 21:35:23.438973
++add the Model Selection similar to test modal to the new agent UI. 
+
+# 2024-12-13 21:36:37.387794
++/architect why does the Deploy New Agent modal not include the list of models like the test ui?
+
+# 2024-12-13 21:38:10.728197
++can i use the default model from the settings table for the model configuration in the Deploy New Agent. 
+
+# 2024-12-13 21:38:52.064567
++align the text for the default model left. not centered.
+
+# 2024-12-13 21:39:25.001769
++the model looks centered for Qwen: QwQ 32B Preview
++Context: 32,768 tokens
++Pricing: $0.00000015/1K prompt, $0.0000006/1K completion
+
+# 2024-12-13 21:41:10.054040
++/architect can i replace the agent prompt options "ReAct
++OpenAI Functions
++Structured
++Plan and Execute" with the agent prompt options from the home page as a drop down with a series of different prompt types based on the home page selection, and the system prompt updates based on the selection?
+
+# 2024-12-13 21:42:55.044214
++it's mising Prompt Library
++Mathematical Frameworks
++Basic Prompting
++Advanced Prompting
++Cutting Edge
++Specialized
++Safety
++Optimization
++Agent Library
++Conversational Agents
++Tool-Using Agents
++Multi-Agent Systems
++Memory Systems
+
+# 2024-12-13 21:44:48.214776
++[plugin:vite:react-swc] × Unexpected token `Dialog`. Expected jsx identifier
++     ╭─[/workspaces/reflective-engineer/src/components/DeployAgentDialog.tsx:272:1]
++ 269 │   );
++ 270 │ 
++ 271 │   return (
++ 272 │     <Dialog
++     ·      ──────
++ 273 │       open={trigger ? undefined : true}
++ 274 │       onOpenChange={(open) => {
++ 275 │         if (!open && onClose) {
++     ╰────
++
++
++Caused by:
++    Syntax Error
++/workspaces/reflective-engineer/src/components/DeployAgentDialog.tsx:272:1
+
+# 2024-12-13 21:46:47.291793
++/undo
+
+# 2024-12-13 21:47:00.125734
++it's mising Prompt Library
++Mathematical Frameworks
++Basic Prompting
++Advanced Prompting
++Cutting Edge
++Specialized
++Safety
++Optimization
++Agent Library
++Conversational Agents
++Tool-Using Agents
++Multi-Agent Systems
++Memory Systems, watch for previous errors
+
+# 2024-12-13 21:47:40.039086
++/add public/templates/
+
+# 2024-12-13 21:48:03.619559
++it's mising Prompt Library
++Mathematical Frameworks
++Basic Prompting
++Advanced Prompting
++Cutting Edge
++Specialized
++Safety
++Optimization
++Agent Library
++Conversational Agents
++Tool-Using Agents
++Multi-Agent Systems
++Memory Systems, watch for previous errors using prompt templates from public/templates/
+
+# 2024-12-13 21:49:02.606351
++i don't see the prompt templates in the deploy modal
+
+# 2024-12-13 21:50:05.579894
++/add a prompt drop down with all problem templates organized by types
