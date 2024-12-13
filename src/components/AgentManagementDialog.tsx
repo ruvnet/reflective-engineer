@@ -47,7 +47,7 @@ export function AgentManagementDialog({
         input,
         systemPrompt: systemPrompt // Pass the current system prompt
       });
-      setResponse(result.output);
+      setResponse(result?.output || "No response");
     } catch (error) {
       setResponse(`Error: ${error instanceof Error ? error.message : "Failed to execute agent"}`);
     } finally {
