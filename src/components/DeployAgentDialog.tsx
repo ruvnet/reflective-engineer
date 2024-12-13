@@ -796,8 +796,9 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                                   content: `Please optimize this system prompt for the ${formData.domain} domain:\n\n${formData.systemPrompt}`
                                 }
                               ],
-                              temperature: 0.7,
-                              stream: true
+                              temperature: formData.temperature,
+                              max_tokens: formData.maxTokens,
+                              stream: formData.streaming
                             })
                           });
 
