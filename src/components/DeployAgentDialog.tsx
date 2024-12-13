@@ -230,7 +230,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
   );
 
   return (
-    <Dialog 
+    <Dialog
       open={trigger ? undefined : true}
       onOpenChange={(open) => {
         if (!open && onClose) {
@@ -246,9 +246,15 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+      <DialogContent 
+        className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto"
+        aria-describedby="dialog-description"
+      >
         <DialogHeader>
           <DialogTitle>Deploy New Agent</DialogTitle>
+          <p id="dialog-description" className="text-sm text-muted-foreground">
+            Configure and deploy a new AI agent with custom capabilities
+          </p>
         </DialogHeader>
         
         <div className="grid gap-4 py-4">
@@ -541,6 +547,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
           <Button 
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               handleSubmit();
             }} 
             className="mt-4"
