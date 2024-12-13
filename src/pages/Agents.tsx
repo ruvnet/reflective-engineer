@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Terminal, Plus, Play, Square, Zap } from "lucide-react";
+import { Terminal, Plus, Play, Square, Zap, Trash2 } from "lucide-react";
 import MainNav from "../components/MainNav";
 import { DeployAgentDialog } from "../components/DeployAgentDialog";
 import { TestAgentDialog } from "../components/TestAgentDialog";
@@ -36,6 +36,23 @@ export default function Agents() {
       toast({
         title: "Error",
         description: "Failed to deploy agent",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleDelete = async (agent: Agent) => {
+    try {
+      agentService.deleteAgent(agent.id);
+      setAgents(agentService.getAgents());
+      toast({
+        title: "Success",
+        description: "Agent deleted successfully"
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete agent",
         variant: "destructive"
       });
     }
@@ -151,19 +168,28 @@ export default function Agents() {
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span>{agent.name}</span>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => {
-                        setManagedAgent(agent);
-                      }}
-                    >
-                      {agent.status === "stopped" ? (
-                        <Play className="h-4 w-4" />
-                      ) : (
-                        <Square className="h-4 w-4" />
-                      )}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => handleDelete(agent)}
+                      >
+                        <Trash2 className="h-4 w-4 text-red-500" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => {
+                          setManagedAgent(agent);
+                        }}
+                      >
+                        {agent.status === "stopped" ? (
+                          <Play className="h-4 w-4" />
+                        ) : (
+                          <Square className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>

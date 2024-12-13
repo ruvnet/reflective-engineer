@@ -142,6 +142,18 @@ class AgentService {
     return this.agents.get(id);
   }
 
+  deleteAgent(id: string): void {
+    const agent = this.agents.get(id);
+    if (!agent) throw new Error('Agent not found');
+    
+    // Stop the agent if it's running
+    if (agent.status === "running") {
+      this.stopAgent(id);
+    }
+    
+    this.agents.delete(id);
+  }
+
   async executeAgent(id: string, input: string): Promise<string> {
     const agent = this.agents.get(id);
     if (!agent || !agent.executor) throw new Error('Agent not found or not initialized');
