@@ -238,7 +238,7 @@ const Settings = () => {
                     Default Model
                   </label>
                   <select
-                    className="console-input w-full"
+                    className="console-input w-full text-left"
                     value={selectedModel}
                     onChange={(e) => setSelectedModel(e.target.value)}
                   >
