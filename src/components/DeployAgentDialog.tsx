@@ -476,7 +476,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                           setFormData(prev => ({
                             ...prev,
                             domain: value,
-                            systemPrompt: `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.`
+                            systemPrompt: `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.\n\n${prev.systemPrompt}`
                           }));
                         }}
                       >
@@ -770,7 +770,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                                 },
                                 {
                                   role: "user",
-                                  content: `Please optimize this system prompt:\n\n${formData.systemPrompt}`
+                                  content: `Please optimize this system prompt for the ${formData.domain} domain:\n\n${formData.systemPrompt}`
                                 }
                               ],
                               temperature: 0.7,
