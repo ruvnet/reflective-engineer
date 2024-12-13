@@ -15,7 +15,7 @@ export default function Agents() {
   const { toast } = useToast();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [testingAgent, setTestingAgent] = useState<Agent | null>(null);
-  const [responseAgent, setResponseAgent] = useState<Agent | null>(null);
+  const [managedAgent, setManagedAgent] = useState<Agent | null>(null);
   const { data: template } = useTemplate("system-dynamics");
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function Agents() {
     try {
       const newAgent = await agentService.deployAgent(agent);
       setAgents(agentService.getAgents());
+      setManagedAgent(newAgent);
       toast({
         title: "Success",
         description: "Agent deployed successfully"
@@ -152,14 +153,8 @@ export default function Agents() {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={async () => {
-                        if (agent.status === "stopped") {
-                          await handleStartStop(agent);
-                          setResponseAgent(agent);
-                        } else {
-                          await handleStartStop(agent);
-                          setResponseAgent(null);
-                        }
+                      onClick={() => {
+                        setManagedAgent(agent);
                       }}
                     >
                       {agent.status === "stopped" ? (
@@ -186,11 +181,12 @@ export default function Agents() {
         )}
       </div>
 
-      {responseAgent && (
-        <AgentResponseDialog
-          agent={responseAgent}
+      {managedAgent && (
+        <AgentManagementDialog
+          agent={managedAgent}
           isOpen={true}
-          onClose={() => setResponseAgent(null)}
+          onClose={() => setManagedAgent(null)}
+          onStartStop={handleStartStop}
         />
       )}
 
