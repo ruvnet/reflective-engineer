@@ -598,7 +598,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                       <SelectContent>
                         {CHAIN_TYPES.map((chain) => (
                           <SelectItem key={chain.value} value={chain.value}>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col text-left">
                               <span>{chain.label}</span>
                               <span className="text-xs text-muted-foreground">{chain.description}</span>
                             </div>
