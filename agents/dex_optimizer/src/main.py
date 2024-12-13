@@ -1,10 +1,10 @@
 import argparse
 import yaml
-from market_data import MarketDataModule
-from logical_reasoning import LogicalReasoningEngine
-from optimization import OptimizationLayer
-from decision_tree import DecisionTreeAnalysis
-from validation import ValidationFramework
+from .market_data import MarketDataModule
+from .logical_reasoning import LogicalReasoningEngine
+from .optimization import OptimizationLayer
+from .decision_tree import DecisionTreeAnalysis
+from .validation import ValidationFramework
 
 def load_config(config_path):
     with open(config_path, 'r') as file:

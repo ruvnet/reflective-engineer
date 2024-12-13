@@ -6,6 +6,7 @@ const navItems = [
   { name: "Home", path: "/" },
   { name: "Templates", path: "/templates" },
   { name: "Documentation", path: "/docs" },
+  { name: "Agent", path: "/simple-agent" },
   { name: "Settings", path: "/settings" },
   { name: "About", path: "/about" }
 ];

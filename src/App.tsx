@@ -8,6 +8,7 @@ import Settings from "./pages/Settings";
 import Templates from "./pages/Templates";
 import Documentation from "./pages/Documentation";
 import About from "./pages/About";
+import SimpleAgent from "./pages/SimpleAgent";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/templates" element={<Templates />} />
           <Route path="/docs" element={<Documentation />} />
           <Route path="/about" element={<About />} />
+          <Route path="/simple-agent" element={<SimpleAgent />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
