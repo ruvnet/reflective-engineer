@@ -63,7 +63,7 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
     }
   }, [isOpen, toast]);
 
-  // Get current model details
+  // Get current model details 
   const currentModel = useMemo(() => {
     return models.find(m => m.id === selectedModel);
   }, [models, selectedModel]);
