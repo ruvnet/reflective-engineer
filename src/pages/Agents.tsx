@@ -179,6 +179,13 @@ export default function Agents() {
                       <Button
                         variant="outline"
                         size="icon"
+                        onClick={() => setTestingAgent(agent)}
+                      >
+                        <Zap className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
                         onClick={() => {
                           setManagedAgent(agent);
                         }}
