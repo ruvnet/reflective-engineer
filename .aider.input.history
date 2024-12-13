@@ -1430,3 +1430,277 @@
 # 2024-12-13 21:53:11.617280
 +make text for template catagories left aligned. Tool-Using Agents
 +Integration with external tools and APIs for enhanced capabilities
+
+# 2024-12-13 21:54:24.576684
++add optimization button next to System Prompt that optimizes the prompt similar to the home page in the prompt form field area using the default selected llm 
+
+# 2024-12-13 21:56:08.961761
++after clicking Optimize,change the button to say executing and when complete return the origianal state. 
+
+# 2024-12-13 21:56:52.122991
++last update caused. chunk-TRNWTHID.js?v=c730222a:9129 Uncaught ReferenceError: Loader2 is not defined
++    at DeployAgentDialog (DeployAgentDialog.tsx:808:28)
+
+# 2024-12-13 21:58:33.860740
++can i clear the previous prompt and stream the new prompt into the prompt field as it is received?
+
+# 2024-12-13 21:59:24.650313
++can i stop the executing button text as soon as the response is complete?
+
+# 2024-12-13 22:00:05.355231
++for the prompt template categories, can i include the math prompts?
+
+# 2024-12-13 22:01:03.685344
++i don't see the math prompt options in the drop down for Prompt Templates
++Template Category
+
+# 2024-12-13 22:01:40.742301
++Uncaught TypeError: Cannot read properties of undefined (reading 'map')
++    at DeployAgentDialog (DeployAgentDialog.tsx:413:112)
++
+
+# 2024-12-13 22:03:42.030980
++the drop down for Domain Configuration seem to clear the prompt templates, it should be prepended to the system prompt, as well as used part of the optimzation process.
+
+# 2024-12-13 22:04:37.169069
++selecting Domain Category seems to clear the prompt template
+
+# 2024-12-13 22:05:50.742908
++selecting the prompt Template after selecting the domains, clears the domains, it needs to work in either direction.
+
+# 2024-12-13 22:06:40.387498
++/architect selecting the prompt Template after selecting the domains, clears the domains, it needs to work in either direction.
+
+# 2024-12-13 22:08:22.494143
++make sure the optimization prompt doesn't include "I've reviewed the provided prompt and have made some adjustments to enhance its clarity, effectiveness, and efficiency. Here's the optimized version:" as part of it's guidance
+
+# 2024-12-13 22:10:09.138584
++does the prompt optimizer include guidance for the the selection made in the following areas? Model Configuration
++
++Chain Configuration
++
++Memory System
++
++Available Tools
++
++
+
+# 2024-12-13 22:10:53.634656
++/architect does the prompt optimizer include guidance for the the selection made in the following areas? Model Configuration 
+
+# 2024-12-13 22:11:43.241750
++the text in the following area should be left aligned. Chain Type
++
++LLM Chain
++Simple prompt-completion chain. Best for straightforward tasks.
+
+# 2024-12-13 22:12:21.751512
++make System Prompt expanded by default.
+
+# 2024-12-13 22:12:51.183947
++/architect make System Prompt expanded by default.
+
+# 2024-12-13 22:13:39.295105
++System Prompt accordian isn't expanded
+
+# 2024-12-13 22:15:53.505556
++clicking model configuration give me the error. <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
++    at @radix-ui_react-select.js?v=c730222a:868:13
++    at renderWithHooks (chunk-TRNWTHID.js?v=c730222a:11548:26)
++    at updateForwardRef (chunk-TRNWTHID.js?v=c730222a:14325:28)
++    at beginWork (chunk-TRNWTHID.js?v=c730222a:15946:22)
++    at HTMLUnknownElement.callCallback2 (chunk-TRNWTHID.js?v=c730222a:3674:22)
++    at Object.invokeGuardedCallbackDev (chunk-TRNWTHID.js?v=c730222a:3699:24)
++    at invokeGuardedCallback (chunk-TRNWTHID.js?v=c730222a:3733:39)
++    at beginWork$1 (chunk-TRNWTHID.js?v=c730222a:19765:15)
++    at performUnitOfWork (chunk-TRNWTHID.js?v=c730222a:19198:20)
++    at workLoopSync (chunk-TRNWTHID.js?v=c730222a:19137:13)
++(anonymous) @ @radix-ui_react-select.js?v=c730222a:868
++renderWithHooks @ chunk-TRNWTHID.js?v=c730222a:11548
++updateForwardRef @ chunk-TRNWTHID.js?v=c730222a:14325
++beginWork @ chunk-TRNWTHID.js?v=c730222a:15946
++callCallback2 @ chunk-TRNWTHID.js?v=c730222a:3674
++invokeGuardedCallbackDev @ chunk-TRNWTHID.js?v=c730222a:3699
++invokeGuardedCallback @ chunk-TRNWTHID.js?v=c730222a:3733
++beginWork$1 @ chunk-TRNWTHID.js?v=c730222a:19765
++performUnitOfWork @ chunk-TRNWTHID.js?v=c730222a:19198
++workLoopSync @ chunk-TRNWTHID.js?v=c730222a:19137
++renderRootSync @ chunk-TRNWTHID.js?v=c730222a:19116
++recoverFromConcurrentError @ chunk-TRNWTHID.js?v=c730222a:18736
++performSyncWorkOnRoot @ chunk-TRNWTHID.js?v=c730222a:18879
++flushSyncCallbacks @ chunk-TRNWTHID.js?v=c730222a:9119
++(anonymous) @ chunk-TRNWTHID.js?v=c730222a:18627
++chunk-TRNWTHID.js?v=c730222a:14032 The above error occurred in the <SelectItem> component:
++
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-select.js?v=c730222a:841:7
++    at _c8 (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/src/components/ui/select.tsx:157:60)
++    at div
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-732RBRG4.js?v=c730222a:41:13
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-S7F25QQB.js?v=c730222a:52:11
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-S7F25QQB.js?v=c730222a:33:11
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-6V7MEE3A.js?v=c730222a:98:15
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-select.js?v=c730222a:752:13
++    at div
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-S7F25QQB.js?v=c730222a:52:11
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-S7F25QQB.js?v=c730222a:33:11
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-6V7MEE3A.js?v=c730222a:98:15
++    at Provider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-ZE3V6U6Z.js?v=c730222a:38:15)
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-select.js?v=c730222a:296:58
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-S7F25QQB.js?v=c730222a:52:11
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-S7F25QQB.js?v=c730222a:33:11
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-732RBRG4.js?v=c730222a:41:13
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-OBXR3CTT.js?v=c730222a:258:22
++    at SelectPortal
++    at _c4 (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/src/components/ui/select.tsx:96:63)
++    at Provider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-ZE3V6U6Z.js?v=c730222a:38:15)
++    at Provider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-6V7MEE3A.js?v=c730222a:28:15)
++    at CollectionProvider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-6V7MEE3A.js?v=c730222a:89:13)
++    at Provider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-ZE3V6U6Z.js?v=c730222a:38:15)
++    at Provider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-KVHQPINV.js?v=c730222a:1905:15)
++    at Popper (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-KVHQPINV.js?v=c730222a:1962:11)
++    at Select (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-select.js?v=c730222a:84:5)
++    at div
++    at div
++    at div
++    at div
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-732RBRG4.js?v=c730222a:41:13
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-accordion.js?v=c730222a:117:11
++    at Presence (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-HPPZTILP.js?v=c730222a:24:11)
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-accordion.js?v=c730222a:110:13
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-accordion.js?v=c730222a:441:13
++    at _c4 (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/src/components/ui/accordion.tsx:59:66)
++    at div
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-732RBRG4.js?v=c730222a:41:13
++    at Provider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-ZE3V6U6Z.js?v=c730222a:38:15)
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-accordion.js?v=c730222a:51:7
++    at Provider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-ZE3V6U6Z.js?v=c730222a:38:15)
++    at https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/
++logCapturedError @ chunk-TRNWTHID.js?v=c730222a:14032
++update.callback @ chunk-TRNWTHID.js?v=c730222a:14052
++callCallback @ chunk-TRNWTHID.js?v=c730222a:11248
++commitUpdateQueue @ chunk-TRNWTHID.js?v=c730222a:11265
++commitLayoutEffectOnFiber @ chunk-TRNWTHID.js?v=c730222a:17093
++commitLayoutMountEffects_complete @ chunk-TRNWTHID.js?v=c730222a:17980
++commitLayoutEffects_begin @ chunk-TRNWTHID.js?v=c730222a:17969
++commitLayoutEffects @ chunk-TRNWTHID.js?v=c730222a:17920
++commitRootImpl @ chunk-TRNWTHID.js?v=c730222a:19353
++commitRoot @ chunk-TRNWTHID.js?v=c730222a:19277
++performSyncWorkOnRoot @ chunk-TRNWTHID.js?v=c730222a:18895
++flushSyncCallbacks @ chunk-TRNWTHID.js?v=c730222a:9119
++(anonymous) @ chunk-TRNWTHID.js?v=c730222a:18627
++chunk-TRNWTHID.js?v=c730222a:9129 Uncaught Error: A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
++    at @radix-ui_react-select.js?v=c730222a:868:13
++    at renderWithHooks (chunk-TRNWTHID.js?v=c730222a:11548:26)
++    at updateForwardRef (chunk-TRNWTHID.js?v=c730222a:14325:28)
++    at beginWork (chunk-TRNWTHID.js?v=c730222a:15946:22)
++    at beginWork$1 (chunk-TRNWTHID.js?v=c730222a:19753:22)
++    at performUnitOfWork (chunk-TRNWTHID.js?v=c730222a:19198:20)
++    at workLoopSync (chunk-TRNWTHID.js?v=c730222a:19137:13)
++    at renderRootSync (chunk-TRNWTHID.js?v=c730222a:19116:15)
++    at recoverFromConcurrentError (chunk-TRNWTHID.js?v=c730222a:18736:28)
++    at performSyncWorkOnRoot (chunk-TRNWTHID.js?v=c730222a:18879:28)
++(anonymous) @ @radix-ui_react-select.js?v=c730222a:868
++renderWithHooks @ chunk-TRNWTHID.js?v=c730222a:11548
++updateForwardRef @ chunk-TRNWTHID.js?v=c730222a:14325
++beginWork @ chunk-TRNWTHID.js?v=c730222a:15946
++beginWork$1 @ chunk-TRNWTHID.js?v=c730222a:19753
++performUnitOfWork @ chunk-TRNWTHID.js?v=c730222a:19198
++workLoopSync @ chunk-TRNWTHID.js?v=c730222a:19137
++renderRootSync @ chunk-TRNWTHID.js?v=c730222a:19116
++recoverFromConcurrentError @ chunk-TRNWTHID.js?v=c730222a:18736
++performSyncWorkOnRoot @ chunk-TRNWTHID.js?v=c730222a:18879
++flushSyncCallbacks @ chunk-TRNWTHID.js?v=c730222a:9119
++(anonymous) @ chunk-TRNWTHID.js?v=c730222a:18627
+
+# 2024-12-13 22:17:06.205154
++chunk-TRNWTHID.js?v=c730222a:9129 Uncaught Error: A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
+
+# 2024-12-13 22:17:41.767719
++/add DeployAgentDialog.tsx
+
+# 2024-12-13 22:17:45.497012
++chunk-TRNWTHID.js?v=c730222a:9129 Uncaught Error: A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
+
+# 2024-12-13 22:19:01.277438
++/architect selecting the model configuration create an error. chunk-TRNWTHID.js?v=c730222a:14032 The above error occurred in the <SelectItem> component: <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder. 
+
+# 2024-12-13 22:19:27.378153
++/add src/pages/Agents.tsx
+
+# 2024-12-13 22:19:28.814819
++/architect selecting the model configuration create an error. chunk-TRNWTHID.js?v=c730222a:14032 The above error occurred in the <SelectItem> component: <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder. 
+
+# 2024-12-13 22:20:53.732708
++/add src/components/DeployAgentDialog.tsx
+
+# 2024-12-13 22:20:56.992167
++/architect selecting the model configuration create an error. chunk-TRNWTHID.js?v=c730222a:14032 The above error occurred in the <SelectItem> component: <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder. 
+
+# 2024-12-13 22:22:38.546097
++/add src/pages/Settings.tsx
+
+# 2024-12-13 22:22:44.439395
++/add src/services/settingsService.ts
+
+# 2024-12-13 22:23:13.808448
++the models don't load in the model configuration accoridan model in agents, the settings page works correctly.
+
+# 2024-12-13 22:25:24.396366
++/ask why doesn't the setting or prompt get passed to the next modal when an agent is deployed? 
+
+# 2024-12-13 22:25:59.614851
++fix 
+
+# 2024-12-13 22:27:50.738321
++Deploy Agent doesn't do anything after the last change
+
+# 2024-12-13 22:29:28.237656
++/undo
+
+# 2024-12-13 22:29:52.313097
++Deploy Agent doesn't do anything after the last change, watch for use state multiple times
+
+# 2024-12-13 22:30:48.231646
++make Domain Configuration optional
+
+# 2024-12-13 22:32:07.911400
++confirm Input on prompt execution model is using all values from the original deploy agent modal.
+
+# 2024-12-13 22:33:54.255681
++the input field still doesn't display the prompt and clicking execute doesn't seem to use deployment prompt either.
+
+# 2024-12-13 22:35:09.084415
++/architect t he input field still doesn't display the prompt and clicking execute doesn't seem to use deployment prompt either.
+
+# 2024-12-13 22:37:29.724821
++can i save the all the settings from the initial deployment modal and use all the values in the execution modal? and update input field to use the final system prompt from the deployment dialog?
+
+# 2024-12-13 22:41:25.722736
++the test dialog loads the  rompt templates, but the execute dialog doesn't. 
+
+# 2024-12-13 22:44:03.239931
++/undo
+
+# 2024-12-13 22:45:18.666089
++/ask which dialog does the Deploy Agent button display and where is the code?
+
+# 2024-12-13 22:46:37.950184
++/ask what is the next modal displayed?
+
+# 2024-12-13 22:48:07.723790
++/ask what fields on the AgentManagementDialog 
+
+# 2024-12-13 22:49:06.745861
++/add system prompt field with value in AgentManagementDialog 
+
+# 2024-12-13 22:49:32.643508
++add system prompt field with value in AgentManagementDialog 
+
+# 2024-12-13 22:50:06.419765
++make the gear icon display all the setting and hide the AgentManagementDialog 
+
+# 2024-12-13 22:51:38.615830
++the settings button doesn't dislay the setting dialog 
+
+# 2024-12-13 22:52:51.258055
++make the Response in AgentManagementDialog stream
