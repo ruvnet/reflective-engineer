@@ -29,10 +29,14 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
   const [isLoading, setIsLoading] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+  // Initialize all settings from agent config
   const [temperature, setTemperature] = useState(agent.config.model.temperature);
   const [maxTokens, setMaxTokens] = useState(agent.config.model.maxTokens);
   const [models, setModels] = useState<OpenRouterModel[]>([]);
   const [selectedModel, setSelectedModel] = useState(agent.config.model.name);
+  const [systemPrompt, setSystemPrompt] = useState(agent.config.systemPrompt);
+  const [streaming, setStreaming] = useState(agent.config.streaming ?? true);
+  const [verbose, setVerbose] = useState(agent.config.verbose ?? false);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const { toast } = useToast();
 
@@ -117,7 +121,7 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
           messages: [
             {
               role: "system",
-              content: agent.config.systemPrompt
+              content: systemPrompt
             },
             {
               role: "user",
@@ -126,7 +130,9 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
           ],
           temperature,
           max_tokens: maxTokens,
-          stream: true
+          stream: streaming,
+          temperature: temperature,
+          max_tokens: maxTokens
         }),
         signal: abortControllerRef.current.signal
       });
@@ -212,14 +218,25 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
         </DialogHeader>
         
         <div className="flex flex-col gap-4 flex-1">
-          <div>
-            <label className="text-sm font-medium mb-2 block">Input</label>
-            <Textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Enter your test input..."
-              className="min-h-[100px]"
-            />
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">System Prompt</label>
+              <Textarea
+                value={systemPrompt}
+                onChange={(e) => setSystemPrompt(e.target.value)}
+                placeholder="System prompt..."
+                className="min-h-[100px] font-mono text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium mb-2 block">Input</label>
+              <Textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Enter your test input..."
+                className="min-h-[100px]"
+              />
+            </div>
           </div>
 
           <div className="space-y-4">
