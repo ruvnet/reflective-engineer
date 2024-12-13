@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Terminal, Plus, Play, Square } from "lucide-react";
+import { Terminal, Plus, Play, Square, Zap } from "lucide-react";
 import MainNav from "../components/MainNav";
 import { DeployAgentDialog } from "../components/DeployAgentDialog";
+import { TestAgentDialog } from "../components/TestAgentDialog";
 import { useToast } from "@/components/ui/use-toast";
 import { agentService, Agent } from "@/services/agentService";
 
 export default function Agents() {
   const { toast } = useToast();
   const [agents, setAgents] = useState<Agent[]>([]);
+  const [testingAgent, setTestingAgent] = useState<Agent | null>(null);
 
   useEffect(() => {
     setAgents(agentService.getAgents());
@@ -93,17 +95,28 @@ export default function Agents() {
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span>{agent.name}</span>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => handleStartStop(agent)}
-                    >
-                      {agent.status === "stopped" ? (
-                        <Play className="h-4 w-4" />
-                      ) : (
-                        <Square className="h-4 w-4" />
-                      )}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => setTestingAgent(agent)}
+                        disabled={agent.status !== "running"}
+                        title={agent.status !== "running" ? "Start agent to test" : "Test agent"}
+                      >
+                        <Zap className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => handleStartStop(agent)}
+                      >
+                        {agent.status === "stopped" ? (
+                          <Play className="h-4 w-4" />
+                        ) : (
+                          <Square className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -121,6 +134,14 @@ export default function Agents() {
           </div>
         )}
       </div>
+
+      {testingAgent && (
+        <TestAgentDialog
+          agent={testingAgent}
+          isOpen={true}
+          onClose={() => setTestingAgent(null)}
+        />
+      )}
     </div>
   );
 }
