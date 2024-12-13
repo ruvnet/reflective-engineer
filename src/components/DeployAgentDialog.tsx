@@ -774,7 +774,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                                 }
                               ],
                               temperature: 0.7,
-                              stream: false
+                              stream: true
                             })
                           });
 
@@ -782,13 +782,45 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                             throw new Error("Failed to optimize prompt");
                           }
 
-                          const data = await response.json();
-                          const optimizedPrompt = data.choices[0].message.content;
-                          
+                          // Clear the existing prompt first
                           setFormData(prev => ({
                             ...prev,
-                            systemPrompt: optimizedPrompt
+                            systemPrompt: ""
                           }));
+
+                          // Stream in the optimized prompt
+                          const reader = response.body?.getReader();
+                          if (!reader) throw new Error("No response reader available");
+
+                          let optimizedPrompt = "";
+                          
+                          while (true) {
+                            const { done, value } = await reader.read();
+                            if (done) break;
+                            
+                            const chunk = new TextDecoder().decode(value);
+                            const lines = chunk.split('\n').filter(line => line.trim());
+                            
+                            for (const line of lines) {
+                              if (line.startsWith('data: ')) {
+                                const content = line.slice(5);
+                                if (content.trim() === '[DONE]') continue;
+                                
+                                try {
+                                  const data = JSON.parse(content);
+                                  if (data.choices?.[0]?.delta?.content) {
+                                    optimizedPrompt += data.choices[0].delta.content;
+                                    setFormData(prev => ({
+                                      ...prev,
+                                      systemPrompt: optimizedPrompt
+                                    }));
+                                  }
+                                } catch (error) {
+                                  console.warn('Failed to parse streaming response chunk:', content);
+                                }
+                              }
+                            }
+                          }
 
                           toast({
                             title: "Success",
