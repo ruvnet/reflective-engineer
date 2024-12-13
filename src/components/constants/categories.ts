@@ -1,6 +1,6 @@
 export const AGENT_CATEGORIES = {
   "Prompt Library": {
-    "Mathematical Frameworks": ["abstract-algebra", "category-theory", "complex-analysis", "mathematical-logic", "number-theory", "set-theory", "symbolic-systems", "topology"],
+    "Mathematical Frameworks": ["abstract-algebra", "category-theory", "complex-analysis", "mathematical-logic", "number-theory", "set-theory", "symbolic-systems", "topology", "tree-of-thoughts"],
     "Basic Prompting": ["chain-of-thought", "direct-instruction", "few-shot", "role-playing", "step-by-step", "zero-shot"],
     "Advanced Prompting": ["chain-of-verification", "meta-prompting", "recursive-prompting", "self-consistency", "socratic-method"],
     "Cutting Edge": ["adversarial-prompting", "automatic-reasoning", "constitutional-ai", "emergent-abilities", "multi-agent", "recursive-refinement", "self-reflection"],
