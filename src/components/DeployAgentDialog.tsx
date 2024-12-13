@@ -142,7 +142,14 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
   useEffect(() => {
     const loadModels = async () => {
       const settings = loadSettings();
-      if (!settings?.apiKey) return;
+      if (!settings?.apiKey) {
+        toast({
+          title: "Error",
+          description: "API key not configured. Please check your settings.",
+          variant: "destructive"
+        });
+        return;
+      }
 
       setIsLoadingModels(true);
       try {
@@ -156,16 +163,16 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
         console.error('Failed to load models:', error);
         toast({
           title: "Error",
-          description: "Failed to load available models",
+          description: "Failed to load available models. Please check your API key.",
           variant: "destructive"
         });
       } finally {
-        setIsOptimizing(false);
+        setIsLoadingModels(false); // Fixed: was setting isOptimizing instead of isLoadingModels
       }
     };
 
     loadModels();
-  }, []);
+  }, []); // Empty dependency array to run only on mount
 
   const validateForm = (): boolean => {
     console.log("Validating form...");
