@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchAvailableModels, OpenRouterModel, loadSettings } from "@/services/settingsService";
+import { CATEGORIES, OUTPUT_TYPES, DOMAINS } from "../components/constants/domains";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -19,28 +20,6 @@ interface DeployAgentDialogProps {
   onClose?: () => void;
 }
 
-const AGENT_TYPES = {
-  react: {
-    name: "ReAct",
-    description: "Combines reasoning and acting in an iterative process. Best for complex tasks requiring multiple steps.",
-    options: ["prefix", "suffix"]
-  },
-  openai: {
-    name: "OpenAI Functions",
-    description: "Uses OpenAI's function calling capabilities. Ideal for structured outputs and API interactions.",
-    options: ["functions", "systemMessage"]
-  },
-  structured: {
-    name: "Structured",
-    description: "Maintains specific output formats. Perfect for consistent, formatted responses.",
-    options: ["outputSchema", "format"]
-  },
-  plan: {
-    name: "Plan and Execute",
-    description: "Creates and follows a plan of actions. Great for complex tasks requiring strategic thinking.",
-    options: ["planningPrompt", "executionPrompt"]
-  }
-};
 
 
 const MEMORY_OPTIONS = [
@@ -123,6 +102,8 @@ const CHAIN_TYPES = [
 interface FormErrors {
   name?: string;
   description?: string;
+  domainCategory?: string;
+  domain?: string;
   tools?: string;
   systemPrompt?: string;
   model?: string;
@@ -136,7 +117,8 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
     return {
       name: "",
       description: "",
-      agentType: "react",
+      domainCategory: "",
+      domain: "",
       model: settings?.defaultModel || "",
       temperature: 0.7,
       maxTokens: 2048,
@@ -189,6 +171,14 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
 
     if (!formData.description.trim()) {
       newErrors.description = "Description is required";
+    }
+
+    if (!formData.domainCategory) {
+      newErrors.domainCategory = "Domain category is required";
+    }
+
+    if (!formData.domain) {
+      newErrors.domain = "Domain is required";
     }
 
     if (formData.tools.length === 0) {
@@ -338,23 +328,62 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
             )}
           </div>
 
-          <Tabs defaultValue="react" onValueChange={(value) => setFormData({ ...formData, agentType: value })}>
-            <TabsList className="grid grid-cols-4">
-              {Object.entries(AGENT_TYPES).map(([key, type]) => (
-                <TabsTrigger key={key} value={key}>{type.name}</TabsTrigger>
-              ))}
-            </TabsList>
+          <div className="grid gap-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">Domain Category</label>
+              <Select
+                value={formData.domainCategory}
+                onValueChange={(value) => {
+                  setFormData(prev => ({
+                    ...prev,
+                    domainCategory: value,
+                    domain: "", // Reset domain when category changes
+                    systemPrompt: "" // Reset system prompt
+                  }));
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a domain category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.keys(DOMAINS).map((category) => (
+                    <SelectItem key={category} value={category}>{category}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.domainCategory && (
+                <p className="text-sm text-red-500 mt-1">{errors.domainCategory}</p>
+              )}
+            </div>
 
-            {Object.entries(AGENT_TYPES).map(([key, type]) => (
-              <TabsContent key={key} value={key}>
-                <Alert>
-                  <AlertDescription>
-                    {type.description}
-                  </AlertDescription>
-                </Alert>
-              </TabsContent>
-            ))}
-          </Tabs>
+            {formData.domainCategory && (
+              <div>
+                <label className="text-sm font-medium mb-2 block">Domain</label>
+                <Select
+                  value={formData.domain}
+                  onValueChange={(value) => {
+                    setFormData(prev => ({
+                      ...prev,
+                      domain: value,
+                      systemPrompt: `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.`
+                    }));
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a domain" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DOMAINS[formData.domainCategory as keyof typeof DOMAINS].map((domain) => (
+                      <SelectItem key={domain} value={domain}>{domain}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.domain && (
+                  <p className="text-sm text-red-500 mt-1">{errors.domain}</p>
+                )}
+              </div>
+            )}
+          </div>
 
           <Accordion type="multiple" className="w-full">
             <AccordionItem value="model">
