@@ -33,6 +33,7 @@ export function AgentManagementDialog({
   const [systemPrompt, setSystemPrompt] = useState(agent.config.systemPrompt);
   const [models, setModels] = useState<OpenRouterModel[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [selectedModel, setSelectedModel] = useState(agent.config.model.name);
   const [temperature, setTemperature] = useState(agent.config.model.temperature);
   const [maxTokens, setMaxTokens] = useState(agent.config.model.maxTokens);
@@ -96,8 +97,103 @@ export function AgentManagementDialog({
     }
   };
 
+  if (showSettings) {
+    return (
+      <Dialog open={showSettings} onOpenChange={() => setShowSettings(false)}>
+        <DialogContent className="sm:max-w-[700px] max-h-[80vh] flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Agent Settings: {agent.name}</DialogTitle>
+          </DialogHeader>
+          
+          <div className="flex flex-col gap-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">Model Selection</label>
+              <select
+                className="w-full p-2 rounded-md border bg-background"
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                disabled={isLoadingModels}
+              >
+                {isLoadingModels ? (
+                  <option>Loading models...</option>
+                ) : (
+                  models.map((model) => (
+                    <option key={model.id} value={model.id}>
+                      {model.name}
+                    </option>
+                  ))
+                )}
+              </select>
+              {currentModel && (
+                <div className="mt-2 text-sm text-muted-foreground">
+                  <p>Context: {currentModel.context_length.toLocaleString()} tokens</p>
+                  <p>Pricing: ${currentModel.pricing.prompt}/1K prompt, ${currentModel.pricing.completion}/1K completion</p>
+                </div>
+              )}
+            </div>
+
+            <div>
+              <label className="text-sm font-medium mb-2 block">Temperature: {temperature}</label>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                value={temperature}
+                onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                className="w-full"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium mb-2 block">Max Tokens: {maxTokens}</label>
+              <input
+                type="range"
+                min="256"
+                max={currentModel?.context_length || 4096}
+                step="256"
+                value={maxTokens}
+                onChange={(e) => setMaxTokens(parseInt(e.target.value))}
+                className="w-full"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium mb-2 block">System Prompt</label>
+              <Textarea
+                value={systemPrompt}
+                onChange={(e) => setSystemPrompt(e.target.value)}
+                placeholder="System prompt..."
+                className="min-h-[100px] font-mono text-sm"
+              />
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowSettings(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => {
+                // Update agent config
+                agent.config.systemPrompt = systemPrompt;
+                agent.config.model = {
+                  ...agent.config.model,
+                  name: selectedModel,
+                  temperature,
+                  maxTokens
+                };
+                setShowSettings(false);
+              }}>
+                Save Changes
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={() => onClose()}>
+    <Dialog open={isOpen && !showSettings} onOpenChange={() => onClose()}>
       <DialogContent className="sm:max-w-[700px] max-h-[80vh] flex flex-col">
         <DialogHeader>
           <div className="flex justify-between items-center">
@@ -115,8 +211,17 @@ export function AgentManagementDialog({
                 )}
                 {agent.status === "stopped" ? "Start" : "Stop"}
               </Button>
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => {
+                  // Close this dialog and show settings
+                  onClose();
+                  setShowSettings(true);
+                }}
+              >
                 <Settings className="h-4 w-4" />
+                Settings
               </Button>
             </div>
           </div>
