@@ -771,7 +771,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                               messages: [
                                 {
                                   role: "system",
-                                  content: "You are an expert at optimizing prompts for clarity, effectiveness, and efficiency. Consider the following aspects in your optimization:\n\n1. Model Configuration: Temperature and token settings\n2. Chain Configuration: Processing flow and execution patterns\n3. Memory System: Context retention and information management\n4. Available Tools: Integration and usage patterns\n\nAnalyze the given prompt and provide only the optimized version, without any explanatory text or preamble."
+                                  content: "You are an expert at optimizing prompts for clarity, effectiveness, and efficiency. Consider the following aspects in your optimization:\n\n1. Model Configuration:\n   - Temperature settings (0-1 scale)\n   - Max token allocation\n   - Response length management\n   - Model-specific capabilities\n2. Chain Configuration: Processing flow and execution patterns\n3. Memory System: Context retention and information management\n4. Available Tools: Integration and usage patterns\n\nAnalyze the given prompt and provide only the optimized version, without any explanatory text or preamble."
                                 },
                                 {
                                   role: "user",
