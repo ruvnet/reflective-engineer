@@ -410,7 +410,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                           <SelectValue placeholder="Select a template" />
                         </SelectTrigger>
                         <SelectContent>
-                          {formData.agentCategory && AGENT_CATEGORIES["Agent Library"][formData.agentCategory].map((template) => (
+                          {formData.agentCategory && AGENT_CATEGORIES[formData.agentCategory === "Conversational Agents" || formData.agentCategory === "Tool-Using Agents" || formData.agentCategory === "Multi-Agent Systems" || formData.agentCategory === "Memory Systems" ? "Agent Library" : "Prompt Library"][formData.agentCategory]?.map((template) => (
                             <SelectItem key={template} value={template}>
                               {template}
                             </SelectItem>
