@@ -1,12 +1,18 @@
-import { useState, useCallback, useRef } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useState, useCallback, useRef, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { Slider } from "@/components/ui/slider";
 import { Agent } from "@/services/agentService";
-import { loadSettings } from "@/services/settingsService";
 import { useToast } from "@/components/ui/use-toast";
+import { loadSettings } from "@/services/settingsService";
 
 interface TestAgentDialogProps {
   agent: Agent;
@@ -19,7 +25,19 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
   const [response, setResponse] = useState("");
   const responseRef = useRef<HTMLPreElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const [temperature, setTemperature] = useState(agent.config.model.temperature);
+  const [maxTokens, setMaxTokens] = useState(agent.config.model.maxTokens);
   const { toast } = useToast();
+
+  const stopStream = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      setIsStreaming(false);
+      setIsLoading(false);
+    }
+  }, []);
 
   const handleTest = useCallback(async () => {
     if (!input.trim()) {
@@ -31,25 +49,24 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
       return;
     }
     
+    if (isStreaming) {
+      stopStream();
+      return;
+    }
+
     setIsLoading(true);
+    setIsStreaming(true);
     setResponse("");
 
-    const cleanup = async () => {
-      try {
-        // Stop and clean up the test agent
-        await agentService.stopAgent(agent.id);
-        // You might want to add a method to remove the agent completely
-      } catch (error) {
-        console.error('Failed to cleanup test agent:', error);
-      }
-    };
+    const settings = loadSettings();
+    if (!settings?.apiKey) {
+      throw new Error("API key not configured");
+    }
+
+    // Create new AbortController for this request
+    abortControllerRef.current = new AbortController();
     
     try {
-      const settings = loadSettings();
-      if (!settings?.apiKey) {
-        throw new Error("API key not configured");
-      }
-
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -70,10 +87,11 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
               content: input
             }
           ],
-          temperature: agent.config.model.temperature,
-          max_tokens: agent.config.model.maxTokens,
+          temperature,
+          max_tokens: maxTokens,
           stream: true
-        })
+        }),
+        signal: abortControllerRef.current.signal
       });
 
       if (!response.ok) {
@@ -82,8 +100,6 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
 
       const reader = response.body?.getReader();
       if (!reader) throw new Error("No response reader available");
-
-      setResponse("");
       
       while (true) {
         const { done, value } = await reader.read();
@@ -107,18 +123,33 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
         }
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to execute agent test";
-      setResponse(`Error: ${errorMessage}`);
-      toast({
-        title: "Error",
-        description: errorMessage,
-        variant: "destructive"
-      });
-      console.error(error);
+      if (error instanceof Error && error.name === 'AbortError') {
+        setResponse(prev => prev + "\n[Stream stopped by user]");
+      } else {
+        const errorMessage = error instanceof Error ? error.message : "Failed to execute agent test";
+        setResponse(`Error: ${errorMessage}`);
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive"
+        });
+        console.error(error);
+      }
     } finally {
       setIsLoading(false);
+      setIsStreaming(false);
+      abortControllerRef.current = null;
     }
-  }, [agent, input, toast]);
+  }, [agent, input, toast, temperature, maxTokens, stopStream, isStreaming]);
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
@@ -138,41 +169,83 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
             />
           </div>
 
-          <div className="flex-1">
-            <div className="flex justify-between items-center mb-2">
-              <label className="text-sm font-medium">Response</label>
-              <div className="flex gap-2">
-                <Badge variant="outline">
-                  Model: {agent.config.model.name}
-                </Badge>
-                <Badge variant="outline">
-                  Temp: {agent.config.model.temperature}
-                </Badge>
-                <Badge variant="outline">
-                  Max Tokens: {agent.config.model.maxTokens}
-                </Badge>
+          <div className="space-y-4">
+            <div className="grid gap-4">
+              <div>
+                <label className="text-sm font-medium mb-2 block">Model Settings</label>
+                <div className="grid gap-4 p-4 border rounded-md">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-sm">Temperature: {temperature}</label>
+                      <Badge variant="outline">
+                        Model: {agent.config.model.name}
+                      </Badge>
+                    </div>
+                    <Slider
+                      min={0}
+                      max={1}
+                      step={0.1}
+                      value={[temperature]}
+                      onValueChange={([value]) => setTemperature(value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm mb-2 block">Max Tokens: {maxTokens}</label>
+                    <Slider
+                      min={256}
+                      max={4096}
+                      step={256}
+                      value={[maxTokens]}
+                      onValueChange={([value]) => setMaxTokens(value)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            <ScrollArea className="h-[200px] border rounded-md p-4">
-              <pre 
-                ref={responseRef}
-                className="whitespace-pre-wrap font-mono text-sm"
-              >
-                {response || "Response will appear here..."}
-              </pre>
-            </ScrollArea>
-          </div>
 
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={onClose}>
-              Close
-            </Button>
-            <Button 
-              onClick={handleTest}
-              disabled={isLoading || !input.trim()}
-            >
-              {isLoading ? "Testing..." : "Test Agent"}
-            </Button>
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-sm font-medium">Response</label>
+                <Badge 
+                  variant={isStreaming ? "destructive" : "outline"}
+                >
+                  {isStreaming ? "Streaming..." : "Ready"}
+                </Badge>
+              </div>
+              <ScrollArea className="h-[200px] border rounded-md p-4">
+                <pre 
+                  ref={responseRef}
+                  className="whitespace-pre-wrap font-mono text-sm"
+                >
+                  {response || "Response will appear here..."}
+                </pre>
+              </ScrollArea>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={onClose}>
+                Close
+              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline"
+                  onClick={() => {
+                    setResponse("");
+                    setTemperature(agent.config.model.temperature);
+                    setMaxTokens(agent.config.model.maxTokens);
+                  }}
+                >
+                  Reset
+                </Button>
+                <Button 
+                  onClick={handleTest}
+                  disabled={!input.trim()}
+                  variant={isStreaming ? "destructive" : "default"}
+                >
+                  {isStreaming ? "Stop Stream" : isLoading ? "Testing..." : "Test Agent"}
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </DialogContent>
