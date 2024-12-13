@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const navItems = [
   { name: "Home", path: "/" },
+  { name: "Agents", path: "/agents" },
   { name: "Templates", path: "/templates" },
   { name: "Documentation", path: "/docs" },
   { name: "Settings", path: "/settings" },
