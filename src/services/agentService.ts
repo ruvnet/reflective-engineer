@@ -130,6 +130,8 @@ class AgentService {
     
     agent.status = "stopped";
     this.agents.set(id, agent);
+    // Clean up the agent
+    this.agents.delete(id);
   }
 
   getAgents(): Agent[] {
