@@ -1229,3 +1229,70 @@
 
 # 2024-12-13 19:59:05.652953
 +/undo
+
+# 2024-12-13 21:11:11.465990
++/ask why doesn't he deploy agent button do anything?
+
+# 2024-12-13 21:11:58.242624
++implement suggestions.
+
+# 2024-12-13 21:12:44.838919
++chunk-TRNWTHID.js?v=c730222a:14032 The above error occurred in the <DeployAgentDialog> component:
++
++    at DeployAgentDialog (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/src/components/DeployAgentDialog.tsx?t=1734119851996:169:37)
++    at div
++    at _c8 (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/src/components/ui/card.tsx:76:61)
++    at div
++    at _c (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/src/components/ui/card.tsx:12:53)
++    at div
++    at div
++    at Agents (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/src/pages/Agents.tsx?t=1734119851996:24:23)
++    at RenderedRoute (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/react-router-dom.js?v=c730222a:4069:5)
++    at Routes (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/react-router-dom.js?v=c730222a:4508:5)
++    at Router (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/react-router-dom.js?v=c730222a:4451:15)
++    at BrowserRouter (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/react-router-dom.js?v=c730222a:5196:5)
++    at Provider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/chunk-ZE3V6U6Z.js?v=c730222a:38:15)
++    at TooltipProvider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=c730222a:61:5)
++    at QueryClientProvider (https://probable-space-succotash-q9x5wvp7w4347r5-8080.app.github.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=c730222a:2794:3)
++    at App
++
++Consider adding an error boundary to your tree to customize error handling behavior.
++Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+# 2024-12-13 21:13:24.299474
++Validating form...
++DeployAgentDialog.tsx:166 Validating form...
++DeployAgentDialog.tsx:189 Validation errors: 
++{tools: 'Select at least one tool', systemPrompt: 'System prompt is required'}
++systemPrompt
++: 
++"System prompt is required"
++tools
++: 
++"Select at least one tool"
++[[Prototype]]
++: 
++Object
+
+# 2024-12-13 21:14:23.751495
++use open router for llm agentService.ts:63 Your chosen OpenAI model, "gpt-4", is a chat model and not a text-in/text-out LLM.
++Passing it into the "OpenAI" class is deprecated and only permitted for backwards-compatibility. You may experience odd behavior.
++Please use the "ChatOpenAI" class instead.
++
++See this page for more information:
++|
++└> https://js.langchain.com/docs/integrations/chat/openai
+
+# 2024-12-13 21:15:31.675272
++agent deployed, include a model to display the output when then play button is clicked similar to the testing output response. 
+
+# 2024-12-13 21:18:05.544263
++/architect after the deploy agent button is clicked, hide the deloy agent modal and display the modal to show and run the agent with output response. don't use test modal create a new agent management ui for this. it should also display when the play button is clicked in the primary UI. 
+
+# 2024-12-13 21:20:52.346474
++/undo
+
+# 2024-12-13 21:21:34.860776
++clickingdeploy creaes aan error and blank page. chunk-TRNWTHID.js?v=c730222a:9129 Uncaught ReferenceError: AgentManagementDialog is not defined
++    at Agents (Agents.tsx:185:10)
++
