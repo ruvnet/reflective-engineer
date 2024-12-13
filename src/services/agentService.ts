@@ -1,5 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
-import { createOpenRouterClient } from "./openRouterService";
+import { OpenAI } from "@langchain/openai";
 import { loadSettings } from "./settingsService";
 import { AgentExecutor, initializeAgentExecutorWithOptions } from "langchain/agents";
 import { Tool } from "@langchain/core/tools";
@@ -64,13 +63,18 @@ class AgentService {
     const id = Date.now().toString();
     
     try {
-      const client = createOpenRouterClient(settings.apiKey);
-      
-      const llm = new ChatOpenAI({
+      const llm = new OpenAI({
+        baseURL: "https://openrouter.ai/api/v1",
         modelName: agent.config.model.name,
         temperature: agent.config.model.temperature,
         maxTokens: agent.config.model.maxTokens,
         streaming: agent.config.streaming,
+        configuration: {
+          baseHeaders: {
+            "HTTP-Referer": window.location.href,
+            "X-Title": "Reflective Engineer"
+          }
+        }
       });
 
       const selectedTools = agent.config.tools
