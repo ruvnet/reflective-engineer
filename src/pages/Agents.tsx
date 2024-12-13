@@ -58,15 +58,25 @@ export default function Agents() {
       <div className="flex-1 p-8">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold tracking-tight">Agents</h2>
-          <DeployAgentDialog 
-            onDeploy={handleDeploy}
-            trigger={
-              <Button>
-                <Plus className="mr-2 h-4 w-4" />
-                New Agent
-              </Button>
-            }
-          />
+          <div className="flex gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => setTestingAgent(agents.find(a => a.status === "running"))}
+              disabled={!agents.some(a => a.status === "running")}
+            >
+              <Zap className="mr-2 h-4 w-4" />
+              Test Agent
+            </Button>
+            <DeployAgentDialog 
+              onDeploy={handleDeploy}
+              trigger={
+                <Button>
+                  <Plus className="mr-2 h-4 w-4" />
+                  New Agent
+                </Button>
+              }
+            />
+          </div>
         </div>
 
         {agents.length === 0 ? (
@@ -95,29 +105,17 @@ export default function Agents() {
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span>{agent.name}</span>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        onClick={() => setTestingAgent(agent)}
-                        disabled={agent.status !== "running"}
-                        className="flex items-center"
-                      >
-                        <Zap className="h-4 w-4 mr-2" />
-                        Test
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() => handleStartStop(agent)}
-                      >
-                        {agent.status === "stopped" ? (
-                          <Play className="h-4 w-4" />
-                        ) : (
-                          <Square className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </div>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handleStartStop(agent)}
+                    >
+                      {agent.status === "stopped" ? (
+                        <Play className="h-4 w-4" />
+                      ) : (
+                        <Square className="h-4 w-4" />
+                      )}
+                    </Button>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
