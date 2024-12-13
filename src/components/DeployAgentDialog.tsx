@@ -521,7 +521,11 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                     </div>
                     <Select
                       value={formData.model}
-                      onValueChange={(value) => setFormData({ ...formData, model: value })}
+                      onValueChange={(value) => {
+                        if (value !== "loading") {
+                          setFormData({ ...formData, model: value });
+                        }
+                      }}
                     >
                       <SelectTrigger>
                         <SelectValue />
