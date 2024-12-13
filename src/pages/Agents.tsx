@@ -5,7 +5,7 @@ import { Terminal, Plus, Play, Square, Zap } from "lucide-react";
 import MainNav from "../components/MainNav";
 import { DeployAgentDialog } from "../components/DeployAgentDialog";
 import { TestAgentDialog } from "../components/TestAgentDialog";
-import { AgentResponseDialog } from "../components/AgentResponseDialog";
+import { AgentManagementDialog } from "../components/AgentManagementDialog";
 import { useToast } from "@/components/ui/use-toast";
 import { agentService, Agent } from "@/services/agentService";
 import { useTemplate } from "@/services/templateService";
