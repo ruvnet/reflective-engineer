@@ -1,8 +1,9 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
 import { Agent } from "@/services/agentService";
 import { loadSettings } from "@/services/settingsService";
 import { useToast } from "@/components/ui/use-toast";
@@ -16,6 +17,7 @@ interface TestAgentDialogProps {
 export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps) {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
+  const responseRef = useRef<HTMLPreElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -70,7 +72,7 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
           ],
           temperature: agent.config.model.temperature,
           max_tokens: agent.config.model.maxTokens,
-          stream: false
+          stream: true
         })
       });
 
@@ -78,8 +80,32 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
         throw new Error("Failed to get response from OpenRouter");
       }
 
-      const data = await response.json();
-      setResponse(data.choices[0].message.content);
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error("No response reader available");
+
+      setResponse("");
+      
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        // Decode and parse the chunk
+        const chunk = new TextDecoder().decode(value);
+        const lines = chunk.split('\n').filter(line => line.trim());
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = JSON.parse(line.slice(5));
+            if (data.choices?.[0]?.delta?.content) {
+              setResponse(prev => prev + data.choices[0].delta.content);
+              // Scroll to bottom
+              if (responseRef.current) {
+                responseRef.current.scrollTop = responseRef.current.scrollHeight;
+              }
+            }
+          }
+        }
+      }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Failed to execute agent test";
       setResponse(`Error: ${errorMessage}`);
@@ -113,9 +139,25 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
           </div>
 
           <div className="flex-1">
-            <label className="text-sm font-medium mb-2 block">Response</label>
+            <div className="flex justify-between items-center mb-2">
+              <label className="text-sm font-medium">Response</label>
+              <div className="flex gap-2">
+                <Badge variant="outline">
+                  Model: {agent.config.model.name}
+                </Badge>
+                <Badge variant="outline">
+                  Temp: {agent.config.model.temperature}
+                </Badge>
+                <Badge variant="outline">
+                  Max Tokens: {agent.config.model.maxTokens}
+                </Badge>
+              </div>
+            </div>
             <ScrollArea className="h-[200px] border rounded-md p-4">
-              <pre className="whitespace-pre-wrap font-mono text-sm">
+              <pre 
+                ref={responseRef}
+                className="whitespace-pre-wrap font-mono text-sm"
+              >
                 {response || "Response will appear here..."}
               </pre>
             </ScrollArea>
