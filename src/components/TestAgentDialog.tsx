@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Agent, agentService } from "@/services/agentService";
+import { Agent } from "@/services/agentService";
+import { loadSettings } from "@/services/settingsService";
+import { useToast } from "@/components/ui/use-toast";
 
 interface TestAgentDialogProps {
   agent: Agent;
@@ -15,23 +17,65 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleTest = async () => {
+  const handleTest = useCallback(async () => {
     if (!input.trim()) return;
     
     setIsLoading(true);
     setResponse("");
     
     try {
-      const result = await agentService.executeAgent(agent.id, input);
-      setResponse(result);
+      const settings = loadSettings();
+      if (!settings?.apiKey) {
+        throw new Error("API key not configured");
+      }
+
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${settings.apiKey}`,
+          "HTTP-Referer": window.location.origin,
+          "X-Title": "Reflective Engineer",
+        },
+        body: JSON.stringify({
+          model: agent.config.model.name,
+          messages: [
+            {
+              role: "system",
+              content: agent.config.systemPrompt
+            },
+            {
+              role: "user",
+              content: input
+            }
+          ],
+          temperature: agent.config.model.temperature,
+          max_tokens: agent.config.model.maxTokens,
+          stream: false
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get response from OpenRouter");
+      }
+
+      const data = await response.json();
+      setResponse(data.choices[0].message.content);
     } catch (error) {
-      setResponse("Error: Failed to execute agent test");
+      const errorMessage = error instanceof Error ? error.message : "Failed to execute agent test";
+      setResponse(`Error: ${errorMessage}`);
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive"
+      });
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [agent, input, toast]);
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
