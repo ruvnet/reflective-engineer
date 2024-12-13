@@ -31,12 +31,22 @@ export function AgentManagementDialog({
   const responseRef = useRef<HTMLPreElement>(null);
   const [systemPrompt, setSystemPrompt] = useState(agent.config.systemPrompt);
 
+  // Update system prompt when agent changes
+  useEffect(() => {
+    setSystemPrompt(agent.config.systemPrompt);
+  }, [agent.config.systemPrompt]);
+
   const handleExecute = async () => {
     if (!input.trim() || !agent.executor) return;
     
     setIsExecuting(true);
     try {
-      const result = await agent.executor.call({ input });
+      // Update the agent's system prompt before execution
+      agent.config.systemPrompt = systemPrompt;
+      const result = await agent.executor.call({ 
+        input,
+        systemPrompt: systemPrompt // Pass the current system prompt
+      });
       setResponse(result.output);
     } catch (error) {
       setResponse(`Error: ${error instanceof Error ? error.message : "Failed to execute agent"}`);
