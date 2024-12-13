@@ -1420,3 +1420,13 @@
 
 # 2024-12-13 21:50:05.579894
 +/add a prompt drop down with all problem templates organized by types
+
+# 2024-12-13 21:51:18.068648
++move Prompt Templates top of modal above Domain and below description
+
+# 2024-12-13 21:52:14.936483
++organize Domain Category and Domain drop down into a accoridian
+
+# 2024-12-13 21:53:11.617280
++make text for template catagories left aligned. Tool-Using Agents
++Integration with external tools and APIs for enhanced capabilities
