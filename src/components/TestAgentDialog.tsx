@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Agent } from "@/services/agentService";
+import { Agent, agentService } from "@/services/agentService";
 
 interface TestAgentDialogProps {
   agent: Agent;
@@ -23,21 +23,8 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
     setResponse("");
     
     try {
-      const result = await agent.executor?.call(
-        { input },
-        {
-          callbacks: [{
-            handleLLMNewToken(token: string) {
-              setResponse(prev => prev + token);
-            },
-          }],
-        }
-      );
-      
-      if (!result) {
-        throw new Error("No response from agent");
-      }
-      
+      const result = await agentService.executeAgent(agent.id, input);
+      setResponse(result);
     } catch (error) {
       setResponse("Error: Failed to execute agent test");
       console.error(error);
