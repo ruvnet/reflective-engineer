@@ -1,9 +1,10 @@
-import { ChatOpenAI } from "langchain/chat_models/openai";
+import { ChatOpenAI } from "@langchain/openai";
 import { createOpenRouterClient } from "./openRouterService";
 import { loadSettings } from "./settingsService";
 import { AgentExecutor, initializeAgentExecutorWithOptions } from "langchain/agents";
-import { Tool } from "langchain/tools";
-import { BufferMemory, VectorStoreMemory } from "langchain/memory";
+import { Tool } from "@langchain/core/tools";
+import { BufferMemory } from "langchain/memory";
+import { VectorStoreMemory } from "@langchain/community/memory/vector_store";
 
 export interface Agent {
   id: string;
