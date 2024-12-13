@@ -64,8 +64,9 @@ class AgentService {
         streaming: agent.config.streaming,
         configuration: {
           baseHeaders: {
-            "HTTP-Referer": window.location.href,
-            "X-Title": "Reflective Engineer"
+            "HTTP-Referer": "*",
+            "X-Title": "Reflective Engineer",
+            "Origin": "*"
           }
         }
       });
