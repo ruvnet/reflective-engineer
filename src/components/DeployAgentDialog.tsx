@@ -334,7 +334,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
             )}
           </div>
 
-          <Accordion type="multiple" className="w-full">
+          <Accordion type="multiple" className="w-full" defaultValue={["system"]}>
             <AccordionItem value="templates">
               <AccordionTrigger>
                 <div className="flex items-center">
