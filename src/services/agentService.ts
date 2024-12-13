@@ -1,45 +1,102 @@
-import { exec } from 'child_process';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
+import { ChatOpenAI } from "langchain/chat_models/openai";
+import { createOpenRouterClient } from "./openRouterService";
+import { loadSettings } from "./settingsService";
+import { AgentExecutor, initializeAgentExecutorWithOptions } from "langchain/agents";
+import { Tool } from "langchain/tools";
+import { BufferMemory, VectorStoreMemory } from "langchain/memory";
 
 export interface Agent {
   id: string;
   name: string;
   description: string;
   status: "running" | "stopped";
-  config: string;
+  config: AgentConfig;
+  executor?: AgentExecutor;
+}
+
+export interface AgentConfig {
+  type: string;
+  model: {
+    name: string;
+    temperature: number;
+    maxTokens: number;
+  };
+  memory: string;
+  tools: string[];
+  chainType: string;
+  systemPrompt: string;
+  streaming: boolean;
+  verbose: boolean;
 }
 
 class AgentService {
-  private agents: Agent[] = [];
+  private agents: Map<string, Agent> = new Map();
+  private tools: Map<string, Tool> = new Map();
+
+  constructor() {
+    this.initializeTools();
+  }
+
+  private initializeTools() {
+    // Add tool initialization here
+    // Example:
+    // this.tools.set("web-browser", new WebBrowser());
+  }
+
+  private async createMemory(type: string) {
+    switch (type) {
+      case "buffer":
+        return new BufferMemory();
+      case "vector":
+        return new VectorStoreMemory();
+      default:
+        return new BufferMemory();
+    }
+  }
 
   async deployAgent(agent: Omit<Agent, 'id' | 'status'>): Promise<Agent> {
-    // Create unique ID for the agent
+    const settings = loadSettings();
+    if (!settings?.apiKey) {
+      throw new Error("API key not configured");
+    }
+
     const id = Date.now().toString();
     
     try {
-      // Create agent directory
-      await execAsync(`mkdir -p agents/${id}`);
+      const client = createOpenRouterClient(settings.apiKey);
       
-      // Write config file
-      await execAsync(`echo '${agent.config}' > agents/${id}/config.json`);
-      
-      // Create startup script
-      const startupScript = `#!/bin/bash
-cd agents/${id}
-# Add agent startup logic here
-`;
-      await execAsync(`echo '${startupScript}' > agents/${id}/startup.sh`);
-      await execAsync(`chmod +x agents/${id}/startup.sh`);
+      const llm = new ChatOpenAI({
+        modelName: agent.config.model.name,
+        temperature: agent.config.model.temperature,
+        maxTokens: agent.config.model.maxTokens,
+        streaming: agent.config.streaming,
+      });
+
+      const selectedTools = agent.config.tools
+        .map(toolId => this.tools.get(toolId))
+        .filter(tool => tool) as Tool[];
+
+      const memory = await this.createMemory(agent.config.memory);
+
+      const executor = await initializeAgentExecutorWithOptions(
+        selectedTools,
+        llm,
+        {
+          agentType: agent.config.type,
+          memory,
+          verbose: agent.config.verbose,
+          systemMessage: agent.config.systemPrompt,
+        }
+      );
 
       const newAgent: Agent = {
         ...agent,
         id,
-        status: "stopped"
+        status: "stopped",
+        executor
       };
 
-      this.agents.push(newAgent);
+      this.agents.set(id, newAgent);
       return newAgent;
     } catch (error) {
       console.error('Failed to deploy agent:', error);
@@ -48,38 +105,41 @@ cd agents/${id}
   }
 
   async startAgent(id: string): Promise<void> {
-    const agent = this.agents.find(a => a.id === id);
+    const agent = this.agents.get(id);
     if (!agent) throw new Error('Agent not found');
-
-    try {
-      await execAsync(`./agents/${id}/startup.sh`);
-      agent.status = "running";
-    } catch (error) {
-      console.error('Failed to start agent:', error);
-      throw new Error('Failed to start agent');
-    }
+    
+    agent.status = "running";
+    this.agents.set(id, agent);
   }
 
   async stopAgent(id: string): Promise<void> {
-    const agent = this.agents.find(a => a.id === id);
+    const agent = this.agents.get(id);
     if (!agent) throw new Error('Agent not found');
-
-    try {
-      // Find and kill the agent process
-      await execAsync(`pkill -f "agents/${id}/startup.sh"`);
-      agent.status = "stopped";
-    } catch (error) {
-      console.error('Failed to stop agent:', error);
-      throw new Error('Failed to stop agent');
-    }
+    
+    agent.status = "stopped";
+    this.agents.set(id, agent);
   }
 
   getAgents(): Agent[] {
-    return this.agents;
+    return Array.from(this.agents.values());
   }
 
   getAgent(id: string): Agent | undefined {
-    return this.agents.find(a => a.id === id);
+    return this.agents.get(id);
+  }
+
+  async executeAgent(id: string, input: string): Promise<string> {
+    const agent = this.agents.get(id);
+    if (!agent || !agent.executor) throw new Error('Agent not found or not initialized');
+    if (agent.status !== "running") throw new Error('Agent is not running');
+
+    try {
+      const result = await agent.executor.call({ input });
+      return result.output;
+    } catch (error) {
+      console.error('Agent execution failed:', error);
+      throw new Error('Agent execution failed');
+    }
   }
 }
 
