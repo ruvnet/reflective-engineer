@@ -5,6 +5,7 @@ import { Terminal, Plus, Play, Square, Zap } from "lucide-react";
 import MainNav from "../components/MainNav";
 import { DeployAgentDialog } from "../components/DeployAgentDialog";
 import { TestAgentDialog } from "../components/TestAgentDialog";
+import { AgentResponseDialog } from "../components/AgentResponseDialog";
 import { useToast } from "@/components/ui/use-toast";
 import { agentService, Agent } from "@/services/agentService";
 import { useTemplate } from "@/services/templateService";
@@ -14,6 +15,7 @@ export default function Agents() {
   const { toast } = useToast();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [testingAgent, setTestingAgent] = useState<Agent | null>(null);
+  const [responseAgent, setResponseAgent] = useState<Agent | null>(null);
   const { data: template } = useTemplate("system-dynamics");
 
   useEffect(() => {
@@ -150,7 +152,15 @@ export default function Agents() {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => handleStartStop(agent)}
+                      onClick={async () => {
+                        if (agent.status === "stopped") {
+                          await handleStartStop(agent);
+                          setResponseAgent(agent);
+                        } else {
+                          await handleStartStop(agent);
+                          setResponseAgent(null);
+                        }
+                      }}
                     >
                       {agent.status === "stopped" ? (
                         <Play className="h-4 w-4" />
@@ -175,6 +185,14 @@ export default function Agents() {
           </div>
         )}
       </div>
+
+      {responseAgent && (
+        <AgentResponseDialog
+          agent={responseAgent}
+          isOpen={true}
+          onClose={() => setResponseAgent(null)}
+        />
+      )}
 
       {testingAgent && (
         <TestAgentDialog
