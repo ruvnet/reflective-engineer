@@ -153,9 +153,9 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
     temperature: 0.7,
     maxTokens: 2048,
     memory: "buffer",
-    tools: [] as string[],
+    tools: ["calculator", "search"],  // Pre-select some default tools
     chainType: "llm",
-    systemPrompt: "",
+    systemPrompt: "You are a helpful AI assistant that uses available tools to solve problems step by step.",
     streaming: true,
     verbose: false
   });
