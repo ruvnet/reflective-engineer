@@ -532,7 +532,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                       </SelectTrigger>
                       <SelectContent>
                         {isLoadingModels ? (
-                          <SelectItem value="">Loading models...</SelectItem>
+                          <SelectItem value="loading">Loading models...</SelectItem>
                         ) : (
                           models.map((model) => (
                             <SelectItem key={model.id} value={model.id}>
