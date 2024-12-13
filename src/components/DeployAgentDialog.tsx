@@ -602,6 +602,94 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
               </AccordionContent>
             </AccordionItem>
 
+            <AccordionItem value="templates">
+              <AccordionTrigger>
+                <div className="flex items-center">
+                  <Bot className="mr-2 h-4 w-4" />
+                  Prompt Templates
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="grid gap-4 p-2">
+                  <div className="grid gap-2">
+                    <div className="flex items-center">
+                      <label>Template Category</label>
+                      <InfoTooltip content="Select a template category to use" />
+                    </div>
+                    <Select
+                      value={formData.agentCategory}
+                      onValueChange={(value) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          agentCategory: value,
+                          agentType: "" // Reset template when category changes
+                        }));
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.keys(AGENT_CATEGORIES["Agent Library"]).map((category) => (
+                          <SelectItem key={category} value={category}>
+                            <div className="flex flex-col">
+                              <span>{category}</span>
+                              <span className="text-xs text-muted-foreground">
+                                {AGENT_DESCRIPTIONS[category]}
+                              </span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {formData.agentCategory && (
+                    <div className="grid gap-2">
+                      <div className="flex items-center">
+                        <label>Template</label>
+                        <InfoTooltip content="Select a specific template to use" />
+                      </div>
+                      <Select
+                        value={formData.agentType}
+                        onValueChange={(value) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            agentType: value
+                          }));
+                          // Load the template content when selected
+                          fetch(`/templates/${value}.md`)
+                            .then(res => res.text())
+                            .then(content => {
+                              const parsed = content.match(/---\n([\s\S]*?)\n---\n([\s\S]*)/);
+                              if (parsed) {
+                                const [_, frontmatter, body] = parsed;
+                                setFormData(prev => ({
+                                  ...prev,
+                                  systemPrompt: body.trim()
+                                }));
+                              }
+                            })
+                            .catch(console.error);
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a template" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {formData.agentCategory && AGENT_CATEGORIES["Agent Library"][formData.agentCategory].map((template) => (
+                            <SelectItem key={template} value={template}>
+                              {template}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem value="system">
               <AccordionTrigger>
                 <div className="flex items-center">
