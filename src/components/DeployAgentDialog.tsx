@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Plus, Rocket, Brain, Wrench, Database, Settings, Bot, Network, HelpCircle, Wand2 } from "lucide-react";
+import { Plus, Rocket, Brain, Wrench, Database, Settings, Bot, Network, HelpCircle, Wand2, Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface DeployAgentDialogProps {
