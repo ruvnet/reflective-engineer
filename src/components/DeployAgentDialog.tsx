@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchAvailableModels, OpenRouterModel, loadSettings } from "@/services/settingsService";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -41,23 +42,6 @@ const AGENT_TYPES = {
   }
 };
 
-const MODEL_OPTIONS = [
-  { 
-    value: "gpt-4", 
-    label: "GPT-4",
-    description: "Most capable model, best for complex reasoning"
-  },
-  { 
-    value: "gpt-3.5-turbo", 
-    label: "GPT-3.5 Turbo",
-    description: "Fast and cost-effective for simpler tasks"
-  },
-  { 
-    value: "anthropic/claude-2", 
-    label: "Claude 2",
-    description: "Strong analytical and coding capabilities"
-  }
-];
 
 const MEMORY_OPTIONS = [
   { 
@@ -145,6 +129,8 @@ interface FormErrors {
 }
 
 export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDialogProps) {
+  const [models, setModels] = useState<OpenRouterModel[]>([]);
+  const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -161,6 +147,34 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+
+  useEffect(() => {
+    const loadModels = async () => {
+      const settings = loadSettings();
+      if (!settings?.apiKey) return;
+
+      setIsLoadingModels(true);
+      try {
+        const availableModels = await fetchAvailableModels(settings.apiKey);
+        setModels(availableModels);
+        // Set first model as default if none selected
+        if (!formData.model && availableModels.length > 0) {
+          setFormData(prev => ({...prev, model: availableModels[0].id}));
+        }
+      } catch (error) {
+        console.error('Failed to load models:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load available models",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoadingModels(false);
+      }
+    };
+
+    loadModels();
+  }, []);
 
   const validateForm = (): boolean => {
     console.log("Validating form...");
@@ -362,14 +376,22 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {MODEL_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            <div className="flex flex-col">
-                              <span>{option.label}</span>
-                              <span className="text-xs text-muted-foreground">{option.description}</span>
-                            </div>
-                          </SelectItem>
-                        ))}
+                        {isLoadingModels ? (
+                          <SelectItem value="">Loading models...</SelectItem>
+                        ) : (
+                          models.map((model) => (
+                            <SelectItem key={model.id} value={model.id}>
+                              <div className="flex flex-col">
+                                <span>{model.name}</span>
+                                <span className="text-xs text-muted-foreground">
+                                  Context: {model.context_length.toLocaleString()} tokens
+                                  <br />
+                                  Pricing: ${model.pricing.prompt}/1K prompt, ${model.pricing.completion}/1K completion
+                                </span>
+                              </div>
+                            </SelectItem>
+                          ))
+                        )}
                       </SelectContent>
                     </Select>
                   </div>
