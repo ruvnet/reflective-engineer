@@ -421,62 +421,80 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
             </AccordionItem>
           </Accordion>
 
-          <div className="grid gap-4">
-            <div>
-              <label className="text-sm font-medium mb-2 block">Domain Category</label>
-              <Select
-                value={formData.domainCategory}
-                onValueChange={(value) => {
-                  setFormData(prev => ({
-                    ...prev,
-                    domainCategory: value,
-                    domain: "", // Reset domain when category changes
-                    systemPrompt: "" // Reset system prompt
-                  }));
-                }}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a domain category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.keys(DOMAINS).map((category) => (
-                    <SelectItem key={category} value={category}>{category}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.domainCategory && (
-                <p className="text-sm text-red-500 mt-1">{errors.domainCategory}</p>
-              )}
-            </div>
+          <Accordion type="multiple" className="w-full">
+            <AccordionItem value="domain">
+              <AccordionTrigger>
+                <div className="flex items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Domain Configuration
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="grid gap-4 p-2">
+                  <div>
+                    <div className="flex items-center">
+                      <label className="text-sm font-medium">Domain Category</label>
+                      <InfoTooltip content="Select the primary category for your agent's domain" />
+                    </div>
+                    <Select
+                      value={formData.domainCategory}
+                      onValueChange={(value) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          domainCategory: value,
+                          domain: "", // Reset domain when category changes
+                          systemPrompt: "" // Reset system prompt
+                        }));
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a domain category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.keys(DOMAINS).map((category) => (
+                          <SelectItem key={category} value={category}>{category}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.domainCategory && (
+                      <p className="text-sm text-red-500 mt-1">{errors.domainCategory}</p>
+                    )}
+                  </div>
 
-            {formData.domainCategory && (
-              <div>
-                <label className="text-sm font-medium mb-2 block">Domain</label>
-                <Select
-                  value={formData.domain}
-                  onValueChange={(value) => {
-                    setFormData(prev => ({
-                      ...prev,
-                      domain: value,
-                      systemPrompt: `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.`
-                    }));
-                  }}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a domain" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {DOMAINS[formData.domainCategory as keyof typeof DOMAINS].map((domain) => (
-                      <SelectItem key={domain} value={domain}>{domain}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.domain && (
-                  <p className="text-sm text-red-500 mt-1">{errors.domain}</p>
-                )}
-              </div>
-            )}
-          </div>
+                  {formData.domainCategory && (
+                    <div>
+                      <div className="flex items-center">
+                        <label className="text-sm font-medium">Domain</label>
+                        <InfoTooltip content="Select the specific domain for your agent" />
+                      </div>
+                      <Select
+                        value={formData.domain}
+                        onValueChange={(value) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            domain: value,
+                            systemPrompt: `You are an AI assistant specialized in ${value}. You will help users by providing detailed, step-by-step solutions using available tools.`
+                          }));
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a domain" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {DOMAINS[formData.domainCategory as keyof typeof DOMAINS].map((domain) => (
+                            <SelectItem key={domain} value={domain}>{domain}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {errors.domain && (
+                        <p className="text-sm text-red-500 mt-1">{errors.domain}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           <Accordion type="multiple" className="w-full">
             <AccordionItem value="model">
