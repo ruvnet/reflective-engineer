@@ -7,11 +7,14 @@ import { DeployAgentDialog } from "../components/DeployAgentDialog";
 import { TestAgentDialog } from "../components/TestAgentDialog";
 import { useToast } from "@/components/ui/use-toast";
 import { agentService, Agent } from "@/services/agentService";
+import { useTemplate } from "@/services/templateService";
+import { loadSettings } from "@/services/settingsService";
 
 export default function Agents() {
   const { toast } = useToast();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [testingAgent, setTestingAgent] = useState<Agent | null>(null);
+  const { data: template } = useTemplate("system-dynamics");
 
   useEffect(() => {
     setAgents(agentService.getAgents());
@@ -63,21 +66,26 @@ export default function Agents() {
               variant="outline"
               onClick={async () => {
                 try {
-                  // Create a test agent
+                  const settings = loadSettings();
+                  if (!settings?.defaultModel) {
+                    throw new Error("No default model configured");
+                  }
+
+                  // Create a test agent using template
                   const testAgent = await agentService.deployAgent({
                     name: "Test Agent",
-                    description: "Temporary agent for testing",
+                    description: template?.overview || "Temporary agent for testing",
                     config: {
                       type: "react",
                       model: {
-                        name: "openai/gpt-3.5-turbo",
+                        name: settings.defaultModel,
                         temperature: 0.7,
                         maxTokens: 2048
                       },
                       memory: "buffer",
                       tools: [],
                       chainType: "llm",
-                      systemPrompt: "You are a helpful AI assistant.",
+                      systemPrompt: template?.content || "You are a helpful AI assistant.",
                       streaming: false,
                       verbose: true
                     }
