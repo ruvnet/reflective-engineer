@@ -8,13 +8,6 @@ import { useToast } from "@/components/ui/use-toast";
 export default function Agents() {
   const { toast } = useToast();
 
-  const handleDeploy = () => {
-    toast({
-      title: "Coming Soon",
-      description: "Agent deployment will be available soon"
-    });
-  };
-
   return (
     <div className="flex min-h-screen flex-col">
       <MainNav title="Agent Builder" />
@@ -22,10 +15,19 @@ export default function Agents() {
       <div className="flex-1 p-8">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold tracking-tight">Agents</h2>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            New Agent
-          </Button>
+          <DeployAgentDialog 
+            onDeploy={() => {
+              toast({
+                description: "Agent deployment coming soon"
+              });
+            }}
+            trigger={
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                New Agent
+              </Button>
+            }
+          />
         </div>
 
         <Card>
@@ -36,7 +38,11 @@ export default function Agents() {
               Get started by deploying your first agent
             </p>
             <DeployAgentDialog 
-              onDeploy={handleDeploy}
+              onDeploy={() => {
+                toast({
+                  description: "Agent deployment coming soon"
+                });
+              }}
               trigger={
                 <Button>
                   <Plus className="mr-2 h-4 w-4" />
