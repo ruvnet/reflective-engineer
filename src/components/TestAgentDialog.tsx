@@ -155,11 +155,16 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
             try {
               const data = JSON.parse(content);
               if (data.choices?.[0]?.delta?.content) {
-                setResponse(prev => prev + data.choices[0].delta.content);
-                // Scroll to bottom
-                if (responseRef.current) {
-                  responseRef.current.scrollTop = responseRef.current.scrollHeight;
-                }
+                setResponse(prev => {
+                  const newResponse = prev + data.choices[0].delta.content;
+                  // Use requestAnimationFrame to ensure DOM update before scrolling
+                  requestAnimationFrame(() => {
+                    if (responseRef.current) {
+                      responseRef.current.scrollTop = responseRef.current.scrollHeight;
+                    }
+                  });
+                  return newResponse;
+                });
               }
             } catch (error) {
               console.warn('Failed to parse streaming response chunk:', content);
