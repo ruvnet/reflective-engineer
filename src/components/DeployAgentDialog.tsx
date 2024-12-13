@@ -821,7 +821,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                               }
                             }
                           }
-
+                          setIsOptimizing(false);
                           toast({
                             title: "Success",
                             description: "System prompt optimized",
