@@ -26,6 +26,7 @@ export default function Agents() {
     try {
       const newAgent = await agentService.deployAgent(agent);
       setAgents(agentService.getAgents());
+      setTestingAgent(null); // Clear testing agent
       setManagedAgent(newAgent);
       toast({
         title: "Success",
