@@ -15,6 +15,7 @@ import { Plus, Rocket, Brain, Wrench, Database, Settings, Bot, Network, HelpCirc
 interface DeployAgentDialogProps {
   onDeploy: (agent: { name: string; description: string; config: any }) => void;
   trigger?: React.ReactNode;
+  onClose?: () => void;
 }
 
 const AGENT_TYPES = {
@@ -142,7 +143,7 @@ interface FormErrors {
   systemPrompt?: string;
 }
 
-export function DeployAgentDialog({ onDeploy, trigger }: DeployAgentDialogProps) {
+export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDialogProps) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -208,6 +209,11 @@ export function DeployAgentDialog({ onDeploy, trigger }: DeployAgentDialogProps)
       description: formData.description,
       config
     });
+
+    // Close the dialog after successful deployment
+    if (onClose) {
+      onClose();
+    }
   };
 
   const InfoTooltip = ({ content }: { content: string }) => (
@@ -224,7 +230,7 @@ export function DeployAgentDialog({ onDeploy, trigger }: DeployAgentDialogProps)
   );
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => !open && onClose?.()}>
       <DialogTrigger asChild>
         {trigger || (
           <Button>
