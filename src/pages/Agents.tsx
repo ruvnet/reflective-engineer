@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Terminal, Plus, Play, Square, Zap, Trash2 } from "lucide-react";
+import { Terminal, Plus, Play, Square, Trash2, Zap } from "lucide-react";
 import MainNav from "../components/MainNav";
 import { DeployAgentDialog } from "../components/DeployAgentDialog";
 import { TestAgentDialog } from "../components/TestAgentDialog";
