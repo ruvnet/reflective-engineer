@@ -237,31 +237,39 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
 
     console.log("Deploying agent with config:", config);
 
-    await onDeploy({
-      name: formData.name,
-      description: formData.description,
-      config
-    });
+    try {
+      await onDeploy({
+        name: formData.name,
+        description: formData.description,
+        config
+      });
 
-    // Reset form data
-    setFormData({
-      name: "",
-      description: "",
-      agentType: "react",
-      model: "gpt-4",
-      temperature: 0.7,
-      maxTokens: 2048,
-      memory: "buffer",
-      tools: ["calculator", "search"],
-      chainType: "llm",
-      systemPrompt: "You are a helpful AI assistant that uses available tools to solve problems step by step.",
-      streaming: true,
-      verbose: false
-    });
+      // Only reset form after successful deployment
+      setFormData({
+        name: "",
+        description: "",
+        domainCategory: "",
+        domain: "",
+        agentCategory: "",
+        agentType: "react",
+        model: "",
+        temperature: 0.7,
+        maxTokens: 2048,
+        memory: "buffer",
+        tools: ["calculator", "search"],
+        chainType: "llm",
+        systemPrompt: "You are a helpful AI assistant that uses available tools to solve problems step by step.",
+        streaming: true,
+        verbose: false
+      });
 
-    // Close the dialog after deployment
-    if (onClose) {
-      onClose();
+      // Close the dialog after successful deployment
+      if (onClose) {
+        onClose();
+      }
+    } catch (error) {
+      console.error("Deployment failed:", error);
+      // Don't reset form or close dialog on failure
     }
   };
 
