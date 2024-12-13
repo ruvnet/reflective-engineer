@@ -60,8 +60,19 @@ export default function Agents() {
           <h2 className="text-3xl font-bold tracking-tight">Agents</h2>
           <div className="flex gap-2">
             <Button
-              variant="secondary"
-              onClick={() => setTestingAgent(agents.find(a => a.status === "running"))}
+              variant="outline"
+              onClick={() => {
+                const runningAgent = agents.find(a => a.status === "running");
+                if (runningAgent) {
+                  setTestingAgent(runningAgent);
+                } else {
+                  toast({
+                    title: "No Running Agent",
+                    description: "Please start an agent before testing",
+                    variant: "destructive"
+                  });
+                }
+              }}
               disabled={!agents.some(a => a.status === "running")}
             >
               <Zap className="mr-2 h-4 w-4" />

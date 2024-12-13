@@ -20,7 +20,14 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
   const { toast } = useToast();
 
   const handleTest = useCallback(async () => {
-    if (!input.trim()) return;
+    if (!input.trim()) {
+      toast({
+        title: "Input Required",
+        description: "Please enter some text to test the agent",
+        variant: "destructive"
+      });
+      return;
+    }
     
     setIsLoading(true);
     setResponse("");
