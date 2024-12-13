@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchAvailableModels, OpenRouterModel, loadSettings } from "@/services/settingsService";
 import { CATEGORIES, OUTPUT_TYPES, DOMAINS } from "../components/constants/domains";
+import { AGENT_CATEGORIES, AGENT_DESCRIPTIONS } from "../components/constants/categories";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -119,6 +120,8 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
       description: "",
       domainCategory: "",
       domain: "",
+      agentCategory: "",
+      agentType: "",
       model: settings?.defaultModel || "",
       temperature: 0.7,
       maxTokens: 2048,
