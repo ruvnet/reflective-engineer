@@ -1,7 +1,7 @@
 import unittest
 from src.main import load_config
 
-class TestMain(unittest.TestCase):
+class sdynm TestMain(unittest.TestCase):
     def test_load_config(self):
         config = load_config('config/config.yaml')
         self.assertIsNotNone(config)
