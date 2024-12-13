@@ -445,8 +445,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                         setFormData(prev => ({
                           ...prev,
                           domainCategory: value,
-                          domain: "", // Reset domain when category changes
-                          systemPrompt: "" // Reset system prompt
+                          domain: "" // Reset domain when category changes
                         }));
                       }}
                     >
