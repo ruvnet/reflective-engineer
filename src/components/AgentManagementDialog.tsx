@@ -193,7 +193,7 @@ export function AgentManagementDialog({
   }
 
   return (
-    <Dialog open={isOpen && !showSettings} onOpenChange={() => onClose()}>
+    <Dialog open={isOpen} onOpenChange={() => onClose()}>
       <DialogContent className="sm:max-w-[700px] max-h-[80vh] flex flex-col">
         <DialogHeader>
           <div className="flex justify-between items-center">
@@ -214,11 +214,7 @@ export function AgentManagementDialog({
               <Button 
                 variant="outline" 
                 size="sm"
-                onClick={() => {
-                  // Close this dialog and show settings
-                  onClose();
-                  setShowSettings(true);
-                }}
+                onClick={() => setShowSettings(true)}
               >
                 <Settings className="h-4 w-4" />
                 Settings
