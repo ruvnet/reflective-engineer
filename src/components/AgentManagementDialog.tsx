@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Agent } from "@/services/agentService";
+import { fetchAvailableModels, OpenRouterModel, loadSettings } from "@/services/settingsService";
 import { Play, Square, Settings } from "lucide-react";
 
 interface AgentManagementDialogProps {
@@ -30,19 +31,60 @@ export function AgentManagementDialog({
   const [isExecuting, setIsExecuting] = useState(false);
   const responseRef = useRef<HTMLPreElement>(null);
   const [systemPrompt, setSystemPrompt] = useState(agent.config.systemPrompt);
+  const [models, setModels] = useState<OpenRouterModel[]>([]);
+  const [isLoadingModels, setIsLoadingModels] = useState(false);
+  const [selectedModel, setSelectedModel] = useState(agent.config.model.name);
+  const [temperature, setTemperature] = useState(agent.config.model.temperature);
+  const [maxTokens, setMaxTokens] = useState(agent.config.model.maxTokens);
 
-  // Update system prompt when agent changes
+  // Update values when agent changes
   useEffect(() => {
     setSystemPrompt(agent.config.systemPrompt);
-  }, [agent.config.systemPrompt]);
+    setSelectedModel(agent.config.model.name);
+    setTemperature(agent.config.model.temperature);
+    setMaxTokens(agent.config.model.maxTokens);
+  }, [agent.config]);
+
+  // Load available models when dialog opens
+  useEffect(() => {
+    const loadModels = async () => {
+      const settings = loadSettings();
+      if (!settings?.apiKey) return;
+
+      setIsLoadingModels(true);
+      try {
+        const availableModels = await fetchAvailableModels(settings.apiKey);
+        setModels(availableModels);
+      } catch (error) {
+        console.error('Failed to load models:', error);
+      } finally {
+        setIsLoadingModels(false);
+      }
+    };
+
+    if (isOpen) {
+      loadModels();
+    }
+  }, [isOpen]);
+
+  // Get current model details
+  const currentModel = useMemo(() => {
+    return models.find(m => m.id === selectedModel);
+  }, [models, selectedModel]);
 
   const handleExecute = async () => {
     if (!input.trim() || !agent.executor) return;
     
     setIsExecuting(true);
     try {
-      // Update the agent's system prompt before execution
+      // Update the agent's configuration before execution
       agent.config.systemPrompt = systemPrompt;
+      agent.config.model = {
+        ...agent.config.model,
+        name: selectedModel,
+        temperature,
+        maxTokens
+      };
       const result = await agent.executor.call({ 
         input: input // Only pass the input
       });
