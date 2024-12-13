@@ -401,7 +401,9 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                                 const [_, frontmatter, body] = parsed;
                                 setFormData(prev => ({
                                   ...prev,
-                                  systemPrompt: body.trim()
+                                  systemPrompt: prev.domain ? 
+                                    `You are an AI assistant specialized in ${prev.domain}. You will help users by providing detailed, step-by-step solutions using available tools.\n\n${body.trim()}` :
+                                    body.trim()
                                 }));
                               }
                             })
