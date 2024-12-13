@@ -771,7 +771,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                               messages: [
                                 {
                                   role: "system",
-                                  content: "You are an expert at optimizing prompts for clarity, effectiveness, and efficiency. Analyze the given prompt and suggest improvements while maintaining its core functionality."
+                                  content: "You are an expert at optimizing prompts for clarity, effectiveness, and efficiency. Analyze the given prompt and provide only the optimized version, without any explanatory text or preamble."
                                 },
                                 {
                                   role: "user",
