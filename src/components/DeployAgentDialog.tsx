@@ -13,7 +13,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Plus, Rocket, Brain, Wrench, Database, Settings, Bot, Network, HelpCircle } from "lucide-react";
+import { Plus, Rocket, Brain, Wrench, Database, Settings, Bot, Network, HelpCircle, Wand2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 interface DeployAgentDialogProps {
   onDeploy: (agent: { name: string; description: string; config: any }) => void;
@@ -111,6 +112,7 @@ interface FormErrors {
 }
 
 export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDialogProps) {
+  const { toast } = useToast();
   const [models, setModels] = useState<OpenRouterModel[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [formData, setFormData] = useState(() => {
@@ -720,9 +722,88 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
               </AccordionTrigger>
               <AccordionContent>
                 <div className="grid gap-4 p-2">
-                  <div className="flex items-center">
-                    <label>System Prompt</label>
-                    <InfoTooltip content="Instructions that define the agent's behavior and capabilities" />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <label>System Prompt</label>
+                      <InfoTooltip content="Instructions that define the agent's behavior and capabilities" />
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={async () => {
+                        if (!formData.model) {
+                          toast({
+                            title: "Error",
+                            description: "Please select a model first",
+                            variant: "destructive"
+                          });
+                          return;
+                        }
+
+                        const settings = loadSettings();
+                        if (!settings?.apiKey) {
+                          toast({
+                            title: "Error",
+                            description: "API key not configured",
+                            variant: "destructive"
+                          });
+                          return;
+                        }
+
+                        try {
+                          const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                              "Authorization": `Bearer ${settings.apiKey}`,
+                              "HTTP-Referer": window.location.origin,
+                              "X-Title": "Reflective Engineer",
+                            },
+                            body: JSON.stringify({
+                              model: formData.model,
+                              messages: [
+                                {
+                                  role: "system",
+                                  content: "You are an expert at optimizing prompts for clarity, effectiveness, and efficiency. Analyze the given prompt and suggest improvements while maintaining its core functionality."
+                                },
+                                {
+                                  role: "user",
+                                  content: `Please optimize this system prompt:\n\n${formData.systemPrompt}`
+                                }
+                              ],
+                              temperature: 0.7,
+                              stream: false
+                            })
+                          });
+
+                          if (!response.ok) {
+                            throw new Error("Failed to optimize prompt");
+                          }
+
+                          const data = await response.json();
+                          const optimizedPrompt = data.choices[0].message.content;
+                          
+                          setFormData(prev => ({
+                            ...prev,
+                            systemPrompt: optimizedPrompt
+                          }));
+
+                          toast({
+                            title: "Success",
+                            description: "System prompt optimized",
+                          });
+                        } catch (error) {
+                          toast({
+                            title: "Error",
+                            description: "Failed to optimize prompt",
+                            variant: "destructive"
+                          });
+                        }
+                      }}
+                    >
+                      <Rocket className="w-4 h-4 mr-2" />
+                      Optimize
+                    </Button>
                   </div>
                   <Textarea
                     value={formData.systemPrompt}
