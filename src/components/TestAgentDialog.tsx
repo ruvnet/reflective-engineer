@@ -320,6 +320,7 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
                 <Button 
                   variant="outline"
                   onClick={() => {
+                    stopStream();
                     setResponse("");
                     setTemperature(agent.config.model.temperature);
                     setMaxTokens(agent.config.model.maxTokens);
