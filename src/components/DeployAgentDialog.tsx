@@ -230,7 +230,14 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
   );
 
   return (
-    <Dialog onOpenChange={(open) => !open && onClose?.()}>
+    <Dialog 
+      open={trigger ? undefined : true}
+      onOpenChange={(open) => {
+        if (!open && onClose) {
+          onClose();
+        }
+      }}
+    >
       <DialogTrigger asChild>
         {trigger || (
           <Button>
@@ -531,7 +538,14 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
             </AccordionItem>
           </Accordion>
 
-          <Button onClick={handleSubmit} className="mt-4">
+          <Button 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }} 
+            className="mt-4"
+            type="button"
+          >
             <Rocket className="mr-2 h-4 w-4" />
             Deploy Agent
           </Button>
