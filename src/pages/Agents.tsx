@@ -24,15 +24,27 @@ export default function Agents() {
 
   const handleDeploy = async (agent: Omit<Agent, 'id' | 'status'>) => {
     try {
-      const newAgent = await agentService.deployAgent(agent);
+      const newAgent = await agentService.deployAgent({
+        ...agent,
+        config: {
+          ...agent.config,
+          systemPrompt: agent.config.systemPrompt || "",
+          tools: agent.config.tools || [],
+          memory: agent.config.memory || "buffer",
+          chainType: agent.config.chainType || "llm",
+          streaming: agent.config.streaming !== undefined ? agent.config.streaming : true,
+          verbose: agent.config.verbose || false
+        }
+      });
       setAgents(agentService.getAgents());
       setTestingAgent(null); // Clear testing agent
-      setManagedAgent(newAgent);
+      setManagedAgent(newAgent); // This will now have all the config
       toast({
         title: "Success",
         description: "Agent deployed successfully"
       });
     } catch (error) {
+      console.error("Deploy error:", error);
       toast({
         title: "Error",
         description: "Failed to deploy agent",
