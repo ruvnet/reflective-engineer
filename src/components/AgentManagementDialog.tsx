@@ -29,6 +29,7 @@ export function AgentManagementDialog({
   const [response, setResponse] = useState("");
   const [isExecuting, setIsExecuting] = useState(false);
   const responseRef = useRef<HTMLPreElement>(null);
+  const [systemPrompt, setSystemPrompt] = useState(agent.config.systemPrompt);
 
   const handleExecute = async () => {
     if (!input.trim() || !agent.executor) return;

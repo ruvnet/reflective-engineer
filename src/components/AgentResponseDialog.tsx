@@ -47,14 +47,27 @@ export function AgentResponseDialog({ agent, isOpen, onClose }: AgentResponseDia
         </DialogHeader>
         
         <div className="flex flex-col gap-4 flex-1">
-          <div>
-            <label className="text-sm font-medium mb-2 block">Input</label>
-            <Textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Enter your input..."
-              className="min-h-[100px]"
-            />
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">System Prompt</label>
+              <Textarea
+                value={systemPrompt}
+                onChange={(e) => setSystemPrompt(e.target.value)}
+                placeholder="System prompt..."
+                className="min-h-[100px]"
+                disabled={agent.status !== "running"}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium mb-2 block">Input</label>
+              <Textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Enter your input..."
+                className="min-h-[100px]"
+                disabled={agent.status !== "running"}
+              />
+            </div>
           </div>
 
           <div>
