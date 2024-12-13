@@ -97,13 +97,14 @@ export default function Agents() {
                     <span>{agent.name}</span>
                     <div className="flex gap-2">
                       <Button
-                        variant="outline"
-                        size="icon"
+                        variant="secondary"
+                        size="sm"
                         onClick={() => setTestingAgent(agent)}
                         disabled={agent.status !== "running"}
-                        title={agent.status !== "running" ? "Start agent to test" : "Test agent"}
+                        className="flex items-center"
                       >
-                        <Zap className="h-4 w-4" />
+                        <Zap className="h-4 w-4 mr-2" />
+                        Test
                       </Button>
                       <Button
                         variant="outline"
