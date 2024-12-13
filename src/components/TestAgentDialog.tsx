@@ -31,6 +31,16 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
     
     setIsLoading(true);
     setResponse("");
+
+    const cleanup = async () => {
+      try {
+        // Stop and clean up the test agent
+        await agentService.stopAgent(agent.id);
+        // You might want to add a method to remove the agent completely
+      } catch (error) {
+        console.error('Failed to cleanup test agent:', error);
+      }
+    };
     
     try {
       const settings = loadSettings();

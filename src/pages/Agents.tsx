@@ -61,14 +61,38 @@ export default function Agents() {
           <div className="flex gap-2">
             <Button
               variant="outline"
-              onClick={() => {
-                const runningAgent = agents.find(a => a.status === "running");
-                if (runningAgent) {
-                  setTestingAgent(runningAgent);
-                } else {
+              onClick={async () => {
+                try {
+                  // Create a test agent
+                  const testAgent = await agentService.deployAgent({
+                    name: "Test Agent",
+                    description: "Temporary agent for testing",
+                    config: {
+                      type: "react",
+                      model: {
+                        name: "openai/gpt-3.5-turbo",
+                        temperature: 0.7,
+                        maxTokens: 2048
+                      },
+                      memory: "buffer",
+                      tools: [],
+                      chainType: "llm",
+                      systemPrompt: "You are a helpful AI assistant.",
+                      streaming: false,
+                      verbose: true
+                    }
+                  });
+                  
+                  // Start the agent
+                  await agentService.startAgent(testAgent.id);
+                  
+                  // Update agents list and open test dialog
+                  setAgents(agentService.getAgents());
+                  setTestingAgent(testAgent);
+                } catch (error) {
                   toast({
-                    title: "No Running Agent",
-                    description: "Please start an agent before testing",
+                    title: "Error",
+                    description: "Failed to create test agent",
                     variant: "destructive"
                   });
                 }
