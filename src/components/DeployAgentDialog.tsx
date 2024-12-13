@@ -131,19 +131,22 @@ interface FormErrors {
 export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDialogProps) {
   const [models, setModels] = useState<OpenRouterModel[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    agentType: "react",
-    model: "gpt-4",
-    temperature: 0.7,
-    maxTokens: 2048,
-    memory: "buffer",
-    tools: ["calculator", "search"],  // Pre-select some default tools
-    chainType: "llm",
-    systemPrompt: "You are a helpful AI assistant that uses available tools to solve problems step by step.",
-    streaming: true,
-    verbose: false
+  const [formData, setFormData] = useState(() => {
+    const settings = loadSettings();
+    return {
+      name: "",
+      description: "",
+      agentType: "react",
+      model: settings?.defaultModel || "",
+      temperature: 0.7,
+      maxTokens: 2048,
+      memory: "buffer",
+      tools: ["calculator", "search"],  // Pre-select some default tools
+      chainType: "llm",
+      systemPrompt: "You are a helpful AI assistant that uses available tools to solve problems step by step.",
+      streaming: true,
+      verbose: false
+    };
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
