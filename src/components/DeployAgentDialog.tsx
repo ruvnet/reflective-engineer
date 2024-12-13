@@ -113,6 +113,7 @@ interface FormErrors {
 
 export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDialogProps) {
   const { toast } = useToast();
+  const [isOpen, setIsOpen] = useState(false);
   const [models, setModels] = useState<OpenRouterModel[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [isOptimizing, setIsOptimizing] = useState(false);
@@ -219,6 +220,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
     }
 
     console.log("Form data:", formData);
+    setIsOpen(false);
     
     const config = {
       type: formData.agentType,
@@ -287,15 +289,16 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
   );
 
   return (
-    <Dialog
-      open={trigger ? undefined : true}
+    <Dialog 
+      open={isOpen}
       onOpenChange={(open) => {
+        setIsOpen(open);
         if (!open && onClose) {
           onClose();
         }
       }}
     >
-      <DialogTrigger asChild>
+      <DialogTrigger asChild onClick={() => setIsOpen(true)}>
         {trigger || (
           <Button>
             <Plus className="mr-2 h-4 w-4" />
