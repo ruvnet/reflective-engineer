@@ -1,31 +1,31 @@
 export const AGENT_CATEGORIES = {
   "Prompt Library": {
-    "Mathematical Frameworks": "Agents specialized in mathematical reasoning and frameworks",
-    "Basic Prompting": "Fundamental prompt engineering techniques",
-    "Advanced Prompting": "Sophisticated prompt engineering strategies",
-    "Cutting Edge": "Latest developments in prompt engineering",
-    "Specialized": "Domain-specific prompt engineering",
-    "Safety": "Safe and responsible prompt engineering",
-    "Optimization": "Prompt optimization and refinement"
+    "Mathematical Frameworks": ["abstract-algebra", "category-theory", "complex-analysis", "mathematical-logic", "number-theory", "set-theory", "symbolic-systems", "topology"],
+    "Basic Prompting": ["chain-of-thought", "direct-instruction", "few-shot", "role-playing", "step-by-step", "zero-shot"],
+    "Advanced Prompting": ["chain-of-verification", "meta-prompting", "recursive-prompting", "self-consistency", "socratic-method"],
+    "Cutting Edge": ["adversarial-prompting", "automatic-reasoning", "constitutional-ai", "emergent-abilities", "multi-agent", "recursive-refinement", "self-reflection"],
+    "Specialized": ["causal-inference", "context-distillation", "knowledge-graphs", "prompt-chaining", "retrieval-augmented", "semantic-control", "temporal-reasoning"],
+    "Safety": ["jailbreak-prevention", "output-sanitization", "prompt-injection"],
+    "Optimization": ["context-window", "prompt-compression", "response-shaping", "temperature-control", "token-optimization"]
   },
   "Agent Library": {
-    "Conversational Agents": "Natural dialogue and interaction focused agents",
-    "Tool-Using Agents": "Agents that effectively utilize external tools",
-    "Multi-Agent Systems": "Coordinated systems of multiple agents",
-    "Memory Systems": "Agents with advanced memory capabilities"
+    "Conversational Agents": ["openai-functions", "plan-and-execute", "react-agent", "structured-chat", "xml-agent", "zero-shot-agent"],
+    "Tool-Using Agents": ["api-chain", "retrieval-qa", "router-chain", "sequential-chain", "sql-chain", "vector-store"],
+    "Multi-Agent Systems": ["agent-executor", "agent-network", "hierarchical-agents", "multi-agent-systems", "supervisor-agent", "team-chat"],
+    "Memory Systems": ["buffer-memory", "conversation-memory", "entity-memory", "memory-systems", "summary-memory", "time-weighted-memory", "vector-memory"]
   }
 };
 
 export const AGENT_DESCRIPTIONS = {
-  "Mathematical Frameworks": "Implements mathematical reasoning and structured frameworks for problem-solving",
-  "Basic Prompting": "Uses fundamental prompt engineering techniques for reliable responses",
-  "Advanced Prompting": "Employs sophisticated prompt engineering strategies for complex tasks",
-  "Cutting Edge": "Utilizes the latest developments in prompt engineering and AI capabilities",
-  "Specialized": "Focuses on specific domain expertise and specialized knowledge",
-  "Safety": "Prioritizes safe and responsible AI interaction patterns",
-  "Optimization": "Specializes in optimizing and refining prompt performance",
-  "Conversational Agents": "Excels at natural dialogue and human-like interactions",
-  "Tool-Using Agents": "Effectively leverages external tools and APIs for enhanced capabilities",
-  "Multi-Agent Systems": "Coordinates with other agents in a collaborative system",
-  "Memory Systems": "Utilizes advanced memory systems for improved context retention"
+  "Mathematical Frameworks": "Mathematical reasoning frameworks using formal logic, set theory, and algebraic structures",
+  "Basic Prompting": "Core prompt engineering techniques for reliable and consistent responses",
+  "Advanced Prompting": "Sophisticated prompting strategies for complex reasoning and problem-solving",
+  "Cutting Edge": "Latest developments in prompt engineering and AI capabilities",
+  "Specialized": "Domain-specific prompt engineering techniques for targeted applications",
+  "Safety": "Security and safety measures for responsible AI interaction",
+  "Optimization": "Performance optimization and efficiency improvements for prompts",
+  "Conversational Agents": "Natural language interaction and dialogue management",
+  "Tool-Using Agents": "Integration with external tools and APIs for enhanced capabilities",
+  "Multi-Agent Systems": "Coordinated systems of multiple collaborative agents",
+  "Memory Systems": "Advanced context retention and information management systems"
 };
