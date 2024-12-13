@@ -44,8 +44,7 @@ export function AgentManagementDialog({
       // Update the agent's system prompt before execution
       agent.config.systemPrompt = systemPrompt;
       const result = await agent.executor.call({ 
-        input,
-        systemPrompt: systemPrompt // Pass the current system prompt
+        input: input // Only pass the input
       });
       setResponse(result?.output || "No response");
     } catch (error) {
