@@ -115,6 +115,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
   const { toast } = useToast();
   const [models, setModels] = useState<OpenRouterModel[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
+  const [isOptimizing, setIsOptimizing] = useState(false);
   const [formData, setFormData] = useState(() => {
     const settings = loadSettings();
     return {
@@ -159,7 +160,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
           variant: "destructive"
         });
       } finally {
-        setIsLoadingModels(false);
+        setIsOptimizing(false);
       }
     };
 
@@ -750,6 +751,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                           return;
                         }
 
+                        setIsOptimizing(true);
                         try {
                           const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                             method: "POST",
@@ -801,8 +803,17 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                         }
                       }}
                     >
-                      <Rocket className="w-4 h-4 mr-2" />
-                      Optimize
+                      {isOptimizing ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Executing...
+                        </>
+                      ) : (
+                        <>
+                          <Rocket className="w-4 h-4 mr-2" />
+                          Optimize
+                        </>
+                      )}
                     </Button>
                   </div>
                   <Textarea
