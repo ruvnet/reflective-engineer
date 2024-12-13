@@ -142,6 +142,16 @@ export function AgentManagementDialog({
           </div>
 
           <div>
+            <label className="text-sm font-medium mb-2 block">System Prompt</label>
+            <Textarea
+              value={systemPrompt}
+              onChange={(e) => setSystemPrompt(e.target.value)}
+              placeholder="System prompt..."
+              className="min-h-[100px] font-mono text-sm"
+            />
+          </div>
+
+          <div>
             <label className="text-sm font-medium mb-2 block">Input</label>
             <Textarea
               value={input}
