@@ -141,6 +141,7 @@ interface FormErrors {
   description?: string;
   tools?: string;
   systemPrompt?: string;
+  model?: string;
 }
 
 export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDialogProps) {
@@ -162,6 +163,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
   const [errors, setErrors] = useState<FormErrors>({});
 
   const validateForm = (): boolean => {
+    console.log("Validating form...");
     const newErrors: FormErrors = {};
 
     if (!formData.name.trim()) {
@@ -180,15 +182,24 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
       newErrors.systemPrompt = "System prompt is required";
     }
 
+    if (!formData.model) {
+      newErrors.model = "Model selection is required";
+    }
+
+    console.log("Validation errors:", newErrors);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = () => {
+    console.log("Validating form...");
     if (!validateForm()) {
+      console.log("Form validation failed", errors);
       return;
     }
 
+    console.log("Form data:", formData);
+    
     const config = {
       type: formData.agentType,
       model: {
@@ -204,12 +215,16 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
       verbose: formData.verbose
     };
 
+    console.log("Deploying agent with config:", config);
+
     onDeploy({
       name: formData.name,
       description: formData.description,
       config
     });
 
+    console.log("Agent deployed, closing dialog");
+    
     // Close the dialog after successful deployment
     if (onClose) {
       onClose();
