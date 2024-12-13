@@ -1,4 +1,6 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { Database, Loader2 } from "lucide-react";
+import { fetchAvailableModels, OpenRouterModel } from "@/services/settingsService";
 import {
   Dialog,
   DialogContent,
@@ -29,7 +31,42 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
   const abortControllerRef = useRef<AbortController | null>(null);
   const [temperature, setTemperature] = useState(agent.config.model.temperature);
   const [maxTokens, setMaxTokens] = useState(agent.config.model.maxTokens);
+  const [models, setModels] = useState<OpenRouterModel[]>([]);
+  const [selectedModel, setSelectedModel] = useState(agent.config.model.name);
+  const [isLoadingModels, setIsLoadingModels] = useState(false);
   const { toast } = useToast();
+
+  // Load available models when dialog opens
+  useEffect(() => {
+    const loadModels = async () => {
+      const settings = loadSettings();
+      if (!settings?.apiKey) return;
+
+      setIsLoadingModels(true);
+      try {
+        const availableModels = await fetchAvailableModels(settings.apiKey);
+        setModels(availableModels);
+      } catch (error) {
+        console.error('Failed to load models:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load available models",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoadingModels(false);
+      }
+    };
+
+    if (isOpen) {
+      loadModels();
+    }
+  }, [isOpen, toast]);
+
+  // Get current model details
+  const currentModel = useMemo(() => {
+    return models.find(m => m.id === selectedModel);
+  }, [models, selectedModel]);
 
   const stopStream = useCallback(() => {
     if (abortControllerRef.current) {
@@ -76,7 +113,7 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
           "X-Title": "Reflective Engineer",
         },
         body: JSON.stringify({
-          model: agent.config.model.name,
+          model: selectedModel,
           messages: [
             {
               role: "system",
@@ -179,33 +216,68 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
 
           <div className="space-y-4">
             <div className="grid gap-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">Model Settings</label>
-                <div className="grid gap-4 p-4 border rounded-md">
-                  <div>
-                    <div className="flex justify-between items-center mb-2">
-                      <label className="text-sm">Temperature: {temperature}</label>
-                      <Badge variant="outline">
-                        Model: {agent.config.model.name}
-                      </Badge>
-                    </div>
-                    <Slider
-                      min={0}
-                      max={1}
-                      step={0.1}
-                      value={[temperature]}
-                      onValueChange={([value]) => setTemperature(value)}
-                    />
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center mb-2">
+                    <Database className="w-4 h-4 mr-2" />
+                    <label className="text-sm font-medium">Model Selection</label>
                   </div>
-                  <div>
-                    <label className="text-sm mb-2 block">Max Tokens: {maxTokens}</label>
-                    <Slider
-                      min={256}
-                      max={4096}
-                      step={256}
-                      value={[maxTokens]}
-                      onValueChange={([value]) => setMaxTokens(value)}
-                    />
+                  <select
+                    className="w-full p-2 rounded-md border bg-background"
+                    value={selectedModel}
+                    onChange={(e) => setSelectedModel(e.target.value)}
+                    disabled={isLoadingModels}
+                  >
+                    {isLoadingModels ? (
+                      <option>Loading models...</option>
+                    ) : (
+                      models.map((model) => (
+                        <option key={model.id} value={model.id}>
+                          {model.name}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  {currentModel && (
+                    <div className="mt-2 text-sm text-muted-foreground">
+                      <p>Context: {currentModel.context_length.toLocaleString()} tokens</p>
+                      <p>Pricing: ${currentModel.pricing.prompt}/1K prompt, ${currentModel.pricing.completion}/1K completion</p>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Model Settings</label>
+                  <div className="grid gap-4 p-4 border rounded-md">
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="text-sm">Temperature: {temperature}</label>
+                        {isLoadingModels ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Badge variant="outline">
+                            {currentModel?.name || "Loading..."}
+                          </Badge>
+                        )}
+                      </div>
+                      <Slider
+                        min={0}
+                        max={1}
+                        step={0.1}
+                        value={[temperature]}
+                        onValueChange={([value]) => setTemperature(value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm mb-2 block">Max Tokens: {maxTokens}</label>
+                      <Slider
+                        min={256}
+                        max={currentModel?.context_length || 4096}
+                        step={256}
+                        value={[maxTokens]}
+                        onValueChange={([value]) => setMaxTokens(value)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
