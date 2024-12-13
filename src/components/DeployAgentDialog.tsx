@@ -384,7 +384,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                         ) : (
                           models.map((model) => (
                             <SelectItem key={model.id} value={model.id}>
-                              <div className="flex flex-col">
+                              <div className="flex flex-col text-left">
                                 <span>{model.name}</span>
                                 <span className="text-xs text-muted-foreground">
                                   Context: {model.context_length.toLocaleString()} tokens
