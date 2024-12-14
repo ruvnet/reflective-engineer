@@ -12,7 +12,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import MainNav from "../components/MainNav";
-import { SavedPrompt, getSavedPrompts, deletePrompt } from "../services/storageService";
+import { SavedPrompt, getSavedPrompts, deletePrompt, saveTemplate } from "../services/storageService";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Template {
   title: string;
@@ -53,6 +54,7 @@ export default function Templates() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSection, setActiveSection] = useState<string>("Mathematical Frameworks");
+  const { toast } = useToast();
   const templatesPerPage = 9;
 
   const loadTemplate = (section: string) => {

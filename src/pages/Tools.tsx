@@ -143,7 +143,17 @@ const Tools = () => {
                   <p className="text-console-text mb-4">Edit and manage prompt templates</p>
                   <button 
                     className="console-button w-full"
-                    onClick={() => setIsTemplateEditorOpen(true)}
+                    onClick={() => {
+                      if (!activeSection) {
+                        toast({
+                          title: "Error",
+                          description: "Please select a section first",
+                          variant: "destructive"
+                        });
+                        return;
+                      }
+                      setIsTemplateEditorOpen(true);
+                    }}
                   >
                     Open Editor
                   </button>
@@ -155,14 +165,12 @@ const Tools = () => {
                   onSave={(template) => {
                     try {
                       saveTemplate({
-                        id: crypto.randomUUID(),
                         name: template.name,
                         description: template.description,
-                        category: template.category,
+                        category: activeSection,
                         domain: template.domain,
                         content: template.content,
-                        variables: template.variables,
-                        timestamp: Date.now()
+                        variables: template.variables
                       });
                       setIsTemplateEditorOpen(false);
                       toast({
