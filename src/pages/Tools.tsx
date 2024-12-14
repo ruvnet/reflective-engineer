@@ -101,11 +101,6 @@ const Tools = () => {
             {activeTab === "prompt" && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="glass-panel p-6 border border-console-cyan/20">
-                  <h3 className="text-xl text-console-cyan mb-2">Prompt Generator</h3>
-                  <p className="text-console-text mb-4">Generate structured prompts using templates and frameworks</p>
-                  <button className="console-button w-full">Open Tool</button>
-                </div>
-                <div className="glass-panel p-6 border border-console-cyan/20">
                   <h3 className="text-xl text-console-cyan mb-2">Chain Builder</h3>
                   <p className="text-console-text mb-4">Create complex prompt chains and workflows</p>
                   <button className="console-button w-full">Open Tool</button>
