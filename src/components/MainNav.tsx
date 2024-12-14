@@ -3,10 +3,10 @@ import { Terminal, Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const navItems = [
-  { name: "Home", path: "/" },
+  { name: "Prompts", path: "/" },
   { name: "Agents", path: "/agents" },
   { name: "Templates", path: "/templates" },
-  { name: "Documentation", path: "/docs" },
+  { name: "Docs", path: "/docs" },
   { name: "Settings", path: "/settings" },
   { name: "About", path: "/about" }
 ];
@@ -22,10 +22,12 @@ const MainNav = ({ title }: MainNavProps) => {
     <header className="glass-panel p-6 m-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4 flex-1 min-w-0">
-          <Terminal className="w-6 h-6 text-console-cyan flex-shrink-0" />
-          <h1 className="typing-container font-code text-xl truncate flex items-center">
-            {title}
-          </h1>
+          <Link to="/" className="flex items-center space-x-4">
+            <Terminal className="w-6 h-6 text-console-cyan flex-shrink-0" />
+            <h1 className="typing-container font-code text-xl truncate flex items-center">
+              {title}
+            </h1>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
