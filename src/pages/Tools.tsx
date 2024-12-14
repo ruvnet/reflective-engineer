@@ -256,7 +256,7 @@ const Tools = () => {
                             <button
                               onClick={() => {
                                 setEditingTemplate(template);
-                                setIsToolBuilderOpen(true);
+                                setIsTemplateEditorOpen(true);
                               }}
                               className="console-button p-2 hover:bg-console-cyan/20"
                               title="Edit template"
