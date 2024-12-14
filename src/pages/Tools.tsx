@@ -3,7 +3,8 @@ import MainNav from "../components/MainNav";
 import { toolRegistry } from "../tools";
 import { Tool, ToolCategory } from "../tools/types";
 import { toolService } from "../services/toolService";
-import { SavedTool, SavedTemplate, getSavedTools, getSavedTemplates } from "../services/storageService";
+import { SavedTool, SavedTemplate, getSavedTools, getSavedTemplates, saveTemplate } from "../services/storageService";
+import { useToast } from "@/components/ui/use-toast";
 import { ToolBuilderModal } from "../components/ToolBuilderModal";
 import { TemplateEditorModal } from "../components/TemplateEditorModal";
 
@@ -170,7 +171,7 @@ const Tools = () => {
                         category: activeSection,
                         domain: template.domain,
                         content: template.content,
-                        variables: template.variables
+                        variables: template.variables || []
                       });
                       setIsTemplateEditorOpen(false);
                       toast({
