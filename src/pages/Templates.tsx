@@ -34,6 +34,18 @@ const SECTIONS = [
   "Optimization"
 ];
 
+const MATH_SECTIONS = [
+  "Mathematical Logic",
+  "Set Theory",
+  "Category Theory",
+  "Abstract Algebra", 
+  "Topology",
+  "Complex Analysis",
+  "Symbolic Systems",
+  "System Analysis",
+  "Number Theory"
+];
+
 export default function Templates() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [builtInTemplates, setBuiltInTemplates] = useState<Template[]>([]);
