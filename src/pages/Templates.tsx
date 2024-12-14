@@ -60,9 +60,10 @@ export default function Templates() {
       template.content.toLowerCase().includes(searchQuery.toLowerCase())
     ) : true;
     
-    // Match if template content or title contains the section name
+    // Match if template content or title contains the section name, or if section name contains template title
     const matchesSection = template.content.toLowerCase().includes(activeSection.toLowerCase()) ||
-                          template.title.toLowerCase().includes(activeSection.toLowerCase());
+                          template.title.toLowerCase().includes(activeSection.toLowerCase()) ||
+                          activeSection.toLowerCase().includes(template.title.toLowerCase());
     
     return matchesSearch && matchesSection;
   });
