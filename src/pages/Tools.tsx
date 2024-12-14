@@ -9,7 +9,7 @@ import { ToolBuilderModal } from "../components/ToolBuilderModal";
 import { TemplateEditorModal } from "../components/TemplateEditorModal";
 
 const Tools = () => {
-  const [activeTab, setActiveTab] = useState<ToolCategory>("prompt");
+  const [activeTab, setActiveTab] = useState<ToolCategory | "saved">("prompt");
   const [activeSection, setActiveSection] = useState("Mathematical Frameworks");
   const [tools, setTools] = useState<Tool[]>([]);
   const [savedTools, setSavedTools] = useState<SavedTool[]>([]);
@@ -85,6 +85,16 @@ const Tools = () => {
                   }`}
                 >
                   Utilities
+                </button>
+                <button 
+                  onClick={() => setActiveTab("saved")}
+                  className={`whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium ${
+                    activeTab === "saved"
+                      ? "border-console-cyan text-console-cyan"
+                      : "border-transparent text-gray-400 hover:border-gray-300 hover:text-gray-300"
+                  }`}
+                >
+                  Saved Items
                 </button>
               </nav>
             </div>
@@ -201,6 +211,94 @@ const Tools = () => {
                   <h3 className="text-xl text-console-cyan mb-2">Bias Detector</h3>
                   <p className="text-console-text mb-4">Identify potential biases in model responses</p>
                   <button className="console-button w-full">Open Tool</button>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "saved" && (
+              <div className="space-y-8">
+                {/* Saved Templates Section */}
+                <div>
+                  <h2 className="text-xl font-code text-console-cyan mb-4">Saved Templates</h2>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {savedTemplates.map((template) => (
+                      <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
+                        <CardHeader>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <CardTitle className="text-console-cyan">{template.name}</CardTitle>
+                              <CardDescription className="text-console-green">
+                                {template.category} - {new Date(template.timestamp).toLocaleDateString()}
+                              </CardDescription>
+                            </div>
+                            <button
+                              onClick={() => {
+                                if (window.confirm('Are you sure you want to delete this template?')) {
+                                  deleteTemplate(template.id);
+                                  loadSavedTemplates();
+                                }
+                              }}
+                              className="console-button p-2 hover:bg-red-900/20"
+                              title="Delete template"
+                            >
+                              <Trash2 className="w-4 h-4 text-red-400" />
+                            </button>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
+                            <pre className="text-sm font-code text-console-text">
+                              {template.description}
+                              {'\n\n'}
+                              {template.content}
+                            </pre>
+                          </ScrollArea>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Saved Prompts Section */}
+                <div>
+                  <h2 className="text-xl font-code text-console-cyan mb-4">Saved Prompts</h2>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {getSavedPrompts().map((prompt) => (
+                      <Card key={prompt.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
+                        <CardHeader>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <CardTitle className="text-console-cyan">{prompt.title}</CardTitle>
+                              <CardDescription className="text-console-green">
+                                {prompt.prompt.domain} - {new Date(prompt.timestamp).toLocaleDateString()}
+                              </CardDescription>
+                            </div>
+                            <button
+                              onClick={() => {
+                                if (window.confirm('Are you sure you want to delete this prompt?')) {
+                                  deletePrompt(prompt.id);
+                                  setSavedTemplates(prev => [...prev]); // Force refresh
+                                }
+                              }}
+                              className="console-button p-2 hover:bg-red-900/20"
+                              title="Delete prompt"
+                            >
+                              <Trash2 className="w-4 h-4 text-red-400" />
+                            </button>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
+                            <pre className="text-sm font-code text-console-text">
+                              {prompt.prompt.overview}
+                              {'\n\n'}
+                              {prompt.prompt.content}
+                            </pre>
+                          </ScrollArea>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
