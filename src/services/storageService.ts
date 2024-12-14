@@ -2,6 +2,12 @@ export const SAVED_PROMPTS_KEY = 'symbolic-scribe-saved-prompts';
 export const SAVED_TOOLS_KEY = 'symbolic-scribe-saved-tools';
 export const SAVED_TEMPLATES_KEY = 'symbolic-scribe-saved-templates';
 
+// Generic storage functions
+const getStoredItems = <T>(key: string): T[] => {
+  const saved = localStorage.getItem(key);
+  return saved ? JSON.parse(saved) : [];
+};
+
 export interface SavedPrompt {
   id: string;
   title: string;
@@ -78,7 +84,7 @@ const deleteItem = (key: string, id: string): void => {
 };
 
 // Prompt-specific functions
-export const getSavedPrompts = (): SavedPrompt[] => getStoredItems(SAVED_PROMPTS_KEY);
+export const getSavedPrompts = (): SavedPrompt[] => getStoredItems<SavedPrompt>(SAVED_PROMPTS_KEY);
 export const savePrompt = (prompt: Omit<SavedPrompt, 'id' | 'timestamp'>) => 
   saveItem<SavedPrompt>(SAVED_PROMPTS_KEY, prompt);
 export const deletePrompt = (id: string) => deleteItem(SAVED_PROMPTS_KEY, id);
