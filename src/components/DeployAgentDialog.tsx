@@ -375,11 +375,11 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                       <SelectContent>
-                        {Array.from(new Set([
-                          ...Object.keys(AGENT_CATEGORIES["Agent Library"]), 
-                          ...Object.keys(AGENT_CATEGORIES["Prompt Library"])
-                        ])).map((category) => (
-                          <SelectItem key={category} value={category}>
+                        {[...new Map([
+                          ...Object.entries(AGENT_CATEGORIES["Agent Library"]).map(([k]) => [`agent-${k}`, k]),
+                          ...Object.entries(AGENT_CATEGORIES["Prompt Library"]).map(([k]) => [`prompt-${k}`, k])
+                        ])].map(([key, category]) => (
+                          <SelectItem key={key} value={category}>
                             <div className="flex flex-col text-left">
                               <span>{category}</span>
                               <span className="text-xs text-muted-foreground">
