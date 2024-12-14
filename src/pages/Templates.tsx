@@ -68,6 +68,7 @@ const SECTIONS: Section[] = [
 ];
 
 export default function Templates() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [builtInTemplates, setBuiltInTemplates] = useState<Template[]>([]);
   const [savedTemplates, setSavedTemplates] = useState<SavedPrompt[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -140,8 +141,28 @@ export default function Templates() {
     <div className="min-h-screen flex flex-col">
       <MainNav title="Template Library" />
       
-      <main className="flex-1 p-4">
-        <section className="glass-panel p-6 animate-matrix-fade">
+      <main className="flex-1 flex flex-col md:flex-row gap-4 p-4">
+        <aside className={`glass-panel p-4 ${sidebarOpen ? 'w-64' : 'w-20'} transition-all duration-300`}>
+          <div className="flex flex-col gap-4">
+            {SECTIONS.map((section) => (
+              <div key={section.name} className="space-y-2">
+                <h3 className="text-sm font-code text-console-cyan">{section.name}</h3>
+                <div className="space-y-1">
+                  {section.categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => loadTemplate(category)}
+                      className="w-full text-left px-2 py-1 rounded hover:bg-console-cyan/10 text-sm text-console-text hover:text-console-cyan transition-colors"
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </aside>
+        <section className="flex-1 glass-panel p-6 animate-matrix-fade">
           <div className="flex items-center gap-2 mb-6">
             <BookTemplate className="w-6 h-6 text-console-cyan" />
             <h1 className="text-2xl font-code text-console-cyan">Available Templates</h1>
