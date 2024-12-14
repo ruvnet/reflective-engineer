@@ -256,7 +256,7 @@ export default function Templates() {
                             {template.category} - {new Date(template.timestamp).toLocaleDateString()}
                           </CardDescription>
                         </div>
-                        <div className="flex gap-1 ml-auto">
+                        <div className="flex gap-0.5">
                           <button
                             onClick={() => {
                               setEditingTemplate(template);
