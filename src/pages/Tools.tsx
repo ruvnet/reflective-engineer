@@ -3,6 +3,7 @@ import MainNav from "../components/MainNav";
 import { toolRegistry } from "../tools";
 import { Tool, ToolCategory } from "../tools/types";
 import { toolService } from "../services/toolService";
+import { SavedTool, SavedTemplate, getSavedTools, getSavedTemplates } from "../services/storageService";
 import { ToolBuilderModal } from "../components/ToolBuilderModal";
 import { TemplateEditorModal } from "../components/TemplateEditorModal";
 
