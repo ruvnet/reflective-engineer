@@ -17,12 +17,21 @@ const Tools = () => {
   const [tools, setTools] = useState<Tool[]>([]);
   const [savedTools, setSavedTools] = useState<SavedTool[]>([]);
   const [savedTemplates, setSavedTemplates] = useState<SavedTemplate[]>([]);
-  const [isToolBuilderOpen, setIsToolBuilderOpen] = useState(false);
-  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
-  const [editingTemplate, setEditingTemplate] = useState<SavedTemplate | null>(null);
-  const [editingPrompt, setEditingPrompt] = useState<SavedPrompt | null>(null);
-  const [editingTool, setEditingTool] = useState<SavedTool | null>(null);
-  const [isGenerateOpen, setIsGenerateOpen] = useState(false);
+  const {
+    editingTool,
+    setEditingTool,
+    editingTemplate,
+    setEditingTemplate,
+    editingPrompt,
+    setEditingPrompt,
+    isToolBuilderOpen,
+    setIsToolBuilderOpen,
+    isTemplateEditorOpen,
+    setIsTemplateEditorOpen,
+    isGenerateOpen,
+    setIsGenerateOpen,
+    resetState
+  } = useEditModal();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -162,10 +171,7 @@ const Tools = () => {
 
                 <ToolBuilderModal
                   isOpen={isToolBuilderOpen}
-                  onClose={() => {
-                    setIsToolBuilderOpen(false);
-                    setEditingTool(null);
-                  }}
+                  onClose={() => resetState()}
                   onSave={(tool) => {
                     toolService.addTool(tool);
                     setIsToolBuilderOpen(false);
@@ -181,10 +187,7 @@ const Tools = () => {
 
                 <TemplateEditorModal
                   isOpen={isTemplateEditorOpen}
-                  onClose={() => {
-                    setIsTemplateEditorOpen(false);
-                    setEditingTemplate(null);
-                  }}
+                  onClose={() => resetState()}
                   initialData={editingTemplate || undefined}
                   onSave={(template) => {
                     try {
