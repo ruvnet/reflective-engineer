@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Search, BookTemplate, Trash2, Edit2 } from "lucide-react";
+import { TemplateEditorModal } from "../components/TemplateEditorModal";
 import { 
   Pagination,
   PaginationContent,
@@ -54,6 +55,8 @@ export default function Templates() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSection, setActiveSection] = useState<string>("Mathematical Frameworks");
+  const [editingTemplate, setEditingTemplate] = useState<SavedTemplate | null>(null);
+  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
   const { toast } = useToast();
   const templatesPerPage = 9;
 
@@ -300,6 +303,42 @@ export default function Templates() {
             </div>
           )}
         </section>
+
+        <TemplateEditorModal
+          isOpen={isTemplateEditorOpen}
+          onClose={() => {
+            setIsTemplateEditorOpen(false);
+            setEditingTemplate(null);
+          }}
+          initialData={editingTemplate || undefined}
+          onSave={(template) => {
+            try {
+              const templateData = {
+                name: template.name,
+                description: template.description,
+                category: template.category || activeSection,
+                domain: template.domain,
+                content: template.content,
+                variables: template.variables || []
+              };
+              saveTemplate(templateData);
+              setIsTemplateEditorOpen(false);
+              setEditingTemplate(null);
+              loadSavedTemplates();
+              toast({
+                title: "Success",
+                description: "Template saved successfully"
+              });
+            } catch (error) {
+              console.error('Failed to save template:', error);
+              toast({
+                title: "Error",
+                description: "Failed to save template",
+                variant: "destructive"
+              });
+            }
+          }}
+        />
       </main>
     </div>
   );
