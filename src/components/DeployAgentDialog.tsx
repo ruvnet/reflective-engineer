@@ -69,16 +69,24 @@ const TOOL_CATEGORIES = {
     name: "External APIs",
     description: "Tools for external service integration",
     tools: [
-      { value: "weather", label: "Weather API", description: "Get weather information" },
-      { value: "news", label: "News API", description: "Fetch news articles" }
+      { value: "weather-api", label: "Weather API", description: "Get weather information" },
+      { value: "news-api", label: "News API", description: "Fetch news articles" }
     ]
   },
   utilities: {
     name: "Utilities",
     description: "General purpose tools",
     tools: [
-      { value: "file-io", label: "File I/O", description: "Read and write files" },
-      { value: "code-executor", label: "Code Executor", description: "Execute code snippets" }
+      { value: "file-io-tool", label: "File I/O", description: "Read and write files" },
+      { value: "code-exec", label: "Code Executor", description: "Execute code snippets" }
+    ]
+  },
+  analysis: {
+    name: "Analysis Tools",
+    description: "Tools for analyzing and processing data",
+    tools: [
+      { value: "bias-detector", label: "Bias Detection", description: "Detect potential biases in text" },
+      { value: "sentiment-analyzer", label: "Sentiment Analysis", description: "Analyze text sentiment" }
     ]
   }
 };
