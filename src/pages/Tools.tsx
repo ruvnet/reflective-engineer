@@ -153,19 +153,30 @@ const Tools = () => {
                   isOpen={isTemplateEditorOpen}
                   onClose={() => setIsTemplateEditorOpen(false)}
                   onSave={(template) => {
-                    saveTemplate({
-                      name: template.name,
-                      description: template.description,
-                      category: template.category,
-                      domain: template.domain,
-                      content: template.content,
-                      variables: template.variables
-                    });
-                    setIsTemplateEditorOpen(false);
-                    toast({
-                      title: "Success",
-                      description: "Template saved successfully"
-                    });
+                    try {
+                      saveTemplate({
+                        id: crypto.randomUUID(),
+                        name: template.name,
+                        description: template.description,
+                        category: template.category,
+                        domain: template.domain,
+                        content: template.content,
+                        variables: template.variables,
+                        timestamp: Date.now()
+                      });
+                      setIsTemplateEditorOpen(false);
+                      toast({
+                        title: "Success",
+                        description: "Template saved successfully"
+                      });
+                    } catch (error) {
+                      console.error('Failed to save template:', error);
+                      toast({
+                        title: "Error",
+                        description: "Failed to save template",
+                        variant: "destructive"
+                      });
+                    }
                   }}
                 />
               </div>
