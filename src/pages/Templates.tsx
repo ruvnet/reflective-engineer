@@ -256,19 +256,31 @@ export default function Templates() {
                             Saved Template - {new Date(template.timestamp).toLocaleDateString()}
                           </CardDescription>
                         </div>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (window.confirm('Are you sure you want to delete this template?')) {
-                              deleteTemplate(template.id);
-                              loadSavedTemplates(); // Refresh the list after deletion
-                            }
-                          }}
-                          className="console-button p-2 hover:bg-red-900/20"
-                          title="Delete template"
-                        >
-                          <Trash2 className="w-4 h-4 text-red-400" />
-                        </button>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              setEditingTemplate(template);
+                              setIsTemplateEditorOpen(true);
+                            }}
+                            className="console-button p-2 hover:bg-console-cyan/20"
+                            title="Edit template"
+                          >
+                            <Edit2 className="w-4 h-4 text-console-cyan" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (window.confirm('Are you sure you want to delete this template?')) {
+                                deleteTemplate(template.id);
+                                loadSavedTemplates(); // Refresh the list after deletion
+                              }
+                            }}
+                            className="console-button p-2 hover:bg-red-900/20"
+                            title="Delete template"
+                          >
+                            <Trash2 className="w-4 h-4 text-red-400" />
+                          </button>
+                        </div>
                       </div>
                     </CardHeader>
                     <CardContent>
