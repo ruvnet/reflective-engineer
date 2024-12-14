@@ -74,16 +74,6 @@ const Tools = () => {
                   Overview
                 </button>
                 <button 
-                  onClick={() => setActiveTab("prompt")}
-                  className={`whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium ${
-                    activeTab === "prompt"
-                      ? "border-console-cyan text-console-cyan"
-                      : "border-transparent text-gray-400 hover:border-gray-300 hover:text-gray-300"
-                  }`}
-                >
-                  Prompt Tools
-                </button>
-                <button 
                   onClick={() => setActiveTab("analysis")}
                   className={`whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium ${
                     activeTab === "analysis"
@@ -104,14 +94,14 @@ const Tools = () => {
                   Utilities
                 </button>
                 <button 
-                  onClick={() => setActiveTab("saved")}
+                  onClick={() => setActiveTab("tools")}
                   className={`whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium ${
-                    activeTab === "saved"
+                    activeTab === "tools"
                       ? "border-console-cyan text-console-cyan"
                       : "border-transparent text-gray-400 hover:border-gray-300 hover:text-gray-300"
                   }`}
                 >
-                  Saved Items
+                  Tools
                 </button>
               </nav>
             </div>
@@ -238,7 +228,7 @@ const Tools = () => {
               </div>
             )}
 
-            {activeTab === "saved" && (
+            {activeTab === "tools" && (
               <div className="space-y-8">
                 {/* Saved Tools Section */}
                 <div>
