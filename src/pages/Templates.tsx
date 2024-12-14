@@ -66,9 +66,6 @@ export default function Templates() {
     setCurrentPage(1);
   };
 
-  const loadSavedTemplates = () => {
-    setSavedTemplates(getSavedTemplates());
-  };
 
   // Filter templates based on search and active section
   const filteredTemplates = builtInTemplates.filter(template => {
@@ -274,7 +271,7 @@ export default function Templates() {
                             onClick={() => {
                               if (window.confirm('Are you sure you want to delete this template?')) {
                                 deleteTemplate(template.id);
-                                loadSavedTemplates();
+                                setSavedTemplates(getSavedTemplates());
                               }
                             }}
                             className="console-button p-2 hover:bg-red-900/20"
@@ -321,7 +318,7 @@ export default function Templates() {
               saveTemplate(templateData);
               setIsTemplateEditorOpen(false);
               setEditingTemplate(null);
-              loadSavedTemplates();
+              setSavedTemplates(getSavedTemplates());
               toast({
                 title: "Success",
                 description: "Template saved successfully"
