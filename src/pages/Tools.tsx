@@ -3,13 +3,13 @@ import MainNav from "../components/MainNav";
 import { toolRegistry } from "../tools";
 import { Tool, ToolCategory } from "../tools/types";
 import { toolService } from "../services/toolService";
-import { SavedTool, SavedTemplate, getSavedTools, getSavedTemplates, saveTemplate, deleteTemplate, getSavedPrompts, deletePrompt } from "../services/storageService";
+import { SavedTool, SavedTemplate, SavedPrompt, getSavedTools, getSavedTemplates, saveTemplate, deleteTemplate, getSavedPrompts, deletePrompt, savePrompt } from "../services/storageService";
 import { useToast } from "@/components/ui/use-toast";
 import { ToolBuilderModal } from "../components/ToolBuilderModal";
 import { TemplateEditorModal } from "../components/TemplateEditorModal";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Trash2 } from "lucide-react";
+import { Trash2, Edit2 } from "lucide-react";
 
 const Tools = () => {
   const [activeTab, setActiveTab] = useState<ToolCategory | "saved">("prompt");
@@ -19,6 +19,8 @@ const Tools = () => {
   const [savedTemplates, setSavedTemplates] = useState<SavedTemplate[]>([]);
   const [isToolBuilderOpen, setIsToolBuilderOpen] = useState(false);
   const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
+  const [editingTemplate, setEditingTemplate] = useState<SavedTemplate | null>(null);
+  const [editingPrompt, setEditingPrompt] = useState<SavedPrompt | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -167,7 +169,11 @@ const Tools = () => {
 
                 <TemplateEditorModal
                   isOpen={isTemplateEditorOpen}
-                  onClose={() => setIsTemplateEditorOpen(false)}
+                  onClose={() => {
+                    setIsTemplateEditorOpen(false);
+                    setEditingTemplate(null);
+                  }}
+                  initialData={editingTemplate || undefined}
                   onSave={(template) => {
                     try {
                       console.log('Saving template:', template); // Add debug log
