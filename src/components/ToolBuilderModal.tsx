@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import { z } from 'zod';
+import { Tool, ToolCategory } from '../tools/types';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
@@ -21,7 +22,7 @@ const toolSchema = z.object({
 type ToolBuilderProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (tool: z.infer<typeof toolSchema>) => void;
+  onSave: (tool: Tool) => void;
 };
 
 export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) {
@@ -37,10 +38,43 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
   const handleSave = () => {
     try {
       const validatedData = toolSchema.parse(formData);
-      onSave(validatedData);
+      
+      // Create Tool object
+      const tool: Tool = {
+        id: useId(), // Generate unique ID
+        name: validatedData.name,
+        description: validatedData.description,
+        category: 'prompt' as ToolCategory, // Default to prompt category
+        icon: () => null, // Default icon
+        schema: z.object({
+          input: z.string(),
+          ...validatedData.parameters.reduce((acc, param) => ({
+            ...acc,
+            [param.name]: param.type === 'string' 
+              ? z.string()
+              : param.type === 'number'
+                ? z.number()
+                : z.boolean()
+          }), {})
+        }),
+        execute: async (input) => {
+          // Basic execution logic
+          return {
+            result: `Executed ${validatedData.name} with input: ${JSON.stringify(input)}`
+          };
+        }
+      };
+
+      onSave(tool);
       onClose();
     } catch (error) {
       console.error('Validation error:', error);
+      // Show error toast
+      toast({
+        title: "Error",
+        description: "Failed to validate tool configuration",
+        variant: "destructive"
+      });
     }
   };
 
