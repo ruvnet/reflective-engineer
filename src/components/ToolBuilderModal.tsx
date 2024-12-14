@@ -1,6 +1,7 @@
-import { useState, useId } from 'react';
+import { useState } from 'react';
 import { z } from 'zod';
 import { Tool, ToolCategory } from '../tools/types';
+import { saveTemplate } from '../services/storageService';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
@@ -59,8 +60,9 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
       const category = "prompt"; // Set default category
       
       // Create Tool object
+      // Create and save the tool
       const tool: Tool = {
-        id: crypto.randomUUID(), // Use crypto.randomUUID() instead of useId()
+        id: crypto.randomUUID(),
         name: validatedData.name,
         description: validatedData.description,
         category: 'prompt' as ToolCategory,
@@ -82,6 +84,20 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
           };
         }
       };
+
+      // Also save as a template for display
+      const templateData = {
+        name: validatedData.name,
+        description: validatedData.description,
+        category: "Chain Builder",
+        content: validatedData.prompt,
+        variables: validatedData.parameters.map(p => ({
+          name: p.name,
+          type: p.type,
+          description: p.description
+        }))
+      };
+      saveTemplate(templateData);
 
       onSave(tool);
       onClose();
