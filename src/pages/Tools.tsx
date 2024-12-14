@@ -245,13 +245,23 @@ const Tools = () => {
                               onClick={() => {
                                 if (window.confirm('Are you sure you want to delete this template?')) {
                                   deleteTemplate(template.id);
-                                  loadSavedTemplates();
+                                  setSavedTemplates(getSavedTemplates());
                                 }
                               }}
                               className="console-button p-2 hover:bg-red-900/20"
                               title="Delete template"
                             >
                               <Trash2 className="w-4 h-4 text-red-400" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEditingTemplate(template);
+                                setIsTemplateEditorOpen(true);
+                              }}
+                              className="console-button p-2 hover:bg-console-cyan/20"
+                              title="Edit template"
+                            >
+                              <Edit2 className="w-4 h-4 text-console-cyan" />
                             </button>
                           </div>
                         </CardHeader>
