@@ -147,78 +147,76 @@ const Tools = () => {
               </div>
             )}
 
-            {activeTab === "prompt" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="glass-panel p-6 border border-console-cyan/20">
-                  <h3 className="text-xl text-console-cyan mb-2">Chain Builder</h3>
-                  <p className="text-console-text mb-4">Create complex prompt chains and workflows</p>
-                  <button 
-                    className="console-button w-full"
-                    onClick={() => setIsToolBuilderOpen(true)}
-                  >
-                    Create New Tool
-                  </button>
-                </div>
-                <div className="glass-panel p-6 border border-console-cyan/20">
-                  <h3 className="text-xl text-console-cyan mb-2">Template Editor</h3>
-                  <p className="text-console-text mb-4">Edit and manage prompt templates</p>
-                  <button 
-                    className="console-button w-full"
-                    onClick={() => setIsTemplateEditorOpen(true)}
-                  >
-                    Open Editor
-                  </button>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="glass-panel p-6 border border-console-cyan/20">
+                <h3 className="text-xl text-console-cyan mb-2">Chain Builder</h3>
+                <p className="text-console-text mb-4">Create complex prompt chains and workflows</p>
+                <button 
+                  className="console-button w-full"
+                  onClick={() => setIsToolBuilderOpen(true)}
+                >
+                  Create New Tool
+                </button>
+              </div>
+              <div className="glass-panel p-6 border border-console-cyan/20">
+                <h3 className="text-xl text-console-cyan mb-2">Template Editor</h3>
+                <p className="text-console-text mb-4">Edit and manage prompt templates</p>
+                <button 
+                  className="console-button w-full"
+                  onClick={() => setIsTemplateEditorOpen(true)}
+                >
+                  Open Editor
+                </button>
+              </div>
 
-                <ToolBuilderModal
-                  isOpen={isToolBuilderOpen}
-                  onClose={() => resetState()}
-                  onSave={(tool) => {
-                    toolService.addTool(tool);
-                    setIsToolBuilderOpen(false);
-                    setEditingTool(null);
-                    setSavedTools(getSavedTools());
+              <ToolBuilderModal
+                isOpen={isToolBuilderOpen}
+                onClose={() => resetState()}
+                onSave={(tool) => {
+                  toolService.addTool(tool);
+                  setIsToolBuilderOpen(false);
+                  setEditingTool(null);
+                  setSavedTools(getSavedTools());
+                  toast({
+                    title: "Success",
+                    description: "Tool saved successfully"
+                  });
+                }}
+                initialData={editingTool || undefined}
+              />
+
+              <TemplateEditorModal
+                isOpen={isTemplateEditorOpen}
+                onClose={() => resetState()}
+                initialData={editingTemplate || undefined}
+                onSave={(template) => {
+                  try {
+                    console.log('Saving template:', template); // Add debug log
+                    const templateData = {
+                      name: template.name,
+                      description: template.description,
+                      category: activeSection || "Mathematical Frameworks",
+                      domain: template.domain,
+                      content: template.content,
+                      variables: template.variables || []
+                    };
+                    saveTemplate(templateData);
+                    setIsTemplateEditorOpen(false);
                     toast({
                       title: "Success",
-                      description: "Tool saved successfully"
+                      description: "Template saved successfully"
                     });
-                  }}
-                  initialData={editingTool || undefined}
-                />
-
-                <TemplateEditorModal
-                  isOpen={isTemplateEditorOpen}
-                  onClose={() => resetState()}
-                  initialData={editingTemplate || undefined}
-                  onSave={(template) => {
-                    try {
-                      console.log('Saving template:', template); // Add debug log
-                      const templateData = {
-                        name: template.name,
-                        description: template.description,
-                        category: activeSection || "Mathematical Frameworks",
-                        domain: template.domain,
-                        content: template.content,
-                        variables: template.variables || []
-                      };
-                      saveTemplate(templateData);
-                      setIsTemplateEditorOpen(false);
-                      toast({
-                        title: "Success",
-                        description: "Template saved successfully"
-                      });
-                    } catch (error) {
-                      console.error('Failed to save template:', error);
-                      toast({
-                        title: "Error",
-                        description: "Failed to save template",
-                        variant: "destructive"
-                      });
-                    }
-                  }}
-                />
-              </div>
-            )}
+                  } catch (error) {
+                    console.error('Failed to save template:', error);
+                    toast({
+                      title: "Error",
+                      description: "Failed to save template",
+                      variant: "destructive"
+                    });
+                  }
+                }}
+              />
+            </div>
 
             {activeTab === "analysis" && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
