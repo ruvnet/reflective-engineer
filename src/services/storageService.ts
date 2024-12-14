@@ -3,7 +3,7 @@ export const SAVED_TOOLS_KEY = 'symbolic-scribe-saved-tools';
 export const SAVED_TEMPLATES_KEY = 'symbolic-scribe-saved-templates';
 
 // Generic storage functions
-const getStoredItems = <T>(key: string): T[] => {
+export const getStoredItems = <T>(key: string): T[] => {
   const saved = localStorage.getItem(key);
   return saved ? JSON.parse(saved) : [];
 };
@@ -52,12 +52,6 @@ export interface SavedTemplate {
     defaultValue?: string;
   }>;
 }
-
-// Generic storage functions
-const getStoredItems = <T>(key: string): T[] => {
-  const saved = localStorage.getItem(key);
-  return saved ? JSON.parse(saved) : [];
-};
 
 const saveItem = <T extends { id?: string }>(
   key: string,
