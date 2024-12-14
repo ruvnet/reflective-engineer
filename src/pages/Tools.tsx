@@ -286,7 +286,6 @@ const Tools = () => {
 
                 {/* Templates Section */}
                 <div>
-                  <h2 className="text-xl font-code text-console-cyan mb-4">Templates</h2>
                   <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                     {savedTemplates.map((template) => (
                       <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
@@ -338,7 +337,6 @@ const Tools = () => {
 
                 {/* Prompts Section */}
                 <div>
-                  <h2 className="text-xl font-code text-console-cyan mb-4">Prompts</h2>
                   <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                     {getSavedPrompts().map((prompt) => (
                       <Card key={prompt.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
