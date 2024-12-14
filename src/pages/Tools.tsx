@@ -106,24 +106,25 @@ const Tools = () => {
                 </button>
               </nav>
             </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {toolCards[activeTab].map((tool, index) => (
-              <div 
-                key={index}
-                className="glass-panel p-6 border border-console-cyan/20 hover:border-console-cyan/40 transition-colors"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  {tool.icon}
-                  <h2 className="text-xl text-console-cyan">{tool.title}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {toolCards[activeTab].map((tool, index) => (
+                <div 
+                  key={index}
+                  className="glass-panel p-6 border border-console-cyan/20 hover:border-console-cyan/40 transition-colors"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    {tool.icon}
+                    <h2 className="text-xl text-console-cyan">{tool.title}</h2>
+                  </div>
+                  <p className="text-console-text mb-4">{tool.description}</p>
+                  {tool.comingSoon && (
+                    <span className="inline-block px-2 py-1 rounded bg-console-cyan/10 text-console-cyan text-sm">
+                      Coming Soon
+                    </span>
+                  )}
                 </div>
-                <p className="text-console-text mb-4">{tool.description}</p>
-                {tool.comingSoon && (
-                  <span className="inline-block px-2 py-1 rounded bg-console-cyan/10 text-console-cyan text-sm">
-                    Coming Soon
-                  </span>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
       </main>
