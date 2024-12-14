@@ -723,17 +723,17 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                   {errors.tools && (
                     <p className="text-sm text-red-500">{errors.tools}</p>
                   )}
-                  {Object.entries(TOOL_CATEGORIES).map(([key, category]) => (
-                    <div key={key} className="space-y-2">
+                  {Object.entries(TOOL_CATEGORIES).map(([categoryKey, category]) => (
+                    <div key={categoryKey} className="space-y-2">
                       <div className="flex items-center">
                         <h4 className="font-medium text-sm">{category.name}</h4>
                         <InfoTooltip content={category.description} />
                       </div>
                       <div className="grid gap-2 pl-2">
                         {category.tools.map((tool) => (
-                          <div key={tool.value} className="flex items-center space-x-2">
+                          <div key={`${categoryKey}-${tool.value}`} className="flex items-center space-x-2">
                             <Checkbox
-                              id={tool.value}
+                              id={`${categoryKey}-${tool.value}`}
                               checked={formData.tools.includes(tool.value)}
                               onCheckedChange={(checked) => {
                                 const tools = checked
@@ -743,7 +743,7 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                               }}
                             />
                             <div className="flex items-center">
-                              <label htmlFor={tool.value}>{tool.label}</label>
+                              <label htmlFor={`${categoryKey}-${tool.value}`}>{tool.label}</label>
                               <InfoTooltip content={tool.description} />
                             </div>
                           </div>
