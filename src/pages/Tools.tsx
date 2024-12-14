@@ -144,17 +144,7 @@ const Tools = () => {
                   <p className="text-console-text mb-4">Edit and manage prompt templates</p>
                   <button 
                     className="console-button w-full"
-                    onClick={() => {
-                      if (!activeSection) {
-                        toast({
-                          title: "Error",
-                          description: "Please select a section first",
-                          variant: "destructive"
-                        });
-                        return;
-                      }
-                      setIsTemplateEditorOpen(true);
-                    }}
+                    onClick={() => setIsTemplateEditorOpen(true)}
                   >
                     Open Editor
                   </button>

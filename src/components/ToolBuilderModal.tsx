@@ -56,6 +56,7 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
       }
 
       const validatedData = toolSchema.parse(formData);
+      const category = "prompt"; // Set default category
       
       // Create Tool object
       const tool: Tool = {
