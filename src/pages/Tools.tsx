@@ -22,7 +22,6 @@ const Tools = () => {
   const [editingTemplate, setEditingTemplate] = useState<SavedTemplate | null>(null);
   const [editingPrompt, setEditingPrompt] = useState<SavedPrompt | null>(null);
   const [isGenerateOpen, setIsGenerateOpen] = useState(false);
-  const [editingPrompt, setEditingPrompt] = useState<SavedPrompt | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
