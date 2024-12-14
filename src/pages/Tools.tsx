@@ -4,11 +4,13 @@ import { toolRegistry } from "../tools";
 import { Tool, ToolCategory } from "../tools/types";
 import { toolService } from "../services/toolService";
 import { ToolBuilderModal } from "../components/ToolBuilderModal";
+import { TemplateEditorModal } from "../components/TemplateEditorModal";
 
 const Tools = () => {
   const [activeTab, setActiveTab] = useState<ToolCategory>("prompt");
   const [tools, setTools] = useState<Tool[]>([]);
   const [isToolBuilderOpen, setIsToolBuilderOpen] = useState(false);
+  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
 
   useEffect(() => {
     const toolsForCategory = Array.from(toolRegistry.values())
@@ -124,8 +126,22 @@ const Tools = () => {
                 <div className="glass-panel p-6 border border-console-cyan/20">
                   <h3 className="text-xl text-console-cyan mb-2">Template Editor</h3>
                   <p className="text-console-text mb-4">Edit and manage prompt templates</p>
-                  <button className="console-button w-full">Open Tool</button>
+                  <button 
+                    className="console-button w-full"
+                    onClick={() => setIsTemplateEditorOpen(true)}
+                  >
+                    Open Editor
+                  </button>
                 </div>
+
+                <TemplateEditorModal
+                  isOpen={isTemplateEditorOpen}
+                  onClose={() => setIsTemplateEditorOpen(false)}
+                  onSave={(template) => {
+                    console.log('Template saved:', template);
+                    setIsTemplateEditorOpen(false);
+                  }}
+                />
               </div>
             )}
 
