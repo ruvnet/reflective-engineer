@@ -111,8 +111,67 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
               <AccordionItem value="params">
                 <AccordionTrigger>Parameters</AccordionTrigger>
                 <AccordionContent>
-                  <div className="text-console-text">
-                    Parameter configuration coming soon...
+                  <div className="space-y-4">
+                    {formData.parameters.map((param, index) => (
+                      <div key={index} className="flex gap-2 items-start">
+                        <Input
+                          placeholder="Parameter name"
+                          value={param.name}
+                          onChange={e => {
+                            const newParams = [...formData.parameters];
+                            newParams[index].name = e.target.value;
+                            setFormData({...formData, parameters: newParams});
+                          }}
+                          className="flex-1 console-input"
+                        />
+                        <select
+                          value={param.type}
+                          onChange={e => {
+                            const newParams = [...formData.parameters];
+                            newParams[index].type = e.target.value as "string" | "number" | "boolean";
+                            setFormData({...formData, parameters: newParams});
+                          }}
+                          className="console-input w-32"
+                        >
+                          <option value="string">String</option>
+                          <option value="number">Number</option>
+                          <option value="boolean">Boolean</option>
+                        </select>
+                        <Input
+                          placeholder="Description"
+                          value={param.description}
+                          onChange={e => {
+                            const newParams = [...formData.parameters];
+                            newParams[index].description = e.target.value;
+                            setFormData({...formData, parameters: newParams});
+                          }}
+                          className="flex-1 console-input"
+                        />
+                        <Button 
+                          onClick={() => {
+                            const newParams = formData.parameters.filter((_, i) => i !== index);
+                            setFormData({...formData, parameters: newParams});
+                          }}
+                          className="console-button bg-red-500/20 hover:bg-red-500/30"
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      onClick={() => {
+                        setFormData({
+                          ...formData,
+                          parameters: [
+                            ...formData.parameters,
+                            { name: '', type: 'string', description: '' }
+                          ]
+                        });
+                      }}
+                      className="console-button w-full"
+                    >
+                      Add Parameter
+                    </Button>
                   </div>
                 </AccordionContent>
               </AccordionItem>
