@@ -375,15 +375,23 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                       <SelectContent>
-                        {[...new Map([
-                          ...Object.entries(AGENT_CATEGORIES["Agent Library"]).map(([k]) => [`agent-${k}`, k]),
-                          ...Object.entries(AGENT_CATEGORIES["Prompt Library"]).map(([k]) => [`prompt-${k}`, k])
-                        ])].map(([key, category]) => (
-                          <SelectItem key={key} value={category}>
+                        {[
+                          ...Object.keys(AGENT_CATEGORIES["Agent Library"]).map(category => ({
+                            key: `agent-${category}`,
+                            value: category,
+                            type: "Agent Library"
+                          })),
+                          ...Object.keys(AGENT_CATEGORIES["Prompt Library"]).map(category => ({
+                            key: `prompt-${category}`,
+                            value: category,
+                            type: "Prompt Library"
+                          }))
+                        ].map(({ key, value, type }) => (
+                          <SelectItem key={key} value={value}>
                             <div className="flex flex-col text-left">
-                              <span>{category}</span>
+                              <span>{value}</span>
                               <span className="text-xs text-muted-foreground">
-                                {AGENT_DESCRIPTIONS[category]}
+                                {type === "Agent Library" ? AGENT_DESCRIPTIONS[value] : `${type} - ${value}`}
                               </span>
                             </div>
                           </SelectItem>
