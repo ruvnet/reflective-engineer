@@ -35,17 +35,35 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
   });
   const [testResult, setTestResult] = useState('');
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   const handleSave = () => {
     try {
+      setErrors({}); // Clear previous errors
+      
+      // Validate form data
+      if (!formData.name.trim()) {
+        setErrors(prev => ({ ...prev, name: "Name is required" }));
+        return;
+      }
+      if (!formData.description.trim()) {
+        setErrors(prev => ({ ...prev, description: "Description is required" }));
+        return;
+      }
+      if (!formData.prompt.trim()) {
+        setErrors(prev => ({ ...prev, prompt: "Prompt is required" }));
+        return;
+      }
+
       const validatedData = toolSchema.parse(formData);
       
       // Create Tool object
       const tool: Tool = {
-        id: useId(), // Generate unique ID
+        id: crypto.randomUUID(), // Use crypto.randomUUID() instead of useId()
         name: validatedData.name,
         description: validatedData.description,
-        category: 'prompt' as ToolCategory, // Default to prompt category
-        icon: () => null, // Default icon
+        category: 'prompt' as ToolCategory,
+        icon: () => null,
         schema: z.object({
           input: z.string(),
           ...validatedData.parameters.reduce((acc, param) => ({
@@ -58,7 +76,6 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
           }), {})
         }),
         execute: async (input) => {
-          // Basic execution logic
           return {
             result: `Executed ${validatedData.name} with input: ${JSON.stringify(input)}`
           };
@@ -114,18 +131,28 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
                 <AccordionTrigger>Basic Information</AccordionTrigger>
                 <AccordionContent>
                   <div className="space-y-4">
-                    <Input 
-                      placeholder="Tool Name"
-                      value={formData.name}
-                      onChange={e => setFormData({...formData, name: e.target.value})}
-                      className="console-input"
-                    />
-                    <Textarea
-                      placeholder="Description"
-                      value={formData.description}
-                      onChange={e => setFormData({...formData, description: e.target.value})}
-                      className="console-input"
-                    />
+                    <div className="space-y-2">
+                      <Input 
+                        placeholder="Tool Name"
+                        value={formData.name}
+                        onChange={e => setFormData({...formData, name: e.target.value})}
+                        className={`console-input ${errors.name ? 'border-red-500' : ''}`}
+                      />
+                      {errors.name && (
+                        <p className="text-sm text-red-500">{errors.name}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Textarea
+                        placeholder="Description"
+                        value={formData.description}
+                        onChange={e => setFormData({...formData, description: e.target.value})}
+                        className={`console-input ${errors.description ? 'border-red-500' : ''}`}
+                      />
+                      {errors.description && (
+                        <p className="text-sm text-red-500">{errors.description}</p>
+                      )}
+                    </div>
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -133,12 +160,17 @@ export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) 
               <AccordionItem value="prompt">
                 <AccordionTrigger>Prompt Template</AccordionTrigger>
                 <AccordionContent>
-                  <Textarea
-                    placeholder="Enter prompt template..."
-                    value={formData.prompt}
-                    onChange={e => setFormData({...formData, prompt: e.target.value})}
-                    className="console-input min-h-[200px]"
-                  />
+                  <div className="space-y-2">
+                    <Textarea
+                      placeholder="Enter prompt template..."
+                      value={formData.prompt}
+                      onChange={e => setFormData({...formData, prompt: e.target.value})}
+                      className={`console-input min-h-[200px] ${errors.prompt ? 'border-red-500' : ''}`}
+                    />
+                    {errors.prompt && (
+                      <p className="text-sm text-red-500">{errors.prompt}</p>
+                    )}
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
