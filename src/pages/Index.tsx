@@ -321,6 +321,20 @@ const Index = () => {
               </div>
             </div>
           )}
+
+          <ToolBuilderModal
+            isOpen={isToolBuilderOpen}
+            onClose={() => {
+              setIsToolBuilderOpen(false);
+              setEditingTemplate(null);
+            }}
+            onSave={(tool) => {
+              toolService.addTool(tool);
+              setIsToolBuilderOpen(false);
+              setEditingTemplate(null);
+            }}
+            initialData={editingTemplate}
+          />
         </section>
       </main>
 
