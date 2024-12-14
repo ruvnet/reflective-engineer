@@ -209,21 +209,104 @@ const Tools = () => {
             </div>
 
             {activeTab === "analysis" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="glass-panel p-6 border border-console-cyan/20">
-                  <h3 className="text-xl text-console-cyan mb-2">Output Analyzer</h3>
-                  <p className="text-console-text mb-4">Analyze and evaluate model outputs</p>
-                  <button className="console-button w-full">Open Tool</button>
+              <div className="space-y-8">
+                {/* Analysis Tools Section */}
+                <div>
+                  <h2 className="text-xl font-code text-console-cyan mb-4">Saved Analysis Tools</h2>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {savedTools
+                      .filter(tool => tool.category === "analysis")
+                      .map((tool) => (
+                        <Card key={tool.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
+                          <CardHeader>
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <CardTitle className="text-console-cyan">{tool.name}</CardTitle>
+                                <CardDescription className="text-console-green">
+                                  {tool.category} - {new Date(tool.timestamp).toLocaleDateString()}
+                                </CardDescription>
+                              </div>
+                              <div className="flex gap-0.5">
+                                <button
+                                  onClick={() => {
+                                    setEditingTool(tool);
+                                    setIsToolBuilderOpen(true);
+                                  }}
+                                  className="console-button p-1.5 hover:bg-console-cyan/20"
+                                  title="Edit tool"
+                                >
+                                  <Edit2 className="w-4 h-4 text-console-cyan" />
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    if (window.confirm('Are you sure you want to delete this tool?')) {
+                                      deleteTool(tool.id);
+                                      setSavedTools(getSavedTools());
+                                    }
+                                  }}
+                                  className="console-button p-1.5 hover:bg-red-900/20"
+                                  title="Delete tool"
+                                >
+                                  <Trash2 className="w-4 h-4 text-red-400" />
+                                </button>
+                              </div>
+                            </div>
+                          </CardHeader>
+                          <CardContent>
+                            <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
+                              <pre className="text-sm font-code text-console-text">
+                                {tool.description}
+                                {'\n\n'}
+                                {tool.prompt}
+                              </pre>
+                            </ScrollArea>
+                          </CardContent>
+                        </Card>
+                    ))}
+                  </div>
                 </div>
-                <div className="glass-panel p-6 border border-console-cyan/20">
-                  <h3 className="text-xl text-console-cyan mb-2">Performance Metrics</h3>
-                  <p className="text-console-text mb-4">Track and visualize model performance</p>
-                  <button className="console-button w-full">Open Tool</button>
-                </div>
-                <div className="glass-panel p-6 border border-console-cyan/20">
-                  <h3 className="text-xl text-console-cyan mb-2">Bias Detector</h3>
-                  <p className="text-console-text mb-4">Identify potential biases in model responses</p>
-                  <button className="console-button w-full">Open Tool</button>
+
+                {/* Analysis Tool Creation Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Output Analyzer</h3>
+                    <p className="text-console-text mb-4">Create tools to analyze and evaluate model outputs</p>
+                    <button 
+                      className="console-button w-full"
+                      onClick={() => {
+                        setEditingTool(null);
+                        setIsToolBuilderOpen(true);
+                      }}
+                    >
+                      Create Analyzer
+                    </button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Performance Metrics</h3>
+                    <p className="text-console-text mb-4">Build tools for tracking and visualizing model performance</p>
+                    <button 
+                      className="console-button w-full"
+                      onClick={() => {
+                        setEditingTool(null);
+                        setIsToolBuilderOpen(true);
+                      }}
+                    >
+                      Create Metrics Tool
+                    </button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Bias Detector</h3>
+                    <p className="text-console-text mb-4">Develop tools to identify potential biases in model responses</p>
+                    <button 
+                      className="console-button w-full"
+                      onClick={() => {
+                        setEditingTool(null);
+                        setIsToolBuilderOpen(true);
+                      }}
+                    >
+                      Create Detector
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
