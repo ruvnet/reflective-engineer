@@ -60,10 +60,16 @@ export default function Templates() {
       template.content.toLowerCase().includes(searchQuery.toLowerCase())
     ) : true;
     
-    // Match if template content or title contains the section name, or if section name contains template title
-    const matchesSection = template.content.toLowerCase().includes(activeSection.toLowerCase()) ||
-                          template.title.toLowerCase().includes(activeSection.toLowerCase()) ||
-                          activeSection.toLowerCase().includes(template.title.toLowerCase());
+    // Special handling for Mathematical Frameworks section
+    const isMathFrameworks = activeSection === "Mathematical Frameworks";
+    const matchesSection = isMathFrameworks
+      ? MATH_SECTIONS.some(mathSection => 
+          template.content.toLowerCase().includes(mathSection.toLowerCase()) ||
+          template.title.toLowerCase().includes(mathSection.toLowerCase())
+        )
+      : template.content.toLowerCase().includes(activeSection.toLowerCase()) ||
+        template.title.toLowerCase().includes(activeSection.toLowerCase()) ||
+        activeSection.toLowerCase().includes(template.title.toLowerCase());
     
     return matchesSearch && matchesSection;
   });
