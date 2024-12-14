@@ -145,20 +145,13 @@ export default function Templates() {
         <aside className={`glass-panel p-4 ${sidebarOpen ? 'w-64' : 'w-20'} transition-all duration-300`}>
           <div className="flex flex-col gap-4">
             {SECTIONS.map((section) => (
-              <div key={section.name} className="space-y-2">
-                <h3 className="text-sm font-code text-console-cyan">{section.name}</h3>
-                <div className="space-y-1">
-                  {section.categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => loadTemplate(category)}
-                      className="w-full text-left px-2 py-1 rounded hover:bg-console-cyan/10 text-sm text-console-text hover:text-console-cyan transition-colors"
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <button
+                key={section}
+                onClick={() => loadTemplate(section)}
+                className="w-full text-left px-2 py-1 rounded hover:bg-console-cyan/10 text-sm text-console-text hover:text-console-cyan transition-colors"
+              >
+                {section}
+              </button>
             ))}
           </div>
         </aside>
@@ -185,14 +178,14 @@ export default function Templates() {
           {/* Built-in Templates by Section */}
           {SECTIONS.map((section) => {
             const sectionTemplates = currentTemplates.filter(template => 
-              section.categories.includes(template.title)
+              template.title.startsWith(section)
             );
 
             if (sectionTemplates.length === 0) return null;
 
             return (
-              <div key={section.name} className="mb-8">
-                <h2 className="text-xl font-code text-console-cyan mb-4">{section.name}</h2>
+              <div key={section} className="mb-8">
+                <h2 className="text-xl font-code text-console-cyan mb-4">{section}</h2>
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {sectionTemplates.map((template) => (
                     <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
