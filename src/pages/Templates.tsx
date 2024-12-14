@@ -75,11 +75,8 @@ export default function Templates() {
     // Special handling for Mathematical Frameworks section
     const isMathFrameworks = activeSection === "Mathematical Frameworks";
     const matchesSection = isMathFrameworks
-      ? MATH_SECTIONS.some(mathSection => 
-          template.content.toLowerCase().includes(mathSection.toLowerCase()) ||
-          template.title.toLowerCase().includes(mathSection.toLowerCase()) ||
-          mathSection.toLowerCase().includes(template.title.toLowerCase())
-        )
+      ? template.content.toLowerCase().includes("mathematical") ||
+        template.title.toLowerCase().includes("mathematical")
       : template.content.toLowerCase().includes(activeSection.toLowerCase()) ||
         template.title.toLowerCase().includes(activeSection.toLowerCase()) ||
         activeSection.toLowerCase().includes(template.title.toLowerCase());
