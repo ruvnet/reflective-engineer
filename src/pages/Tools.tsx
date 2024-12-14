@@ -157,6 +157,7 @@ const Tools = () => {
                   onClose={() => setIsTemplateEditorOpen(false)}
                   onSave={(template) => {
                     try {
+                      console.log('Saving template:', template); // Add debug log
                       const templateData = {
                         name: template.name,
                         description: template.description,
