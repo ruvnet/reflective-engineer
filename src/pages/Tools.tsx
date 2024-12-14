@@ -9,6 +9,8 @@ import { TemplateEditorModal } from "../components/TemplateEditorModal";
 const Tools = () => {
   const [activeTab, setActiveTab] = useState<ToolCategory>("prompt");
   const [tools, setTools] = useState<Tool[]>([]);
+  const [savedTools, setSavedTools] = useState<SavedTool[]>([]);
+  const [savedTemplates, setSavedTemplates] = useState<SavedTemplate[]>([]);
   const [isToolBuilderOpen, setIsToolBuilderOpen] = useState(false);
   const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
 
@@ -16,6 +18,18 @@ const Tools = () => {
     const toolsForCategory = Array.from(toolRegistry.values())
       .filter(tool => tool.category === activeTab);
     setTools(toolsForCategory);
+    
+    // Load saved tools and templates
+    setSavedTools(getSavedTools());
+    setSavedTemplates(getSavedTemplates());
+
+    const handleStorageChange = () => {
+      setSavedTools(getSavedTools());
+      setSavedTemplates(getSavedTemplates());
+    };
+
+    window.addEventListener('storageChanged', handleStorageChange);
+    return () => window.removeEventListener('storageChanged', handleStorageChange);
   }, [activeTab]);
   return (
     <div className="min-h-screen flex flex-col">
