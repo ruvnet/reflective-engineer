@@ -6,6 +6,7 @@ const navItems = [
   { name: "Prompts", path: "/" },
   { name: "Agents", path: "/agents" },
   { name: "Templates", path: "/templates" },
+  { name: "Tools", path: "/tools" },
   { name: "Docs", path: "/docs" },
   { name: "Settings", path: "/settings" },
   { name: "About", path: "/about" }
