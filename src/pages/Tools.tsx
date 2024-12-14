@@ -148,20 +148,6 @@ const Tools = () => {
                     Create New Tool
                   </button>
                 </div>
-
-                <ToolBuilderModal
-                  isOpen={isToolBuilderOpen}
-                  onClose={() => {
-                    setIsToolBuilderOpen(false);
-                    setEditingTemplate(null);
-                  }}
-                  onSave={(tool) => {
-                    toolService.addTool(tool);
-                    setIsToolBuilderOpen(false);
-                    setEditingTemplate(null);
-                  }}
-                  initialData={editingTemplate}
-                />
                 <div className="glass-panel p-6 border border-console-cyan/20">
                   <h3 className="text-xl text-console-cyan mb-2">Template Editor</h3>
                   <p className="text-console-text mb-4">Edit and manage prompt templates</p>
