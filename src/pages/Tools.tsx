@@ -3,7 +3,7 @@ import MainNav from "../components/MainNav";
 import { toolRegistry } from "../tools";
 import { Tool, ToolCategory } from "../tools/types";
 import { toolService } from "../services/toolService";
-import { SavedTool, SavedTemplate, getSavedTools, getSavedTemplates, saveTemplate, deleteTemplate } from "../services/storageService";
+import { SavedTool, SavedTemplate, getSavedTools, getSavedTemplates, saveTemplate, deleteTemplate, getSavedPrompts, deletePrompt } from "../services/storageService";
 import { useToast } from "@/components/ui/use-toast";
 import { ToolBuilderModal } from "../components/ToolBuilderModal";
 import { TemplateEditorModal } from "../components/TemplateEditorModal";
