@@ -1,58 +1,18 @@
+import { useState, useEffect } from "react";
 import MainNav from "../components/MainNav";
-import { useState } from "react";
-import { Wand2, Brain, Calculator, Wrench } from "lucide-react";
-
-type Tab = "overview" | "prompt" | "analysis" | "utilities";
-
-interface ToolCard {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  comingSoon?: boolean;
-}
+import { toolRegistry } from "../tools";
+import { Tool, ToolCategory } from "../tools/types";
+import { toolService } from "../services/toolService";
 
 const Tools = () => {
-  const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [activeTab, setActiveTab] = useState<ToolCategory>("prompt");
+  const [tools, setTools] = useState<Tool[]>([]);
 
-  const toolCards: Record<Tab, ToolCard[]> = {
-    overview: [
-      {
-        title: "Getting Started",
-        description: "Learn how to use the various tools available in the platform",
-        icon: <Wand2 className="w-6 h-6 text-console-cyan" />
-      }
-    ],
-    prompt: [
-      {
-        title: "Prompt Generator",
-        description: "Generate structured prompts using templates",
-        icon: <Brain className="w-6 h-6 text-console-cyan" />,
-        comingSoon: true
-      },
-      {
-        title: "Prompt Optimizer",
-        description: "Optimize your prompts for better results",
-        icon: <Brain className="w-6 h-6 text-console-cyan" />,
-        comingSoon: true
-      }
-    ],
-    analysis: [
-      {
-        title: "Performance Analyzer",
-        description: "Analyze prompt performance and results",
-        icon: <Calculator className="w-6 h-6 text-console-cyan" />,
-        comingSoon: true
-      }
-    ],
-    utilities: [
-      {
-        title: "Token Counter",
-        description: "Count tokens in your prompts",
-        icon: <Wrench className="w-6 h-6 text-console-cyan" />,
-        comingSoon: true
-      }
-    ]
-  };
+  useEffect(() => {
+    const toolsForCategory = Array.from(toolRegistry.values())
+      .filter(tool => tool.category === activeTab);
+    setTools(toolsForCategory);
+  }, [activeTab]);
   return (
     <div className="min-h-screen flex flex-col">
       <MainNav title="Tools" />
@@ -107,21 +67,16 @@ const Tools = () => {
               </nav>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {toolCards[activeTab].map((tool, index) => (
+              {tools.map((tool) => (
                 <div 
-                  key={index}
+                  key={tool.id}
                   className="glass-panel p-6 border border-console-cyan/20 hover:border-console-cyan/40 transition-colors"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    {tool.icon}
-                    <h2 className="text-xl text-console-cyan">{tool.title}</h2>
+                    <tool.icon className="w-6 h-6 text-console-cyan" />
+                    <h2 className="text-xl text-console-cyan">{tool.name}</h2>
                   </div>
                   <p className="text-console-text mb-4">{tool.description}</p>
-                  {tool.comingSoon && (
-                    <span className="inline-block px-2 py-1 rounded bg-console-cyan/10 text-console-cyan text-sm">
-                      Coming Soon
-                    </span>
-                  )}
                 </div>
               ))}
             </div>
