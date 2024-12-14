@@ -53,11 +53,17 @@ export default function Templates() {
     setSavedTemplates(getSavedPrompts());
   };
 
-  // Filter templates based on search
-  const filteredTemplates = builtInTemplates.filter(template => 
-    template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    template.content.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter templates based on search and active section
+  const filteredTemplates = builtInTemplates.filter(template => {
+    const matchesSearch = searchQuery ? (
+      template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      template.content.toLowerCase().includes(searchQuery.toLowerCase())
+    ) : true;
+    
+    const matchesSection = template.title.toLowerCase().startsWith(activeSection.toLowerCase());
+    
+    return matchesSearch && matchesSection;
+  });
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredTemplates.length / templatesPerPage);
@@ -155,18 +161,8 @@ export default function Templates() {
           </div>
 
           {/* Built-in Templates by Section */}
-          {SECTIONS.map((section) => {
-            const sectionTemplates = currentTemplates.filter(template => 
-              template.title.startsWith(section)
-            );
-
-            if (sectionTemplates.length === 0) return null;
-
-            return (
-              <div key={section} className="mb-8">
-                <h2 className="text-xl font-code text-console-cyan mb-4">{section}</h2>
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {sectionTemplates.map((template) => (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            {currentTemplates.map((template) => (
                     <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
                       <CardHeader>
                         <CardTitle className="text-console-cyan">{template.title}</CardTitle>
@@ -181,10 +177,7 @@ export default function Templates() {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
-              </div>
-            );
-          })}
+          </div>
 
           {/* Pagination */}
           {totalPages > 1 && (
