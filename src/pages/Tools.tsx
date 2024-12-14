@@ -10,11 +10,13 @@ import { TemplateEditorModal } from "../components/TemplateEditorModal";
 
 const Tools = () => {
   const [activeTab, setActiveTab] = useState<ToolCategory>("prompt");
+  const [activeSection, setActiveSection] = useState("Mathematical Frameworks");
   const [tools, setTools] = useState<Tool[]>([]);
   const [savedTools, setSavedTools] = useState<SavedTool[]>([]);
   const [savedTemplates, setSavedTemplates] = useState<SavedTemplate[]>([]);
   const [isToolBuilderOpen, setIsToolBuilderOpen] = useState(false);
   const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const toolsForCategory = Array.from(toolRegistry.values())
@@ -155,14 +157,15 @@ const Tools = () => {
                   onClose={() => setIsTemplateEditorOpen(false)}
                   onSave={(template) => {
                     try {
-                      saveTemplate({
+                      const templateData = {
                         name: template.name,
                         description: template.description,
-                        category: activeSection,
+                        category: activeSection || "Mathematical Frameworks",
                         domain: template.domain,
                         content: template.content,
                         variables: template.variables || []
-                      });
+                      };
+                      saveTemplate(templateData);
                       setIsTemplateEditorOpen(false);
                       toast({
                         title: "Success",
