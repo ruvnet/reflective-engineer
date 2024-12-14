@@ -74,26 +74,6 @@ const Tools = () => {
                   Overview
                 </button>
                 <button 
-                  onClick={() => setActiveTab("analysis")}
-                  className={`whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium ${
-                    activeTab === "analysis"
-                      ? "border-console-cyan text-console-cyan"
-                      : "border-transparent text-gray-400 hover:border-gray-300 hover:text-gray-300"
-                  }`}
-                >
-                  Analysis Tools
-                </button>
-                <button 
-                  onClick={() => setActiveTab("utilities")}
-                  className={`whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium ${
-                    activeTab === "utilities"
-                      ? "border-console-cyan text-console-cyan"
-                      : "border-transparent text-gray-400 hover:border-gray-300 hover:text-gray-300"
-                  }`}
-                >
-                  Utilities
-                </button>
-                <button 
                   onClick={() => setActiveTab("tools")}
                   className={`whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium ${
                     activeTab === "tools"
@@ -313,7 +293,85 @@ const Tools = () => {
 
             {activeTab === "tools" && (
               <div className="space-y-8">
-                {/* Tools Section */}
+                {/* Creation Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Chain Builder</h3>
+                    <p className="text-console-text mb-4">Create complex prompt chains and workflows</p>
+                    <button 
+                      className="console-button w-full"
+                      onClick={() => setIsToolBuilderOpen(true)}
+                    >
+                      Create New Tool
+                    </button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Template Editor</h3>
+                    <p className="text-console-text mb-4">Edit and manage prompt templates</p>
+                    <button 
+                      className="console-button w-full"
+                      onClick={() => setIsTemplateEditorOpen(true)}
+                    >
+                      Open Editor
+                    </button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Output Analyzer</h3>
+                    <p className="text-console-text mb-4">Create tools to analyze and evaluate model outputs</p>
+                    <button 
+                      className="console-button w-full"
+                      onClick={() => {
+                        setEditingTool(null);
+                        setIsToolBuilderOpen(true);
+                      }}
+                    >
+                      Create Analyzer
+                    </button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Performance Metrics</h3>
+                    <p className="text-console-text mb-4">Build tools for tracking and visualizing model performance</p>
+                    <button 
+                      className="console-button w-full"
+                      onClick={() => {
+                        setEditingTool(null);
+                        setIsToolBuilderOpen(true);
+                      }}
+                    >
+                      Create Metrics Tool
+                    </button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Bias Detector</h3>
+                    <p className="text-console-text mb-4">Develop tools to identify potential biases in model responses</p>
+                    <button 
+                      className="console-button w-full"
+                      onClick={() => {
+                        setEditingTool(null);
+                        setIsToolBuilderOpen(true);
+                      }}
+                    >
+                      Create Detector
+                    </button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Token Counter</h3>
+                    <p className="text-console-text mb-4">Count tokens in prompts and responses</p>
+                    <button className="console-button w-full">Open Tool</button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Format Converter</h3>
+                    <p className="text-console-text mb-4">Convert between different data formats</p>
+                    <button className="console-button w-full">Open Tool</button>
+                  </div>
+                  <div className="glass-panel p-6 border border-console-cyan/20">
+                    <h3 className="text-xl text-console-cyan mb-2">Batch Processor</h3>
+                    <p className="text-console-text mb-4">Process multiple inputs in batch</p>
+                    <button className="console-button w-full">Open Tool</button>
+                  </div>
+                </div>
+
+                {/* Saved Tools Section */}
                 <div>
                   <h2 className="text-xl font-code text-console-cyan mb-4">Saved Tools</h2>
                   <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
