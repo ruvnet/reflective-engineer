@@ -21,6 +21,7 @@ const Tools = () => {
   const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState<SavedTemplate | null>(null);
   const [editingPrompt, setEditingPrompt] = useState<SavedPrompt | null>(null);
+  const [editingTool, setEditingTool] = useState<SavedTool | null>(null);
   const [isGenerateOpen, setIsGenerateOpen] = useState(false);
   const { toast } = useToast();
 
@@ -159,6 +160,25 @@ const Tools = () => {
                   </button>
                 </div>
 
+                <ToolBuilderModal
+                  isOpen={isToolBuilderOpen}
+                  onClose={() => {
+                    setIsToolBuilderOpen(false);
+                    setEditingTool(null);
+                  }}
+                  onSave={(tool) => {
+                    toolService.addTool(tool);
+                    setIsToolBuilderOpen(false);
+                    setEditingTool(null);
+                    setSavedTools(getSavedTools());
+                    toast({
+                      title: "Success",
+                      description: "Tool saved successfully"
+                    });
+                  }}
+                  initialData={editingTool || undefined}
+                />
+
                 <TemplateEditorModal
                   isOpen={isTemplateEditorOpen}
                   onClose={() => {
@@ -218,6 +238,60 @@ const Tools = () => {
 
             {activeTab === "saved" && (
               <div className="space-y-8">
+                {/* Saved Tools Section */}
+                <div>
+                  <h2 className="text-xl font-code text-console-cyan mb-4">Saved Tools</h2>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {savedTools.map((tool) => (
+                      <Card key={tool.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
+                        <CardHeader>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <CardTitle className="text-console-cyan">{tool.name}</CardTitle>
+                              <CardDescription className="text-console-green">
+                                {tool.category} - {new Date(tool.timestamp).toLocaleDateString()}
+                              </CardDescription>
+                            </div>
+                            <div className="flex gap-0.5">
+                              <button
+                                onClick={() => {
+                                  setEditingTool(tool);
+                                  setIsToolBuilderOpen(true);
+                                }}
+                                className="console-button p-1.5 hover:bg-console-cyan/20"
+                                title="Edit tool"
+                              >
+                                <Edit2 className="w-4 h-4 text-console-cyan" />
+                              </button>
+                              <button
+                                onClick={() => {
+                                  if (window.confirm('Are you sure you want to delete this tool?')) {
+                                    deleteTool(tool.id);
+                                    setSavedTools(getSavedTools());
+                                  }
+                                }}
+                                className="console-button p-1.5 hover:bg-red-900/20"
+                                title="Delete tool"
+                              >
+                                <Trash2 className="w-4 h-4 text-red-400" />
+                              </button>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
+                            <pre className="text-sm font-code text-console-text">
+                              {tool.description}
+                              {'\n\n'}
+                              {tool.prompt}
+                            </pre>
+                          </ScrollArea>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Saved Templates Section */}
                 <div>
                   <h2 className="text-xl font-code text-console-cyan mb-4">Saved Templates</h2>
