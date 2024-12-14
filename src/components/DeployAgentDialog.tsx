@@ -85,7 +85,7 @@ const TOOL_CATEGORIES = {
     name: "Analysis Tools",
     description: "Tools for analyzing and processing data",
     tools: [
-      { value: "bias-detector", label: "Bias Detection", description: "Detect potential biases in text" },
+      { value: "bias-detector", label: "Bias Detection Tool", description: "Detect potential biases in text" },
       { value: "sentiment-analyzer", label: "Sentiment Analysis", description: "Analyze text sentiment" }
     ]
   }
