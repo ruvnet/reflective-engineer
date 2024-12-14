@@ -9,6 +9,7 @@ import Templates from "./pages/Templates";
 import Documentation from "./pages/Documentation";
 import About from "./pages/About";
 import Agents from "./pages/Agents";
+import Tools from "./pages/Tools";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/docs" element={<Documentation />} />
           <Route path="/about" element={<About />} />
           <Route path="/agents" element={<Agents />} />
+          <Route path="/tools" element={<Tools />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
