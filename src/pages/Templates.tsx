@@ -256,13 +256,13 @@ export default function Templates() {
                             {template.category} - {new Date(template.timestamp).toLocaleDateString()}
                           </CardDescription>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-1 ml-auto">
                           <button
                             onClick={() => {
                               setEditingTemplate(template);
                               setIsTemplateEditorOpen(true);
                             }}
-                            className="console-button p-2 hover:bg-console-cyan/20"
+                            className="console-button p-1.5 hover:bg-console-cyan/20"
                             title="Edit template"
                           >
                             <Edit2 className="w-4 h-4 text-console-cyan" />
@@ -274,7 +274,7 @@ export default function Templates() {
                                 setSavedTemplates(getSavedTemplates());
                               }
                             }}
-                            className="console-button p-2 hover:bg-red-900/20"
+                            className="console-button p-1.5 hover:bg-red-900/20"
                             title="Delete template"
                           >
                             <Trash2 className="w-4 h-4 text-red-400" />
