@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { z } from 'zod';
 import { Tool, ToolCategory } from '../tools/types';
 import { saveTemplate } from '../services/storageService';
