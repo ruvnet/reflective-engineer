@@ -152,8 +152,19 @@ const Tools = () => {
                   isOpen={isTemplateEditorOpen}
                   onClose={() => setIsTemplateEditorOpen(false)}
                   onSave={(template) => {
-                    console.log('Template saved:', template);
+                    saveTemplate({
+                      name: template.name,
+                      description: template.description,
+                      category: template.category,
+                      domain: template.domain,
+                      content: template.content,
+                      variables: template.variables
+                    });
                     setIsTemplateEditorOpen(false);
+                    toast({
+                      title: "Success",
+                      description: "Template saved successfully"
+                    });
                   }}
                 />
               </div>
