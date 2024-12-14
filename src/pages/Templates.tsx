@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
-import { Search, BookTemplate, Trash2 } from "lucide-react";
+import { Search, BookTemplate, Trash2, Edit2 } from "lucide-react";
 import { 
   Pagination,
   PaginationContent,
