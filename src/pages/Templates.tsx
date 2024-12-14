@@ -40,7 +40,14 @@ export default function Templates() {
   const [savedTemplates, setSavedTemplates] = useState<SavedPrompt[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeSection, setActiveSection] = useState<string>("Mathematical Frameworks");
   const templatesPerPage = 9;
+
+  const loadTemplate = (section: string) => {
+    setSearchQuery(section);
+    setActiveSection(section);
+    setCurrentPage(1);
+  };
 
   const loadSavedTemplates = () => {
     setSavedTemplates(getSavedPrompts());
@@ -60,6 +67,7 @@ export default function Templates() {
 
   useEffect(() => {
     const importTemplates = async () => {
+      setSearchQuery(activeSection);
       const templateModules = import.meta.glob<string>('/public/templates/*.md', { 
         query: '?raw',
         import: 'default'
@@ -115,7 +123,11 @@ export default function Templates() {
               <button
                 key={section}
                 onClick={() => loadTemplate(section)}
-                className="w-full text-left px-2 py-1 rounded hover:bg-console-cyan/10 text-sm text-console-text hover:text-console-cyan transition-colors"
+                className={`w-full text-left px-2 py-1 rounded hover:bg-console-cyan/10 text-sm 
+                  ${activeSection === section 
+                    ? 'bg-console-cyan/10 text-console-cyan' 
+                    : 'text-console-text'
+                  } transition-colors`}
               >
                 {section}
               </button>
