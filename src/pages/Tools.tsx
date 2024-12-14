@@ -21,6 +21,8 @@ const Tools = () => {
   const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState<SavedTemplate | null>(null);
   const [editingPrompt, setEditingPrompt] = useState<SavedPrompt | null>(null);
+  const [isGenerateOpen, setIsGenerateOpen] = useState(false);
+  const [editingPrompt, setEditingPrompt] = useState<SavedPrompt | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -293,18 +295,30 @@ const Tools = () => {
                               >
                                 <Edit2 className="w-4 h-4 text-console-cyan" />
                               </button>
-                              <button
-                                onClick={() => {
-                                  if (window.confirm('Are you sure you want to delete this prompt?')) {
-                                    deletePrompt(prompt.id);
-                                    setSavedTemplates(prev => [...prev]); // Force refresh
-                                  }
-                                }}
-                                className="console-button p-2 hover:bg-red-900/20"
-                                title="Delete prompt"
-                              >
-                                <Trash2 className="w-4 h-4 text-red-400" />
-                              </button>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => {
+                                    setEditingPrompt(prompt);
+                                    setIsGenerateOpen(true);
+                                  }}
+                                  className="console-button p-2 hover:bg-console-cyan/20"
+                                  title="Edit prompt"
+                                >
+                                  <Edit2 className="w-4 h-4 text-console-cyan" />
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    if (window.confirm('Are you sure you want to delete this prompt?')) {
+                                      deletePrompt(prompt.id);
+                                      setSavedTemplates(prev => [...prev]); // Force refresh
+                                    }
+                                  }}
+                                  className="console-button p-2 hover:bg-red-900/20"
+                                  title="Delete prompt"
+                                >
+                                  <Trash2 className="w-4 h-4 text-red-400" />
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </CardHeader>
