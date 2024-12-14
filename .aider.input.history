@@ -1704,3 +1704,119 @@
 
 # 2024-12-13 22:52:51.258055
 +make the Response in AgentManagementDialog stream
+
+# 2024-12-14 14:34:58.433205
++/add src/pages/Index.tsx src/components/MainNav.tsx
+
+# 2024-12-14 14:35:42.445018
++relable Home in Nav to Prompts, rename Documentation to Docs, make top name in nav link to /
+
+# 2024-12-14 14:36:39.054854
++/add src/pages/Templates.tsx
+
+# 2024-12-14 14:37:32.261834
++update templates to include side nav similar to home page, options for various templates,
+
+# 2024-12-14 14:37:59.868615
++/undo
+
+# 2024-12-14 14:38:13.108512
++update templates to include side nav similar to home page, options for various templates, don't break page. 
+
+# 2024-12-14 14:38:39.845410
++/undo
+
+# 2024-12-14 14:39:00.780194
++/architect update templates to include side nav similar to home page, options for various templates, don't break page. watch for previous errors.  
+
+# 2024-12-14 14:40:07.391880
++Only use main sections, remove sub items from nav
+
+# 2024-12-14 14:40:31.047838
++/und
+
+# 2024-12-14 14:40:41.457594
++/architect Only use main sections, remove sub items from nav
+
+# 2024-12-14 14:42:17.483140
++/architect automaticall load templates by default, and link each side bar item to related search.
+
+# 2024-12-14 14:43:03.867396
++no templates are loading in list
+
+# 2024-12-14 14:43:40.462452
++/architect says "No templates found matching your search.earch"
+
+# 2024-12-14 14:44:24.382634
++No templates found matching your search.
+
+# 2024-12-14 14:45:25.330810
++that works, but Mathematical Frameworks
++Basic Prompting are not returning any templates
+
+# 2024-12-14 14:45:56.183279
++fix Mathematical Frameworks so they load
+
+# 2024-12-14 14:46:21.206536
++Mathematical Frameworks should load Mathematical Logic
++Set Theory
++Category Theory
++Abstract Algebra
++Topology
++Complex Analysis
++Symbolic Systems
++System Analysis
++Number Theory
+
+# 2024-12-14 14:46:45.070288
++/undo
+
+# 2024-12-14 14:46:55.172590
++Mathematical Frameworks should load Mathematical Logic
++Set Theory
++Category Theory
++Abstract Algebra
++Topology
++Complex Analysis
++Symbolic Systems
++System Analysis
++Number Theory as the search results. 
+
+# 2024-12-14 14:47:23.386026
++/undo
+
+# 2024-12-14 14:47:37.939082
++Mathematical Frameworks should load Mathematical Logic
++Set Theory
++Category Theory
++Abstract Algebra
++Topology
++Complex Analysis
++Symbolic Systems
++System Analysis
++Number Theory as the search results. not as side bar nav items, watch for previous errors
+
+# 2024-12-14 14:48:31.936753
++/architect Mathematical Frameworks
++Basic Prompting aren't returning any results, the other sections work correctly, use the same approach 
+
+# 2024-12-14 14:49:34.704544
++use the query "Mathematical" for the Mathematical Frameworks query
+
+# 2024-12-14 14:50:47.671351
++add tool page and item to nav. 
+
+# 2024-12-14 14:51:32.336615
++add top nav to tool page 
+
+# 2024-12-14 14:51:53.336135
++the tool page is blank
+
+# 2024-12-14 14:52:37.795551
++/architect the tool page is still blank 
+
+# 2024-12-14 14:53:30.172210
++still blank, just fix it and include it correctly
+
+# 2024-12-14 14:54:27.309870
++why isn't tools loading anything what fuck is wrong with you?
