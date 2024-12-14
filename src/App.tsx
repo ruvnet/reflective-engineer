@@ -5,8 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { EditModalProvider } from "./contexts/EditModalContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ErrorBoundary } from "./components/ErrorBoundary";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Settings from "./pages/Settings";
 import Templates from "./pages/Templates";
