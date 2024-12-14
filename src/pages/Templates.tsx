@@ -24,47 +24,14 @@ type GlobModule = {
   [key: string]: () => Promise<string>
 }
 
-type Section = {
-  name: string;
-  categories: string[];
-};
-
-const SECTIONS: Section[] = [
-  {
-    name: "Mathematical Frameworks",
-    categories: ["Mathematical Logic", "Set Theory", "Category Theory", "Abstract Algebra", 
-                "Topology", "Complex Analysis", "Symbolic Systems", "System Analysis", "Number Theory"]
-  },
-  {
-    name: "Basic Prompting",
-    categories: ["Zero-Shot", "Few-Shot", "Chain of Thought", "Role Playing", 
-                "Step by Step", "Direct Instruction", "Task Decomposition"]
-  },
-  {
-    name: "Advanced Prompting",
-    categories: ["Tree of Thoughts", "ReAct", "Self-Consistency", "Chain of Verification",
-                "Meta-Prompting", "Recursive Prompting", "Socratic Method"]
-  },
-  {
-    name: "Cutting Edge",
-    categories: ["Constitutional AI", "Automatic Reasoning", "Multi-Agent", "Recursive Refinement",
-                "Adversarial Prompting", "Emergent Abilities", "Self-Reflection"]
-  },
-  {
-    name: "Specialized",
-    categories: ["Retrieval Augmented", "Context Distillation", "Prompt Chaining",
-                "Knowledge Graphs", "Semantic Control", "Temporal Reasoning", "Causal Inference"]
-  },
-  {
-    name: "Safety",
-    categories: ["Red Teaming", "Prompt Injection", "Jailbreak Prevention",
-                "Output Sanitization", "Bias Detection"]
-  },
-  {
-    name: "Optimization",
-    categories: ["Token Optimization", "Context Window", "Prompt Compression",
-                "Response Shaping", "Temperature Control"]
-  }
+const SECTIONS = [
+  "Mathematical Frameworks",
+  "Basic Prompting", 
+  "Advanced Prompting",
+  "Cutting Edge",
+  "Specialized",
+  "Safety",
+  "Optimization"
 ];
 
 export default function Templates() {
