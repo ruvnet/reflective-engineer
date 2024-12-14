@@ -249,14 +249,14 @@ export default function Templates() {
             <div className="mt-8">
               <h2 className="text-xl font-code text-console-cyan mb-4">Saved Templates</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {savedTemplates.map((template) => (
+                {savedTemplates.filter(template => template.category).map((template) => (
                   <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
-                          <CardTitle className="text-console-cyan">{template.title}</CardTitle>
+                          <CardTitle className="text-console-cyan">{template.name}</CardTitle>
                           <CardDescription className="text-console-green">
-                            Saved Template - {new Date(template.timestamp).toLocaleDateString()}
+                            {template.category} - {new Date(template.timestamp).toLocaleDateString()}
                           </CardDescription>
                         </div>
                         <div className="flex gap-2">
@@ -271,11 +271,10 @@ export default function Templates() {
                             <Edit2 className="w-4 h-4 text-console-cyan" />
                           </button>
                           <button
-                            onClick={(e) => {
-                              e.preventDefault();
+                            onClick={() => {
                               if (window.confirm('Are you sure you want to delete this template?')) {
                                 deleteTemplate(template.id);
-                                loadSavedTemplates(); // Refresh the list after deletion
+                                loadSavedTemplates();
                               }
                             }}
                             className="console-button p-2 hover:bg-red-900/20"
@@ -289,8 +288,6 @@ export default function Templates() {
                     <CardContent>
                       <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
                         <pre className="text-sm font-code text-console-text">
-                          {template.name}
-                          {'\n\n'}
                           {template.description}
                           {'\n\n'}
                           {template.content}
