@@ -66,20 +66,97 @@ const Tools = () => {
                 </button>
               </nav>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {tools.map((tool) => (
-                <div 
-                  key={tool.id}
-                  className="glass-panel p-6 border border-console-cyan/20 hover:border-console-cyan/40 transition-colors"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <tool.icon className="w-6 h-6 text-console-cyan" />
-                    <h2 className="text-xl text-console-cyan">{tool.name}</h2>
+            {activeTab === "overview" && (
+              <div className="space-y-6">
+                <div className="glass-panel p-6">
+                  <h2 className="text-xl text-console-cyan mb-4">Tool Categories</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                      <h3 className="text-console-green">Prompt Tools</h3>
+                      <p className="text-console-text">Tools for generating, analyzing and optimizing prompts</p>
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-console-green">Analysis Tools</h3>
+                      <p className="text-console-text">Tools for analyzing model outputs and behavior</p>
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-console-green">Utilities</h3>
+                      <p className="text-console-text">General purpose tools and utilities</p>
+                    </div>
                   </div>
-                  <p className="text-console-text mb-4">{tool.description}</p>
                 </div>
-              ))}
-            </div>
+
+                <div className="glass-panel p-6">
+                  <h2 className="text-xl text-console-cyan mb-4">Getting Started</h2>
+                  <ol className="list-decimal list-inside space-y-2 text-console-text">
+                    <li>Select a tool category from the tabs above</li>
+                    <li>Choose a specific tool from the available options</li>
+                    <li>Configure the tool parameters as needed</li>
+                    <li>Execute the tool and view results</li>
+                  </ol>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "prompt" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Prompt Generator</h3>
+                  <p className="text-console-text mb-4">Generate structured prompts using templates and frameworks</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Chain Builder</h3>
+                  <p className="text-console-text mb-4">Create complex prompt chains and workflows</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Template Editor</h3>
+                  <p className="text-console-text mb-4">Edit and manage prompt templates</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "analysis" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Output Analyzer</h3>
+                  <p className="text-console-text mb-4">Analyze and evaluate model outputs</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Performance Metrics</h3>
+                  <p className="text-console-text mb-4">Track and visualize model performance</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Bias Detector</h3>
+                  <p className="text-console-text mb-4">Identify potential biases in model responses</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "utilities" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Token Counter</h3>
+                  <p className="text-console-text mb-4">Count tokens in prompts and responses</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Format Converter</h3>
+                  <p className="text-console-text mb-4">Convert between different data formats</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+                <div className="glass-panel p-6 border border-console-cyan/20">
+                  <h3 className="text-xl text-console-cyan mb-2">Batch Processor</h3>
+                  <p className="text-console-text mb-4">Process multiple inputs in batch</p>
+                  <button className="console-button w-full">Open Tool</button>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </main>
