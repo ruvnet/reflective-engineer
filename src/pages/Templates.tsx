@@ -50,7 +50,7 @@ const MATH_SECTIONS = [
 export default function Templates() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [builtInTemplates, setBuiltInTemplates] = useState<Template[]>([]);
-  const [savedTemplates, setSavedTemplates] = useState<SavedPrompt[]>([]);
+  const [savedTemplates, setSavedTemplates] = useState<SavedTemplate[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSection, setActiveSection] = useState<string>("Mathematical Frameworks");
@@ -64,7 +64,7 @@ export default function Templates() {
   };
 
   const loadSavedTemplates = () => {
-    setSavedTemplates(getSavedPrompts());
+    setSavedTemplates(getSavedTemplates());
   };
 
   // Filter templates based on search and active section
@@ -260,7 +260,8 @@ export default function Templates() {
                           onClick={(e) => {
                             e.preventDefault();
                             if (window.confirm('Are you sure you want to delete this template?')) {
-                              deletePrompt(template.id);
+                              deleteTemplate(template.id);
+                              loadSavedTemplates(); // Refresh the list after deletion
                             }
                           }}
                           className="console-button p-2 hover:bg-red-900/20"
@@ -273,9 +274,11 @@ export default function Templates() {
                     <CardContent>
                       <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
                         <pre className="text-sm font-code text-console-text">
-                          {template.prompt.overview}
+                          {template.name}
                           {'\n\n'}
-                          {template.prompt.content}
+                          {template.description}
+                          {'\n\n'}
+                          {template.content}
                         </pre>
                       </ScrollArea>
                     </CardContent>
