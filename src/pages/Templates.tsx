@@ -168,7 +168,7 @@ export default function Templates() {
                       <CardHeader>
                         <CardTitle className="text-console-cyan">{template.title}</CardTitle>
                         <CardDescription className="text-console-green">
-                          {activeSection} Template
+                          Template
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
