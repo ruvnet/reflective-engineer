@@ -375,7 +375,10 @@ export function DeployAgentDialog({ onDeploy, trigger, onClose }: DeployAgentDia
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                       <SelectContent>
-                        {[...Object.keys(AGENT_CATEGORIES["Agent Library"]), ...Object.keys(AGENT_CATEGORIES["Prompt Library"])].map((category) => (
+                        {Array.from(new Set([
+                          ...Object.keys(AGENT_CATEGORIES["Agent Library"]), 
+                          ...Object.keys(AGENT_CATEGORIES["Prompt Library"])
+                        ])).map((category) => (
                           <SelectItem key={category} value={category}>
                             <div className="flex flex-col text-left">
                               <span>{category}</span>
