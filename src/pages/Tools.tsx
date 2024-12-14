@@ -232,7 +232,7 @@ const Tools = () => {
               <div className="space-y-8">
                 {/* Tools Section */}
                 <div>
-                  <h2 className="text-xl font-code text-console-cyan mb-4">Tools</h2>
+                  <h2 className="text-xl font-code text-console-cyan mb-4">Saved Tools</h2>
                   <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                     {savedTools.map((tool) => (
                       <Card key={tool.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
