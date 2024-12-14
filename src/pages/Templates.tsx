@@ -55,7 +55,6 @@ export default function Templates() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSection, setActiveSection] = useState<string>("Mathematical Frameworks");
   const { toast } = useToast();
-  const { toast } = useToast();
   const templatesPerPage = 9;
 
   const loadTemplate = (section: string) => {
