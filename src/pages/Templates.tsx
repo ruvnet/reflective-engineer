@@ -60,7 +60,8 @@ export default function Templates() {
       template.content.toLowerCase().includes(searchQuery.toLowerCase())
     ) : true;
     
-    const matchesSection = template.title.toLowerCase().startsWith(activeSection.toLowerCase());
+    // Check if template matches the active section without requiring exact prefix match
+    const matchesSection = template.title.toLowerCase().includes(activeSection.toLowerCase());
     
     return matchesSearch && matchesSection;
   });
@@ -167,7 +168,7 @@ export default function Templates() {
                       <CardHeader>
                         <CardTitle className="text-console-cyan">{template.title}</CardTitle>
                         <CardDescription className="text-console-green">
-                          {section.name} Template
+                          {activeSection} Template
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
