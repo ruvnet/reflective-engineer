@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MainNav from "../components/MainNav";
 import { toolRegistry } from "../tools";
+import { useEditModal } from "../contexts/EditModalContext";
 import { Tool, ToolCategory } from "../tools/types";
 import { toolService } from "../services/toolService";
 import { SavedTool, SavedTemplate, SavedPrompt, getSavedTools, getSavedTemplates, saveTemplate, deleteTemplate, getSavedPrompts, deletePrompt, savePrompt } from "../services/storageService";
