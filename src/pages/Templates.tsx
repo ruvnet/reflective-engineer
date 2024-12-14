@@ -249,7 +249,7 @@ export default function Templates() {
             <div className="mt-8">
               <h2 className="text-xl font-code text-console-cyan mb-4">Saved Templates</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {savedTemplates.filter(template => template.category).map((template) => (
+                {savedTemplates.filter(template => template.category === "Chain Builder" || template.category === activeSection).map((template) => (
                   <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
                     <CardHeader>
                       <div className="flex justify-between items-start">
