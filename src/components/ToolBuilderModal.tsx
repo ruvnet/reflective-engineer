@@ -24,16 +24,28 @@ type ToolBuilderProps = {
   isOpen: boolean;
   onClose: () => void;
   onSave: (tool: Tool) => void;
+  initialData?: SavedTemplate;
 };
 
-export function ToolBuilderModal({ isOpen, onClose, onSave }: ToolBuilderProps) {
+export function ToolBuilderModal({ isOpen, onClose, onSave, initialData }: ToolBuilderProps) {
   const [activeTab, setActiveTab] = useState('config');
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    prompt: '',
-    parameters: []
+    name: initialData?.name || '',
+    description: initialData?.description || '',
+    prompt: initialData?.content || '',
+    parameters: initialData?.variables || []
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        name: initialData.name,
+        description: initialData.description,
+        prompt: initialData.content,
+        parameters: initialData.variables
+      });
+    }
+  }, [initialData]);
   const [testResult, setTestResult] = useState('');
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
