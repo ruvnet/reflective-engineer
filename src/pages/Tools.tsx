@@ -151,11 +151,16 @@ const Tools = () => {
 
                 <ToolBuilderModal
                   isOpen={isToolBuilderOpen}
-                  onClose={() => setIsToolBuilderOpen(false)}
+                  onClose={() => {
+                    setIsToolBuilderOpen(false);
+                    setEditingTemplate(null);
+                  }}
                   onSave={(tool) => {
                     toolService.addTool(tool);
                     setIsToolBuilderOpen(false);
+                    setEditingTemplate(null);
                   }}
+                  initialData={editingTemplate}
                 />
                 <div className="glass-panel p-6 border border-console-cyan/20">
                   <h3 className="text-xl text-console-cyan mb-2">Template Editor</h3>
