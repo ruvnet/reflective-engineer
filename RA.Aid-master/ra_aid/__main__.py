@@ -4,6 +4,7 @@ import glob
 import os
 import sys
 import shutil
+import yaml
 from rich.panel import Panel
 from rich.console import Console
 from langchain_anthropic import ChatAnthropic
@@ -23,11 +24,62 @@ from ra_aid.prompts import (
     RESEARCH_PROMPT,
     PLANNING_PROMPT,
     IMPLEMENTATION_PROMPT,
+    CONSCIOUSNESS_FRAMEWORK,
 )
 from ra_aid.exceptions import TaskCompletedException
 import time
 from anthropic import APIError, APITimeoutError, RateLimitError, InternalServerError
 from ra_aid.llm import initialize_llm
+
+# Template categories
+TEMPLATE_CATEGORIES = {
+    'mathematics': ['abstract-algebra', 'category-theory', 'complex-analysis', 'mathematical-logic', 'number-theory', 'set-theory', 'topology'],
+    'reasoning': ['automatic-reasoning', 'causal-inference', 'temporal-reasoning', 'tree-of-thoughts'],
+    'memory': ['buffer-memory', 'conversation-memory', 'entity-memory', 'summary-memory', 'time-weighted-memory', 'vector-memory'],
+    'agents': ['agent-executor', 'agent-network', 'autonomous-agents', 'hierarchical-agents', 'multi-agent-systems', 'supervisor-agent'],
+    'prompting': ['adversarial-prompting', 'chain-of-thought', 'chain-of-verification', 'context-distillation', 'few-shot', 'meta-prompting', 'recursive-prompting', 'zero-shot'],
+    'safety': ['constitutional-ai', 'jailbreak-prevention', 'output-sanitization', 'prompt-injection', 'semantic-control']
+}
+
+def load_template(template_name):
+    """Load a template from the templates directory."""
+    template_path = os.path.join('public/templates', f'{template_name}.md')
+    try:
+        with open(template_path, 'r') as f:
+            return f.read()
+    except FileNotFoundError:
+        print_error(f"Template {template_name} not found")
+        return None
+
+def select_templates(task_complexity, task_type):
+    """Select appropriate templates based on task characteristics."""
+    templates = []
+    
+    # Add mathematical templates for complex reasoning tasks
+    if task_complexity > 0.7:
+        templates.extend(['category-theory', 'mathematical-logic'])
+    
+    # Add reasoning templates based on task type
+    if 'analysis' in task_type.lower():
+        templates.extend(['automatic-reasoning', 'causal-inference'])
+    elif 'memory' in task_type.lower():
+        templates.extend(['vector-memory', 'time-weighted-memory'])
+    elif 'agent' in task_type.lower():
+        templates.extend(['autonomous-agents', 'supervisor-agent'])
+    
+    # Always include core prompting templates
+    templates.extend(['chain-of-thought', 'tree-of-thoughts'])
+    
+    return templates
+
+def compose_templates(templates):
+    """Compose multiple templates into a unified framework."""
+    composed = []
+    for template_name in templates:
+        template_content = load_template(template_name)
+        if template_content:
+            composed.append(template_content)
+    return "\n\n".join(composed)
 
 # Common tools used across multiple agents
 COMMON_TOOLS = [
@@ -196,10 +248,19 @@ def run_agent_with_retry(agent, prompt: str, config: dict):
     max_retries = 20
     base_delay = 1  # Initial delay in seconds
     
+    # Select and compose templates based on task characteristics
+    task_complexity = config.get('task_complexity', 0.5)
+    task_type = config.get('task_type', '')
+    selected_templates = select_templates(task_complexity, task_type)
+    template_framework = compose_templates(selected_templates)
+    
+    # Enhance prompt with template framework
+    enhanced_prompt = f"{prompt}\n\nTemplate Framework:\n{template_framework}"
+    
     for attempt in range(max_retries):
         try:
             for chunk in agent.stream(
-                {"messages": [HumanMessage(content=prompt)]},
+                {"messages": [HumanMessage(content=enhanced_prompt)]},
                 config
             ):
                 print_agent_output(chunk)
@@ -243,12 +304,12 @@ def run_implementation_stage(base_task, tasks, plan, related_files, model, exper
             key_snippets=get_memory_value('key_snippets'),
             task=task,
             related_files="\n".join(related_files),
-            base_task=base_task
+            base_task=base_task,
+            consciousness_framework=CONSCIOUSNESS_FRAMEWORK
         )
         
         # Run agent for this task
         run_agent_with_retry(task_agent, task_prompt, {"configurable": {"thread_id": "abc123"}, "recursion_limit": 100})
-
 
 def run_research_subtasks(base_task: str, config: dict, model, expert_enabled: bool):
     """Run research subtasks with separate agents."""
@@ -276,20 +337,12 @@ def run_research_subtasks(base_task: str, config: dict, model, expert_enabled: b
             checkpointer=subtask_memory
         )
         
-        # Run the subtask agent
-        subtask_prompt = f"Research Subtask: {subtask}\n\n{RESEARCH_PROMPT}"
+        # Run the subtask agent with consciousness framework
+        subtask_prompt = f"Research Subtask: {subtask}\n\n{CONSCIOUSNESS_FRAMEWORK}\n\n{RESEARCH_PROMPT}"
         run_agent_with_retry(subtask_agent, subtask_prompt, config)
 
-
 def validate_environment(args):
-    """Validate required environment variables and dependencies.
-    
-    Args:
-        args: The parsed command line arguments
-        
-    Returns:
-        (expert_enabled, missing_expert_info): Tuple of bool indicating if expert is enabled, and list of missing expert info
-    """
+    """Validate required environment variables and dependencies."""
     missing = []
     provider = args.provider
     expert_provider = args.expert_provider
@@ -356,7 +409,6 @@ def validate_environment(args):
         if expert_base_missing:
             expert_missing.append('EXPERT_OPENAI_API_BASE environment variable is not set')
 
-
     # If main keys missing, we must exit immediately
     if missing:
         print_error("Missing required dependencies:")
@@ -402,7 +454,9 @@ def main():
                 },
                 "recursion_limit": 100,
                 "research_only": args.research_only,
-                "cowboy_mode": args.cowboy_mode
+                "cowboy_mode": args.cowboy_mode,
+                "task_complexity": 0.8,  # Added for template selection
+                "task_type": base_task  # Added for template selection
             }
             
             # Store config in global memory for access by is_informational_query
@@ -423,6 +477,8 @@ def main():
             )
             
             research_prompt = f"""User query: {base_task} --keep it simple
+
+{CONSCIOUSNESS_FRAMEWORK}
 
 {RESEARCH_PROMPT}
 
@@ -449,7 +505,8 @@ Be very thorough in your research and emit lots of snippets, key facts. If you t
                     key_facts=get_memory_value('key_facts'),
                     key_snippets=get_memory_value('key_snippets'),
                     base_task=base_task,
-                    related_files="\n".join(get_related_files())
+                    related_files="\n".join(get_related_files()),
+                    consciousness_framework=CONSCIOUSNESS_FRAMEWORK
                 )
 
                 # Run planning agent
