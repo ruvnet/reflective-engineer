@@ -15,7 +15,8 @@ console = Console()
 
 class RunProgrammingTaskInput(BaseModel):
     instructions: str = Field(description="Instructions for the programming task")
-    files: Optional[List[str]] = Field(None, description="Optional list of files for Aider to examine")
+    files: Optional[List[str]] = Field(default=None, description="Optional list of files for Aider to examine")
+
 
 @tool(args_schema=RunProgrammingTaskInput)
 def run_programming_task(instructions: str, files: Optional[List[str]] = None) -> Dict[str, Union[str, int, bool]]:

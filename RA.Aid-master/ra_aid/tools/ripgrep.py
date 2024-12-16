@@ -1,6 +1,4 @@
 from typing import Dict, Union, Optional, List
-import shutil
-import platform
 from langchain_core.tools import tool
 from rich.console import Console
 from rich.panel import Panel
@@ -25,65 +23,6 @@ DEFAULT_EXCLUDE_DIRS = [
     '.idea',
     '.vscode'
 ]
-
-def check_ripgrep_installation() -> Dict[str, Union[bool, str]]:
-    """Check if ripgrep is installed and provide installation instructions if not."""
-    rg_path = shutil.which('rg')
-    if rg_path:
-        return {
-            "installed": True,
-            "path": rg_path,
-            "message": "ripgrep is installed"
-        }
-    
-    # Prepare installation instructions based on platform
-    system = platform.system().lower()
-    if system == 'linux':
-        instructions = """
-To install ripgrep on Linux:
-
-Ubuntu/Debian:
-```bash
-sudo apt-get update
-sudo apt-get install ripgrep
-```
-
-Fedora:
-```bash
-sudo dnf install ripgrep
-```
-
-Arch Linux:
-```bash
-sudo pacman -S ripgrep
-```"""
-    elif system == 'darwin':
-        instructions = """
-To install ripgrep on macOS using Homebrew:
-```bash
-brew install ripgrep
-```"""
-    elif system == 'windows':
-        instructions = """
-To install ripgrep on Windows:
-
-Using Chocolatey:
-```bash
-choco install ripgrep
-```
-
-Using Scoop:
-```bash
-scoop install ripgrep
-```"""
-    else:
-        instructions = "Please visit https://github.com/BurntSushi/ripgrep#installation for installation instructions."
-
-    return {
-        "installed": False,
-        "path": None,
-        "message": f"ripgrep (rg) is not installed. {instructions}"
-    }
 
 @tool
 def ripgrep_search(
@@ -111,20 +50,6 @@ def ripgrep_search(
             - return_code: Process return code (0 means success)
             - success: Boolean indicating if search succeeded
     """
-    # Check ripgrep installation first
-    rg_check = check_ripgrep_installation()
-    if not rg_check["installed"]:
-        console.print(Panel(
-            Markdown(rg_check["message"]),
-            title="⚠️ Dependency Missing",
-            border_style="yellow"
-        ))
-        return {
-            "output": rg_check["message"],
-            "return_code": 1,
-            "success": False
-        }
-
     # Build rg command with options
     cmd = ['rg', '--color', 'always']
     
@@ -174,16 +99,6 @@ def ripgrep_search(
         output, return_code = run_interactive_command(cmd)
         print()
         decoded_output = output.decode() if output else ""
-        
-        # If command failed but ripgrep exists, it might be a pattern error
-        if return_code != 0 and rg_check["installed"]:
-            error_msg = "Search failed. Please check your pattern syntax."
-            console.print(Panel(error_msg, title="⚠️ Search Error", border_style="yellow"))
-            return {
-                "output": error_msg,
-                "return_code": return_code,
-                "success": False
-            }
         
         return {
             "output": truncate_output(decoded_output),

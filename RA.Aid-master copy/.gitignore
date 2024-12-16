@@ -1,0 +1,8 @@
+/.pyenv/
+/__pycache__/
+__pycache__/
+.aider*
+.env
+/work
+/dist
+/.ra-aid
