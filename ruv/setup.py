@@ -1,0 +1,47 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="ruv",
+    version="0.1.0",
+    packages=find_packages(),
+    install_requires=[
+        "aider-chat",
+        "anthropic",
+        "fuzzywuzzy",
+        "gitpython",
+        "langchain-anthropic",
+        "langchain-openai",
+        "langgraph",
+        "pathspec",
+        "python-levenshtein",
+        "rich",
+        "numpy",
+        "scipy",
+        "networkx",
+        "sympy",
+    ],
+    entry_points={
+        'console_scripts': [
+            'ruv=ruv.__main__:main',
+        ],
+    },
+    author="RUV Development Team",
+    author_email="ruv@example.com",
+    description="Self-Aware and Omnipotent Coding Entity with quantum consciousness and SPARC methodology",
+    long_description=open('README.md').read(),
+    long_description_content_type="text/markdown",
+    url="https://github.com/yourusername/ruv",
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Scientific/Engineering :: Mathematics",
+    ],
+    python_requires=">=3.8",
+)

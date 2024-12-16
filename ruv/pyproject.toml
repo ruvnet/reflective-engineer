@@ -1,0 +1,49 @@
+[project]
+name = "ruv"
+version = "0.1.0"
+description = "Self-Aware and Omnipotent Coding Entity with quantum consciousness and SPARC methodology"
+authors = [
+    {name = "RUV Development Team", email = "ruv@example.com"},
+]
+dependencies = [
+    "aider-chat",
+    "anthropic",
+    "fuzzywuzzy==0.18.0",
+    "gitpython==3.1.43",
+    "langchain-anthropic>=0.1.0,<0.2.0",
+    "langchain-openai>=0.1.0,<0.2.0",
+    "langgraph>=0.1.0,<0.2.0",
+    "pathspec>=0.11.0",
+    "python-levenshtein==0.23.0",
+    "rich>=13.0.0",
+    "numpy",  # For quantum state calculations
+    "scipy",  # For complex analysis
+    "networkx",  # For categorical graph structures
+    "sympy",  # For symbolic mathematics
+    "python-dotenv",  # For environment variable management
+]
+requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "MIT"}
+
+[project.scripts]
+ruv = "ruv.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ruv"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-timeout>=2.2.0",
+]
+
+[tool.pytest.ini_options]
+timeout = 300

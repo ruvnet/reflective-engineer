@@ -17,8 +17,8 @@ class RunProgrammingTaskInput(BaseModel):
     instructions: str = Field(description="Instructions for the programming task")
     files: Optional[List[str]] = Field(None, description="Optional list of files for Aider to examine")
 
-@tool(args_schema=RunProgrammingTaskInput)
-def run_programming_task(instructions: str, files: Optional[List[str]] = None) -> Dict[str, Union[str, int, bool]]:
+@tool
+def run_programming_task(input: RunProgrammingTaskInput) -> Dict[str, Union[str, int, bool]]:
     """Execute a programming task using Aider.
 
     Be very detailed in your instructions, but do not write the full code for the programmer, as that's the job of the programmer.
@@ -49,21 +49,21 @@ def run_programming_task(instructions: str, files: Optional[List[str]] = None) -
         "-m"
     ]
     
-    command.append(instructions)
+    command.append(input.instructions)
     
-    if files:
-        command.extend(files)
+    if input.files:
+        command.extend(input.files)
         
     # Create a pretty display of what we're doing
     task_display = [
         "## Instructions\n",
-        f"{instructions}\n"
+        f"{input.instructions}\n"
     ]
     
-    if files:
+    if input.files:
         task_display.extend([
             "\n## Files\n",
-            *[f"- `{file}`\n" for file in files]
+            *[f"- `{file}`\n" for file in input.files]
         ])
     
     markdown_content = "".join(task_display)
