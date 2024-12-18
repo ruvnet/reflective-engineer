@@ -1,64 +1,61 @@
-# Symbolic Scribe
+# Reflective Engineer
 
-A specialized prompt engineering tool that uses mathematical frameworks to generate precise, structured prompts for AI interactions.
+A powerful LangChain-based development environment for building, testing, and deploying AI agents with structured templates and comprehensive documentation.
 
-## Key Features & Benefits
+## Features
 
-### Mathematical Framework Integration
-- **Set Theory Templates**: Model complex relationships and hierarchies
-- **Category Theory**: Define abstract transformations and mappings
-- **Abstract Algebra**: Structure group operations and symmetries
-- **Topology**: Explore continuous transformations and invariants
-- **Complex Analysis**: Handle multi-dimensional relationships
+### Agent Templates
+- **Comprehensive Library**: Ready-to-use templates for various agent types:
+  - Autonomous Agents
+  - Hierarchical Agents
+  - Team Chat Agents
+  - Zero-Shot Agents
+  - XML Agents
+  - And many more...
+- **Memory Systems**: Multiple memory implementations:
+  - Buffer Memory
+  - Conversation Memory
+  - Entity Memory
+  - Summary Memory
+  - Time-Weighted Memory
+  - Vector Memory
 
-### Practical Applications
-- **Information Security**: Model threat vectors and attack surfaces
-- **Ethical Analysis**: Structure moral frameworks and constraints
-- **AI Safety**: Define system boundaries and safety properties
-- **Domain Adaptation**: Apply mathematical rigor to any field
+### Chain Templates
+- **Versatile Chain Types**:
+  - Sequential Chains
+  - Router Chains
+  - API Chains
+  - SQL Chains
+  - Retrieval QA Chains
+  - And more...
 
-### User Experience
-- **Interactive Console**: Terminal-style interface with modern aesthetics
-- **Real-time Preview**: Test prompts with multiple AI models
-- **Template Library**: Pre-built frameworks for common use cases
-- **Mobile Responsive**: Full functionality on all device sizes
-- **Local Storage**: Secure saving of prompts and preferences
-
-## Security Features
-
-### API Key Management
-- Encrypted local storage of API keys
-- Optional environment variable configuration
-- No server-side key storage
-- Automatic key validation
-
-### Data Privacy
-- Client-side only processing
-- No external data transmission except to OpenRouter API
-- No tracking or analytics
-- Configurable model selection
+### Development Tools
+- **Agent Testing**: Built-in tools for testing and debugging agents
+- **Template Editor**: Visual editor for customizing agent templates
+- **Live Preview**: Real-time testing of agents and chains
+- **Deployment Tools**: Easy deployment options for production environments
 
 ## Quick Start
 
-1. **Installation**
+1. **Clone & Install**
 ```bash
-git clone https://github.com/yourusername/symbolic-scribe.git
-cd symbolic-scribe
+git clone https://github.com/ruvnet/reflective-engineer.git
+cd reflective-engineer
 npm install
 ```
 
-2. **Configuration**
+2. **Configure Environment**
 ```bash
-cp .env.sample .env
-# Edit .env with your OpenRouter API key
+cp sample.env .env
+# Edit .env with your API keys and configuration
 ```
 
-3. **Development**
+3. **Start Development Server**
 ```bash
 npm run dev
 ```
 
-4. **Production Build**
+4. **Build for Production**
 ```bash
 npm run build
 npm run preview
@@ -66,63 +63,86 @@ npm run preview
 
 ## Usage Guide
 
-### Basic Prompt Generation
-1. Select a mathematical framework template
-2. Choose your target domain
-3. Define your variables and relationships
-4. Generate structured prompts
+### Creating an Agent
+1. Navigate to the Templates page
+2. Choose a template type (e.g., Autonomous Agent, Team Chat)
+3. Customize the configuration
+4. Test the agent using the built-in tools
+5. Deploy to your environment
 
 ### Template Customization
-1. Navigate to Templates page
-2. Select a base template
-3. Modify variables and relationships
-4. Save for future use
+1. Open the Template Editor
+2. Modify the template structure
+3. Add custom functionality
+4. Save and export your changes
 
-### Testing & Iteration
-1. Use the Preview function to test prompts
-2. Select different models for comparison
-3. Refine based on responses
-4. Export final versions
+### Memory Integration
+1. Select a memory system
+2. Configure memory parameters
+3. Test with sample conversations
+4. Monitor memory usage and performance
 
-## InfoSec Overview
+## Architecture
 
-### Threat Model
-- Client-side only architecture
-- No persistent server storage
-- Encrypted API key storage
-- Input sanitization
+### Core Components
+- **Template Engine**: Manages and processes agent templates
+- **Memory Systems**: Handles various types of agent memory
+- **Chain Manager**: Coordinates different chain types
+- **Deployment System**: Handles agent deployment and scaling
+
+### Integration Points
+- LangChain
+- OpenAI
+- Vector Stores
+- Custom Tools
+
+## Security
+
+### Features
+- Secure API key management
+- Environment-based configuration
+- Input validation and sanitization
+- Rate limiting and usage monitoring
 
 ### Best Practices
-- Regular API key rotation
-- Use environment variables in production
-- Monitor API usage
-- Review generated prompts for sensitive data
+- Use environment variables for sensitive data
+- Regularly rotate API keys
+- Monitor agent activities
+- Implement proper access controls
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+We welcome contributions! Please follow these steps:
 
-### Development Setup
 1. Fork the repository
 2. Create a feature branch
-3. Install dependencies
-4. Make your changes
-5. Run tests
-6. Submit a PR
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+## Documentation
+
+- **Templates**: Detailed documentation for each template type
+- **API Reference**: Complete API documentation
+- **Examples**: Sample implementations and use cases
+- **Tutorials**: Step-by-step guides for common tasks
 
 ## Support
 
-- Documentation: `/docs` page in app
-- Issues: GitHub issue tracker
-- Community: Discord server (coming soon)
+- GitHub Issues: Bug reports and feature requests
+- Documentation: In-app documentation
+- Community: Discussions and knowledge sharing
 
 ## License
 
-MIT License - see LICENSE file for details
+MIT License - see [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
-- OpenRouter for AI model access
-- shadcn/ui for component library
+- LangChain for the foundational framework
+- OpenAI for language models
+- shadcn/ui for UI components
 - Tailwind CSS for styling
-- Vite for build tooling
+- Vite for build system
