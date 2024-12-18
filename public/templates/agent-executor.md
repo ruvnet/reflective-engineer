@@ -32,3 +32,32 @@ overview: Build an execution framework for managing and running agent tasks effi
 2. Task Prioritization
 3. Error Recovery
 4. Result Validation
+
+# Example Implementation
+```typescript
+import { OpenAI } from "langchain/llms/openai";
+import { AgentExecutor, BaseAgent } from "langchain/agents";
+import { TaskQueue } from "langchain/utils";
+
+// Setup task queue
+const taskQueue = new TaskQueue();
+
+// Create agent
+const agent = new BaseAgent({
+  llm: new OpenAI({ temperature: 0 })
+});
+
+// Initialize executor
+const executor = new AgentExecutor({
+  agent,
+  taskQueue,
+  maxConcurrent: 3,
+  verbose: true,
+  returnIntermediateSteps: true
+});
+
+// Execute tasks
+await executor.call({
+  input: "Process this task",
+  metadata: { priority: "high" }
+});

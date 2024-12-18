@@ -32,3 +32,27 @@ overview: Design an agent that plans complex tasks and executes them step by ste
 2. Progress Monitoring
 3. Failure Recovery
 4. Result Validation
+
+# Example Implementation
+```typescript
+import { OpenAI } from "langchain/llms/openai";
+import { PlanAndExecuteAgent } from "langchain/agents";
+import { DynamicTool } from "langchain/tools";
+
+// Define custom tools
+const tools = [
+  new DynamicTool({
+    name: "task-executor",
+    description: "Executes a specific task step",
+    func: async (step: string) => {
+      // Implementation
+      return "Step executed";
+    },
+  }),
+];
+
+// Create planner
+const agent = PlanAndExecuteAgent.fromLLMAndTools(
+  new OpenAI({ temperature: 0 }),
+  tools
+);

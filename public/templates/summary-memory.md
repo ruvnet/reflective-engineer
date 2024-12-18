@@ -32,3 +32,26 @@ overview: Create a memory system that maintains summarized versions of past inte
 2. Update Frequency
 3. Retention Policy
 4. Access Patterns
+
+# Example Implementation
+```typescript
+import { OpenAI } from "langchain/llms/openai";
+import { SummaryMemory } from "langchain/memory";
+import { PromptTemplate } from "langchain/prompts";
+
+// Initialize summary memory
+const memory = new SummaryMemory({
+  llm: new OpenAI({ temperature: 0 }),
+  prompt: new PromptTemplate({
+    template: "Summarize: {input}",
+    inputVariables: ["input"]
+  }),
+  maxTokens: 100,
+  returnMessages: true
+});
+
+// Add to memory
+await memory.saveContext(
+  { input: "User message" },
+  { output: "AI response" }
+);

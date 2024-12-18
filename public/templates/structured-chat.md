@@ -32,3 +32,25 @@ overview: Create a structured chat agent with defined conversation patterns and 
 2. Template Maintenance
 3. State Validation
 4. Error Recovery
+
+# Example Implementation
+```typescript
+import { OpenAI } from "langchain/llms/openai";
+import { StructuredChatAgent } from "langchain/agents";
+import { PromptTemplate } from "langchain/prompts";
+
+// Define chat structure
+const chatTemplate = new PromptTemplate({
+  template: "Respond to: {input}\nFormat: {format}",
+  inputVariables: ["input", "format"]
+});
+
+// Create agent
+const agent = StructuredChatAgent.fromLLMAndTools(
+  new OpenAI({ temperature: 0.7 }),
+  [],
+  {
+    template: chatTemplate,
+    inputVariables: ["input", "format"]
+  }
+);

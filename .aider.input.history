@@ -936,6 +936,7 @@
 
 # 2024-12-12 16:35:29.058551
 +/undo
+<<<<<<< HEAD
 
 # 2024-12-12 22:26:36.817744
 +/ask why doesn't the agent templates load in the UI?
@@ -1820,3 +1821,5 @@
 
 # 2024-12-14 14:54:27.309870
 +why isn't tools loading anything what fuck is wrong with you?
+=======
+>>>>>>> d6ba441fc94722b9de910dc3f9113c38d737eb4f

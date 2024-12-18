@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { useEditModal } from "../contexts/EditModalContext";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Input } from "@/components/ui/input";
+import { ScrollArea } from "../components/ui/scroll-area";
+import { Input } from "../components/ui/input";
 import { Search, BookTemplate, Trash2, Edit2 } from "lucide-react";
 import { TemplateEditorModal } from "../components/TemplateEditorModal";
 import { 
@@ -12,10 +12,11 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "../components/ui/pagination";
 import MainNav from "../components/MainNav";
-import { SavedPrompt, getSavedPrompts, deletePrompt, saveTemplate } from "../services/storageService";
-import { useToast } from "@/components/ui/use-toast";
+import { SavedTemplate, getSavedTemplates, deleteTemplate, saveTemplate } from "../services/storageService";
+import { useToast } from "../components/ui/use-toast";
+import { Button } from "../components/ui/button";
 
 interface Template {
   title: string;
@@ -27,26 +28,47 @@ type GlobModule = {
   [key: string]: () => Promise<string>
 }
 
-const SECTIONS = [
-  "Mathematical Frameworks",
-  "Basic Prompting", 
-  "Advanced Prompting",
-  "Cutting Edge",
-  "Specialized",
-  "Safety",
-  "Optimization"
-];
+type Section = {
+  name: string;
+  categories: string[];
+};
 
-const MATH_SECTIONS = [
-  "Mathematical Logic",
-  "Set Theory",
-  "Category Theory",
-  "Abstract Algebra", 
-  "Topology",
-  "Complex Analysis",
-  "Symbolic Systems",
-  "System Analysis",
-  "Number Theory"
+const SECTIONS: Section[] = [
+  {
+    name: "Mathematical Frameworks",
+    categories: ["Mathematical Logic", "Set Theory", "Category Theory", "Abstract Algebra", 
+                "Topology", "Complex Analysis", "Symbolic Systems", "System Analysis", "Number Theory"]
+  },
+  {
+    name: "Basic Prompting",
+    categories: ["Zero-Shot", "Few-Shot", "Chain of Thought", "Role Playing", 
+                "Step by Step", "Direct Instruction", "Task Decomposition"]
+  },
+  {
+    name: "Advanced Prompting",
+    categories: ["Tree of Thoughts", "ReAct", "Self-Consistency", "Chain of Verification",
+                "Meta-Prompting", "Recursive Prompting", "Socratic Method"]
+  },
+  {
+    name: "Cutting Edge",
+    categories: ["Constitutional AI", "Automatic Reasoning", "Multi-Agent", "Recursive Refinement",
+                "Adversarial Prompting", "Emergent Abilities", "Self-Reflection"]
+  },
+  {
+    name: "Specialized",
+    categories: ["Retrieval Augmented", "Context Distillation", "Prompt Chaining",
+                "Knowledge Graphs", "Semantic Control", "Temporal Reasoning", "Causal Inference"]
+  },
+  {
+    name: "Safety",
+    categories: ["Red Teaming", "Prompt Injection", "Jailbreak Prevention",
+                "Output Sanitization", "Bias Detection"]
+  },
+  {
+    name: "Optimization",
+    categories: ["Token Optimization", "Context Window", "Prompt Compression",
+                "Response Shaping", "Temperature Control"]
+  }
 ];
 
 export default function Templates() {
@@ -67,6 +89,9 @@ export default function Templates() {
     setCurrentPage(1);
   };
 
+  const loadSavedTemplates = () => {
+    setSavedTemplates(getSavedTemplates());
+  };
 
   // Filter templates based on search and active section
   const filteredTemplates = builtInTemplates.filter(template => {
@@ -74,16 +99,11 @@ export default function Templates() {
       template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       template.content.toLowerCase().includes(searchQuery.toLowerCase())
     ) : true;
-    
-    // Special handling for Mathematical Frameworks section
-    const isMathFrameworks = activeSection === "Mathematical Frameworks";
-    const matchesSection = isMathFrameworks
-      ? template.content.toLowerCase().includes("mathematical") ||
-        template.title.toLowerCase().includes("mathematical")
-      : template.content.toLowerCase().includes(activeSection.toLowerCase()) ||
-        template.title.toLowerCase().includes(activeSection.toLowerCase()) ||
-        activeSection.toLowerCase().includes(template.title.toLowerCase());
-    
+
+    // Find the active section object
+    const activeSectionObj = SECTIONS.find(section => section.name === activeSection);
+    const matchesSection = activeSectionObj?.categories.includes(template.title) || false;
+
     return matchesSearch && matchesSection;
   });
 
@@ -123,7 +143,7 @@ export default function Templates() {
     };
 
     importTemplates();
-  }, []);
+  }, [activeSection]);
 
   // Listen for both storage event and custom event
   useEffect(() => {
@@ -149,19 +169,20 @@ export default function Templates() {
           <div className="flex flex-col gap-4">
             {SECTIONS.map((section) => (
               <button
-                key={section}
-                onClick={() => loadTemplate(section)}
+                key={section.name}
+                onClick={() => loadTemplate(section.name)}
                 className={`w-full text-left px-2 py-1 rounded hover:bg-console-cyan/10 text-sm 
-                  ${activeSection === section 
+                  ${activeSection === section.name 
                     ? 'bg-console-cyan/10 text-console-cyan' 
                     : 'text-console-text'
                   } transition-colors`}
               >
-                {section}
+                {section.name}
               </button>
             ))}
           </div>
         </aside>
+
         <section className="flex-1 glass-panel p-6 animate-matrix-fade">
           <div className="flex items-center gap-2 mb-6">
             <BookTemplate className="w-6 h-6 text-console-cyan" />
@@ -182,23 +203,23 @@ export default function Templates() {
             </div>
           </div>
 
-          {/* Built-in Templates by Section */}
+          {/* Templates Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {currentTemplates.map((template) => (
-                    <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
-                      <CardHeader>
-                        <CardTitle className="text-console-cyan">{template.title}</CardTitle>
-                        <CardDescription className="text-console-green">
-                          Template
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
-                          <pre className="text-sm font-code text-console-text">{template.content}</pre>
-                        </ScrollArea>
-                      </CardContent>
-                    </Card>
-                  ))}
+              <Card key={template.filename} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
+                <CardHeader>
+                  <CardTitle className="text-console-cyan">{template.title}</CardTitle>
+                  <CardDescription className="text-console-green">
+                    {activeSection} Template
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-[200px] w-full rounded-md border border-console-cyan/20 p-4 bg-gray-900/50">
+                    <pre className="text-sm font-code text-console-text">{template.content}</pre>
+                  </ScrollArea>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           {/* Pagination */}
@@ -207,28 +228,35 @@ export default function Templates() {
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
-                    <PaginationPrevious 
+                    <Button
                       onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                       disabled={currentPage === 1}
-                    />
+                      className="pagination-button"
+                    >
+                      Previous
+                    </Button>
                   </PaginationItem>
                   
                   {Array.from({length: totalPages}, (_, i) => i + 1).map(page => (
                     <PaginationItem key={page}>
-                      <PaginationLink
+                      <Button
                         onClick={() => setCurrentPage(page)}
-                        isActive={currentPage === page}
+                        variant={currentPage === page ? "default" : "outline"}
+                        className="pagination-button"
                       >
                         {page}
-                      </PaginationLink>
+                      </Button>
                     </PaginationItem>
                   ))}
                   
                   <PaginationItem>
-                    <PaginationNext
+                    <Button
                       onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                       disabled={currentPage === totalPages}
-                    />
+                      className="pagination-button"
+                    >
+                      Next
+                    </Button>
                   </PaginationItem>
                 </PaginationContent>
               </Pagination>
@@ -247,7 +275,9 @@ export default function Templates() {
             <div className="mt-8">
               <h2 className="text-xl font-code text-console-cyan mb-4">Saved Templates</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {savedTemplates.filter(template => template.category === "Chain Builder" || template.category === activeSection).map((template) => (
+                {savedTemplates.filter(template => 
+                  template.category === activeSection
+                ).map((template) => (
                   <Card key={template.id} className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50">
                     <CardHeader>
                       <div className="flex justify-between items-start">
@@ -261,7 +291,7 @@ export default function Templates() {
                           <button
                             onClick={() => {
                               setEditingTemplate(template);
-                              setIsToolBuilderOpen(true);
+                              setIsTemplateEditorOpen(true);
                             }}
                             className="console-button p-1.5 hover:bg-console-cyan/20"
                             title="Edit template"
@@ -272,7 +302,7 @@ export default function Templates() {
                             onClick={() => {
                               if (window.confirm('Are you sure you want to delete this template?')) {
                                 deleteTemplate(template.id);
-                                setSavedTemplates(getSavedTemplates());
+                                loadSavedTemplates();
                               }
                             }}
                             className="console-button p-1.5 hover:bg-red-900/20"
@@ -305,21 +335,24 @@ export default function Templates() {
             setIsTemplateEditorOpen(false);
             setEditingTemplate(null);
           }}
-          initialData={editingTemplate || undefined}
+          initialData={editingTemplate}
           onSave={(template) => {
             try {
-              const templateData = {
+              saveTemplate({
                 name: template.name,
                 description: template.description,
                 category: template.category || activeSection,
-                domain: template.domain,
                 content: template.content,
-                variables: template.variables || []
-              };
-              saveTemplate(templateData);
+                variables: template.variables?.map(v => ({
+                  name: v.name || '',
+                  type: v.type || 'string',
+                  description: v.description || '',
+                  defaultValue: v.defaultValue
+                })) || []
+              });
               setIsTemplateEditorOpen(false);
               setEditingTemplate(null);
-              setSavedTemplates(getSavedTemplates());
+              loadSavedTemplates();
               toast({
                 title: "Success",
                 description: "Template saved successfully"

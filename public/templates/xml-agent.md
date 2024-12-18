@@ -32,3 +32,30 @@ overview: Implement an agent that processes and generates structured XML respons
 2. XML Sanitization
 3. Error Handling
 4. Response Formatting
+
+# Example Implementation
+```typescript
+import { OpenAI } from "langchain/llms/openai";
+import { XMLAgent } from "langchain/agents";
+import { XMLParser, XMLBuilder } from "langchain/tools";
+
+// Define XML schema
+const schema = `
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="result" type="xs:string"/>
+        <xs:element name="confidence" type="xs:decimal"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>`;
+
+// Initialize agent
+const agent = XMLAgent.fromLLMAndTools(
+  new OpenAI({ temperature: 0 }),
+  [new XMLParser(), new XMLBuilder()],
+  { schema }
+);

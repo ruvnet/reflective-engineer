@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { BookTemplate } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { useTemplate } from "../services/templateService";
 import AgentTemplate from "./AgentTemplate";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 
 interface AgentLibraryProps {
   loadTemplate: (category: string) => void;
 }
 
 // Define agent categories with descriptions
-const AGENT_SECTIONS = {
+export const AGENT_SECTIONS = {
   "Conversational Agents": {
     description: "Agents specialized in natural dialogue and interaction",
     agents: [
@@ -54,7 +55,16 @@ const AGENT_SECTIONS = {
       { id: "time-weighted-memory", name: "Time-Weighted Memory", description: "Temporal memory management" }
     ]
   }
-};
+} as const;
+
+// Export templates mapping for other components
+export const AGENT_TEMPLATES = Object.entries(AGENT_SECTIONS).reduce((acc, [category, { agents }]) => {
+  acc[category] = agents.reduce((agentAcc, agent) => {
+    agentAcc[agent.id] = agent.name;
+    return agentAcc;
+  }, {} as Record<string, string>);
+  return acc;
+}, {} as Record<string, Record<string, string>>);
 
 export default function AgentLibrary({ loadTemplate }: AgentLibraryProps) {
   const [selectedAgent, setSelectedAgent] = useState<{
@@ -62,13 +72,20 @@ export default function AgentLibrary({ loadTemplate }: AgentLibraryProps) {
     name: string;
     description: string;
   } | null>(null);
+  const [expandedSections, setExpandedSections] = useState<string[]>([]);
 
   // Use the template service to load the template content
   const { data: template, isLoading } = useTemplate(
     selectedAgent ? selectedAgent.id : ''
   );
 
-  console.log("AgentLibrary state:", { selectedAgent, template, isLoading });
+  const toggleSection = (section: string) => {
+    setExpandedSections(current =>
+      current.includes(section)
+        ? current.filter(s => s !== section)
+        : [...current, section]
+    );
+  };
 
   return (
     <div className="space-y-8">
@@ -80,48 +97,57 @@ export default function AgentLibrary({ loadTemplate }: AgentLibraryProps) {
           onClose={() => setSelectedAgent(null)}
         />
       ) : (
-        Object.entries(AGENT_SECTIONS).map(([section, { description, agents }]) => (
-          <div key={section} className="glass-panel p-6 animate-matrix-fade">
-            <div className="mb-6">
-              <h2 className="text-2xl font-code text-console-cyan mb-2">{section}</h2>
-              <p className="text-gray-400">{description}</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {agents.map((agent) => (
-                <Card 
-                  key={agent.id}
-                  className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50 cursor-pointer"
-                  onClick={() => {
-                    console.log("Selecting agent:", agent);
-                    setSelectedAgent(agent);
-                  }}
-                >
-                  <CardHeader>
-                    <div className="flex items-center gap-2">
-                      <BookTemplate className="w-5 h-5 text-console-cyan" />
-                      <CardTitle className="text-console-cyan text-lg">{agent.name}</CardTitle>
-                    </div>
-                    <CardDescription className="text-console-green">
-                      {agent.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <button 
-                      className="console-button w-full mt-2"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        loadTemplate(agent.id);
+        <Accordion
+          type="multiple"
+          value={expandedSections}
+          onValueChange={setExpandedSections}
+          className="space-y-4"
+        >
+          {Object.entries(AGENT_SECTIONS).map(([section, { description, agents }]) => (
+            <AccordionItem key={section} value={section} className="glass-panel p-4">
+              <AccordionTrigger className="text-console-cyan hover:no-underline">
+                <div className="flex flex-col items-start">
+                  <h2 className="text-xl font-code">{section}</h2>
+                  <p className="text-sm text-gray-400 mt-1">{description}</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                  {agents.map((agent) => (
+                    <Card 
+                      key={agent.id}
+                      className="glass-panel border-console-cyan hover:shadow-lg transition-shadow bg-gray-900/50 cursor-pointer"
+                      onClick={() => {
+                        setSelectedAgent(agent);
                       }}
                     >
-                      Configure Agent
-                    </button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        ))
+                      <CardHeader>
+                        <div className="flex items-center gap-2">
+                          <BookTemplate className="w-5 h-5 text-console-cyan" />
+                          <CardTitle className="text-console-cyan text-lg">{agent.name}</CardTitle>
+                        </div>
+                        <CardDescription className="text-console-green">
+                          {agent.description}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <button 
+                          className="console-button w-full mt-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            loadTemplate(agent.id);
+                          }}
+                        >
+                          Configure Agent
+                        </button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       )}
     </div>
   );

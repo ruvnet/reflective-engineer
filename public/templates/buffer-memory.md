@@ -32,3 +32,25 @@ overview: Implement a simple buffer-based memory system for storing recent inter
 2. Data Validation
 3. Cleanup Strategy
 4. Access Patterns
+
+# Example Implementation
+```typescript
+import { OpenAI } from "langchain/llms/openai";
+import { BufferMemory } from "langchain/memory";
+import { ConversationChain } from "langchain/chains";
+
+// Initialize buffer memory
+const memory = new BufferMemory({
+  memoryKey: "chat_history",
+  returnMessages: true,
+  inputKey: "input",
+  outputKey: "output",
+  maxLength: 1000
+});
+
+// Create conversation chain with memory
+const chain = new ConversationChain({
+  llm: new OpenAI({ temperature: 0.7 }),
+  memory,
+  verbose: true
+});
