@@ -1,39 +1,64 @@
 # Reflective Engineer
 
-A powerful LangChain-based development environment for building, testing, and deploying AI agents with structured templates and comprehensive documentation.
+A powerful LangChain-based development environment for building, testing, and deploying AI agents. Featuring advanced prompting techniques, sophisticated memory systems, and a comprehensive template library for creating intelligent, context-aware applications.
 
-## Features
+## Advanced Capabilities
+
+### Prompting Systems
+- **Chain of Thought**: Implement step-by-step reasoning in agent responses
+- **Tree of Thoughts**: Enable multi-path exploration for complex problem-solving
+- **Zero-Shot Learning**: Create agents that can handle new tasks without prior examples
+- **Few-Shot Learning**: Provide minimal examples for task adaptation
+- **Structured Output**: Generate responses in specific formats (JSON, XML, etc.)
+- **Constitutional AI**: Implement ethical constraints and behavioral guidelines
+- **Prompt Chaining**: Create sophisticated workflows by connecting multiple prompts
+- **Context Window Management**: Optimize token usage and maintain conversation context
+
+### Mathematical Frameworks
+- **Set Theory**: Model complex relationships and hierarchies
+- **Category Theory**: Define abstract transformations and mappings
+- **Abstract Algebra**: Structure group operations and symmetries
+- **Topology**: Explore continuous transformations and invariants
+- **Complex Analysis**: Handle multi-dimensional relationships
 
 ### Agent Templates
-- **Comprehensive Library**: Ready-to-use templates for various agent types:
-  - Autonomous Agents
-  - Hierarchical Agents
-  - Team Chat Agents
-  - Zero-Shot Agents
-  - XML Agents
-  - And many more...
-- **Memory Systems**: Multiple memory implementations:
-  - Buffer Memory
-  - Conversation Memory
-  - Entity Memory
-  - Summary Memory
-  - Time-Weighted Memory
-  - Vector Memory
+- **Autonomous Agents**: Self-directed agents with independent decision-making
+- **Hierarchical Agents**: Multi-level agent systems with command structures
+- **Team Chat Agents**: Collaborative agents working together
+- **Supervisor Agents**: Oversight and coordination of agent teams
+- **XML Agents**: Structured output generation with schema validation
+- **Router Agents**: Intelligent task distribution and workflow management
+
+### Memory Systems
+- **Buffer Memory**: Recent interaction storage
+- **Conversation Memory**: Full dialogue history management
+- **Entity Memory**: Track and update entity information
+- **Summary Memory**: Compressed historical context
+- **Time-Weighted Memory**: Temporal relevance-based storage
+- **Vector Memory**: Semantic similarity-based retrieval
 
 ### Chain Templates
-- **Versatile Chain Types**:
-  - Sequential Chains
-  - Router Chains
-  - API Chains
-  - SQL Chains
-  - Retrieval QA Chains
-  - And more...
+- **Sequential Chains**: Multi-step processing pipelines
+- **Router Chains**: Dynamic workflow management
+- **API Chains**: External service integration
+- **SQL Chains**: Database interaction and query generation
+- **Retrieval QA**: Document-based question answering
+- **OpenAI Function Chains**: Structured function calling
 
-### Development Tools
-- **Agent Testing**: Built-in tools for testing and debugging agents
-- **Template Editor**: Visual editor for customizing agent templates
-- **Live Preview**: Real-time testing of agents and chains
-- **Deployment Tools**: Easy deployment options for production environments
+## Development Tools
+
+### Agent Development
+- **Visual Template Editor**: Customize agent behavior and responses
+- **Live Preview**: Real-time testing and iteration
+- **Memory Visualization**: Inspect and debug memory states
+- **Chain Debugging**: Step-through execution of chain operations
+- **Performance Monitoring**: Track token usage and response times
+
+### Testing & Deployment
+- **Automated Testing**: Verify agent behavior and responses
+- **Environment Management**: Dev/staging/prod configurations
+- **Version Control**: Track template and agent changes
+- **Deployment Options**: Local, cloud, and containerized deployment
 
 ## Quick Start
 
