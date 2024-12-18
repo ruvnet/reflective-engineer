@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for symbolic-scribe on 2024-11-28T16:17:52Z
+# fly.toml app configuration file generated for reflective-engineer on 2024-12-18T16:54:12Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'reflective-engineer'
-primary_region = 'iad'
+primary_region = 'sjc'
 
 [build]
 

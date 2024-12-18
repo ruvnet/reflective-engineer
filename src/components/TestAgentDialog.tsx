@@ -25,7 +25,7 @@ interface TestAgentDialogProps {
 export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps) {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
-  const responseRef = useRef<HTMLPreElement>(null);
+  const responseRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -128,11 +128,9 @@ export function TestAgentDialog({ agent, isOpen, onClose }: TestAgentDialogProps
               content: input
             }
           ],
-          temperature,
-          max_tokens: maxTokens,
-          stream: streaming,
           temperature: temperature,
-          max_tokens: maxTokens
+          max_tokens: maxTokens,
+          stream: streaming
         }),
         signal: abortControllerRef.current.signal
       });

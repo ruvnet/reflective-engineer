@@ -13,7 +13,7 @@ import {
 } from "../services/settingsService";
 
 const DEFAULT_API_KEY = import.meta.env.VITE_OPENROUTER_KEY;
-const SETTINGS_KEY = 'symbolic-scribe-settings';
+const SETTINGS_KEY = 'reflective-engineer-settings';
 
 // Helper to dispatch settings change event
 const notifySettingsChange = () => {
@@ -179,7 +179,7 @@ const Settings = () => {
           {/* GitHub Link */}
           <div className="flex justify-end">
             <a 
-              href="https://github.com/ruvnet/symbolic-scribe"
+              href="https://github.com/ruvnet/reflective-engineer"
               target="_blank"
               rel="noopener noreferrer"
               className="console-button flex items-center gap-2"
@@ -218,7 +218,7 @@ const Settings = () => {
                   )}
                   <div className="flex items-center gap-2 mt-2 text-gray-400">
                     <Lock className="w-4 h-4" />
-                    <span className="text-sm">Keys entered here are encrypted and stored only in your browser's local storage. View the <a href="https://github.com/ruvnet/symbolic-scribe" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">source code</a> for details.</span>
+                    <span className="text-sm">Keys entered here are encrypted and stored only in your browser's local storage. View the <a href="https://github.com/ruvnet/reflective-engineer" className="text-console-cyan hover:underline" target="_blank" rel="noopener noreferrer">source code</a> for details.</span>
                   </div>
                   <p className="text-sm text-gray-400 mt-1">
                     <span className="flex items-center gap-1">

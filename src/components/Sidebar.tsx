@@ -61,6 +61,11 @@ const SECTIONS = {
 } as const;
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps): JSX.Element => {
+  const handleTemplateClick = (category: keyof typeof CATEGORIES) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    loadTemplate(category);
+  };
+
   return (
     <div className={`glass-panel p-4 md:w-64 animate-matrix-fade ${sidebarOpen ? 'block' : 'hidden md:block'}`}>
       <div className="flex items-center justify-between mb-6">
@@ -87,7 +92,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps): J
                   <li key={category}>
                     <button 
                       className="w-full text-left console-button flex items-center gap-2 py-1 px-2"
-                      onClick={() => loadTemplate(category as keyof typeof CATEGORIES)}
+                      onClick={() => handleTemplateClick(category as keyof typeof CATEGORIES)}
                     >
                       <BookTemplate className="w-4 h-4" />
                       {category}
@@ -114,7 +119,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, loadTemplate }: SidebarProps): J
                     <li key={category}>
                       <button 
                         className="w-full text-left console-button flex items-center gap-2 py-1 px-2"
-                        onClick={() => loadTemplate(category as keyof typeof CATEGORIES)}
+                        onClick={() => handleTemplateClick(category as keyof typeof CATEGORIES)}
                       >
                         <BookTemplate className="w-4 h-4" />
                         {category}
