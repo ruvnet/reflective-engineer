@@ -1,3 +1,9 @@
+RA.Aid-master
+test-sparc
+ruv/
+demo/
+agents/
+openai/
 # Logs
 logs
 *.log
@@ -6,7 +12,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
+*.aider.tags.cache.v3*
+.aider.chat.history.md
+.aider.input.history
 node_modules
 dist
 dist-ssr

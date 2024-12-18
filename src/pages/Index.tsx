@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { AlertCircle, ChevronDown } from "lucide-react";
 import { useTemplate } from "../services/templateService";
-import { useEditModal } from "../contexts/EditModalContext";
 import { useToast } from "../components/ui/use-toast";
 import { loadSettings, fetchAvailableModels, testPrompt, OpenRouterModel } from "../services/settingsService";
 import { Link } from "react-router-dom";
@@ -323,19 +322,6 @@ const Index = () => {
             </div>
           )}
 
-          <ToolBuilderModal
-            isOpen={isToolBuilderOpen}
-            onClose={() => {
-              setIsToolBuilderOpen(false);
-              setEditingTemplate(null);
-            }}
-            onSave={(tool) => {
-              toolService.addTool(tool);
-              setIsToolBuilderOpen(false);
-              setEditingTemplate(null);
-            }}
-            initialData={editingTemplate}
-          />
         </section>
       </main>
 
