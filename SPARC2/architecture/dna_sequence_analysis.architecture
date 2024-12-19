@@ -1,0 +1,65 @@
+// Architecture for DNA Sequence Analysis
+
+// 1. Data Layer:
+//    - Input Data:
+//      - DNA Sequence (Observed): Stored as a map of Position -> Nucleotide
+//      - Reference Sequence: Stored as a map of Position -> Nucleotide
+//      - Known Codon Mappings: Stored as a map of (Nucleotide, Nucleotide, Nucleotide) -> AminoAcid
+//    - Intermediate Data:
+//      - Codon Start Positions: Set of positions where codons start
+//      - Identified Codons: Map of Position -> AminoAcid
+//      - Mutations: Set of positions where mutations occur
+//      - Invalid Codons: Set of positions where invalid codons occur
+//    - Output Data:
+//      - Sequence Consistency: Boolean
+//      - Validation Status: Boolean
+
+// 2. Logic Layer:
+//    - Core Functions:
+//      - isComplementary(nucleotide1, nucleotide2): Checks if two nucleotides are complementary
+//      - identifyCodon(position): Identifies the amino acid encoded by the codon at a given position
+//      - isMutation(position): Checks if a nucleotide at a position is mutated
+//      - validateSequence(): Validates the overall sequence consistency
+//    - Reasoning Engine:
+//      - Uses rules to infer derived predicates (e.g., codon_start, identified_codon, mutation, invalid_codon)
+//      - Applies constraints to ensure consistency and detect contradictions
+//    - Validation Engine:
+//      - Checks if the sequence is consistent and no contradictions are present
+
+// 3. Control Layer:
+//    - Input Processing:
+//      - Reads input data (DNA sequence, reference sequence, known codon mappings)
+//      - Initializes data structures
+//    - Sequence Analysis:
+//      - Iterates through the sequence, applying logic layer functions
+//      - Derives intermediate data
+//    - Validation:
+//      - Runs validation engine to check consistency and validity
+//    - Output Generation:
+//      - Generates output data (identified codons, mutations, sequence consistency, validation status)
+
+// 4. Components:
+//    - Nucleotide Component: Represents a single nucleotide (A, C, G, T)
+//    - Position Component: Represents a position in the DNA sequence
+//    - Codon Component: Represents a triple of nucleotides
+//    - AminoAcid Component: Represents an amino acid
+//    - Sequence Component: Represents the DNA sequence
+//    - Reference Component: Represents the reference sequence
+//    - CodonMap Component: Represents the known codon mappings
+//    - Inference Engine Component: Derives new facts based on rules
+//    - Validation Component: Checks for consistency and validity
+
+// 5. Relationships:
+//    - Sequence Component contains multiple Position Components
+//    - Each Position Component is associated with a Nucleotide Component
+//    - Codon Component is composed of three Nucleotide Components
+//    - CodonMap Component maps Codon Components to AminoAcid Components
+//    - Inference Engine Component uses data from Sequence, Reference, and CodonMap Components
+//    - Validation Component uses data from Inference Engine Component
+
+// 6. Constraints:
+//    - Codon Start Constraint: A codon starts at position P if P + 2 <= sequence length
+//    - Codon Validity Constraint: A codon is valid if it maps to a known amino acid
+//    - Mutation Constraint: A mutation occurs if the observed nucleotide differs from the reference nucleotide
+//    - Sequence Consistency Constraint: The sequence is consistent if no invalid codons and all positions are observed
+//    - Validation Constraint: The results are validated if the sequence is consistent and no contradictions are present

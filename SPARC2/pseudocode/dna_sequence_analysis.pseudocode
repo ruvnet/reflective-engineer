@@ -1,0 +1,68 @@
+// Pseudocode for DNA Sequence Analysis
+
+// Input: DNA sequence, reference sequence, known codon mappings
+// Output: Identified codons, mutations, sequence consistency, validation status
+
+// Data Structures:
+// - Nucleotide: A, C, G, T
+// - Position: Integer representing position in sequence
+// - Codon: Triple of nucleotides
+// - AminoAcid: String representing amino acid
+// - ObservedSequence: Map of Position -> Nucleotide
+// - ReferenceSequence: Map of Position -> Nucleotide
+// - KnownCodons: Map of (Nucleotide, Nucleotide, Nucleotide) -> AminoAcid
+
+// Functions:
+// - isComplementary(nucleotide1, nucleotide2): Returns true if nucleotides are complementary
+// - identifyCodon(position): Returns amino acid encoded by codon at position, or null if invalid
+// - isMutation(position): Returns true if nucleotide at position differs from reference
+// - validateSequence(): Returns true if sequence is consistent and validated
+
+// Main Logic:
+
+// 1. Initialize data structures from input
+// 2. For each position in the sequence:
+//    a. Check if position is a codon start (position + 2 <= sequence length)
+//    b. If codon start:
+//       i.  Identify codon at position
+//       ii. If codon is invalid, mark as invalid
+//    c. Check if position is mutated
+// 3. Check sequence consistency:
+//    a. If any invalid codons, sequence is inconsistent
+//    b. If any position is not observed, sequence is inconsistent
+// 4. Validate results:
+//    a. If sequence is consistent and no contradictions, results are validated
+// 5. Output identified codons, mutations, sequence consistency, validation status
+
+// Detailed Steps:
+
+// isComplementary(nucleotide1, nucleotide2):
+//   if (nucleotide1 == 'A' and nucleotide2 == 'T') or (nucleotide1 == 'T' and nucleotide2 == 'A') or
+//      (nucleotide1 == 'C' and nucleotide2 == 'G') or (nucleotide1 == 'G' and nucleotide2 == 'C'):
+//     return true
+//   else:
+//     return false
+
+// identifyCodon(position):
+//   nucleotide1 = ObservedSequence[position]
+//   nucleotide2 = ObservedSequence[position + 1]
+//   nucleotide3 = ObservedSequence[position + 2]
+//   if KnownCodons contains (nucleotide1, nucleotide2, nucleotide3):
+//     return KnownCodons[(nucleotide1, nucleotide2, nucleotide3)]
+//   else:
+//     return null
+
+// isMutation(position):
+//   if ObservedSequence[position] != ReferenceSequence[position]:
+//     return true
+//   else:
+//     return false
+
+// validateSequence():
+//   if any invalid codons:
+//     return false
+//   if any position is not observed:
+//     return false
+//   if any contradictions:
+//     return false
+//   return true
