@@ -6,3 +6,5 @@ test('regression rejects despite improved quality',()=>{const v=edit();v.cases[0
 test('malformed data denied',()=>{for(const v of [null,{},'x'.repeat(65537),{...edit(),admin:true}])assert.throws(()=>replay(v));const v=edit();v.candidate.quality=Infinity;assert.throws(()=>replay(v));v.candidate.quality=.9;v.cases.push(v.cases[0]);assert.throws(()=>replay(v));});
 test('artifact digests required',()=>{const v=edit();v.candidate.artifactSha256='fake';assert.throws(()=>replay(v));});
 test('CLI parity',()=>{const r=spawnSync(process.execPath,['console/cli.mjs','replay'],{input:JSON.stringify(example),encoding:'utf8'});assert.equal(r.status,0);assert.deepEqual(JSON.parse(r.stdout),replay(example));});
+
+test('artifact arrays cannot impersonate digest strings',()=>{const v=edit();v.candidate.artifactSha256=['b'.repeat(64)];assert.throws(()=>replay(v));});
