@@ -1,175 +1,56 @@
+![Reflective Engineer](docs/assets/header.svg)
+
 # Reflective Engineer
 
-A powerful LangChain-based development environment for building, testing, and deploying AI agents. Featuring advanced prompting techniques, sophisticated memory systems, and a comprehensive template library for creating intelligent, context-aware applications.
+Reflective Engineer helps you decide whether an agent change deserves approval. Import an experiment report and replay its quality, safety, cost, latency and regression checks in your browser, CLI or MCP host. Your evidence stays on your machine.
 
-🚀 **[Try the Live Demo](https://reflective-engineer.fly.dev/)**
+This v2 release is an evidence review console. It does not execute agents, authenticate imported measurements or deploy changes. The historical React prompt builder remains in `src/` for migration reference and is excluded from the supported build. Its browser provider credentials and local storage encryption are not supported security boundaries.
 
-## Advanced Capabilities
+## Capabilities
 
-### Prompting Systems
-- **Chain of Thought**: Implement step-by-step reasoning in agent responses
-- **Tree of Thoughts**: Enable multi-path exploration for complex problem-solving
-- **Zero-Shot Learning**: Create agents that can handle new tasks without prior examples
-- **Few-Shot Learning**: Provide minimal examples for task adaptation
-- **Structured Output**: Generate responses in specific formats (JSON, XML, etc.)
-- **Constitutional AI**: Implement ethical constraints and behavioral guidelines
-- **Prompt Chaining**: Create sophisticated workflows by connecting multiple prompts
-- **Context Window Management**: Optimize token usage and maintain conversation context
+| Capability | Available behavior |
+|---|---|
+| Evidence replay | Strict versioned JSON with parent and candidate metrics, artifact hashes and unique test cases |
+| Promotion review | Quality must improve; safety >=0.99 and never decrease; no regressions, cost increase or latency increase |
+| Browser console | Mobile layout, file import, editable evidence, review download, restrictive CSP, no network access |
+| CLI and MCP | Same deterministic gate evaluator; policy resource and bounded local validation |
+| MetaHarness | Generated profiles, host configurations, sessions, memory adapter and Darwin evaluation tooling |
+| Autogenous | Pinned fitness gate with explicit manual promotion boundary |
 
-### Mathematical Frameworks
-- **Set Theory**: Model complex relationships and hierarchies
-- **Category Theory**: Define abstract transformations and mappings
-- **Abstract Algebra**: Structure group operations and symmetries
-- **Topology**: Explore continuous transformations and invariants
-- **Complex Analysis**: Handle multi-dimensional relationships
+## Install and run
 
-### Agent Templates
-- **Autonomous Agents**: Self-directed agents with independent decision-making
-- **Hierarchical Agents**: Multi-level agent systems with command structures
-- **Team Chat Agents**: Collaborative agents working together
-- **Supervisor Agents**: Oversight and coordination of agent teams
-- **XML Agents**: Structured output generation with schema validation
-- **Router Agents**: Intelligent task distribution and workflow management
+Requires Node 24.
 
-### Memory Systems
-- **Buffer Memory**: Recent interaction storage
-- **Conversation Memory**: Full dialogue history management
-- **Entity Memory**: Track and update entity information
-- **Summary Memory**: Compressed historical context
-- **Time-Weighted Memory**: Temporal relevance-based storage
-- **Vector Memory**: Semantic similarity-based retrieval
-
-### Chain Templates
-- **Sequential Chains**: Multi-step processing pipelines
-- **Router Chains**: Dynamic workflow management
-- **API Chains**: External service integration
-- **SQL Chains**: Database interaction and query generation
-- **Retrieval QA**: Document-based question answering
-- **OpenAI Function Chains**: Structured function calling
-
-## Development Tools
-
-### Agent Development
-- **Visual Template Editor**: Customize agent behavior and responses
-- **Live Preview**: Real-time testing and iteration
-- **Memory Visualization**: Inspect and debug memory states
-- **Chain Debugging**: Step-through execution of chain operations
-- **Performance Monitoring**: Track token usage and response times
-
-### Testing & Deployment
-- **Automated Testing**: Verify agent behavior and responses
-- **Environment Management**: Dev/staging/prod configurations
-- **Version Control**: Track template and agent changes
-- **Deployment Options**: Local, cloud, and containerized deployment
-
-## Quick Start
-
-1. **Clone & Install**
-```bash
-git clone https://github.com/ruvnet/reflective-engineer.git
-cd reflective-engineer
-npm install
-```
-
-2. **Configure Environment**
-```bash
-cp sample.env .env
-# Edit .env with your API keys and configuration
-```
-
-3. **Start Development Server**
-```bash
-npm run dev
-```
-
-4. **Build for Production**
-```bash
+```sh
+npm ci
+npm test
 npm run build
-npm run preview
+node console/serve.mjs
 ```
 
-## Usage Guide
+Open http://127.0.0.1:4173. The example is clearly synthetic. Replace it with your experiment evidence. Browser files are copied into `dist/`; no provider SDK or credential storage is shipped.
 
-### Creating an Agent
-1. Navigate to the Templates page
-2. Choose a template type (e.g., Autonomous Agent, Team Chat)
-3. Customize the configuration
-4. Test the agent using the built-in tools
-5. Deploy to your environment
+```sh
+node console/cli.mjs status
+node console/cli.mjs replay < experiment.json
+node console/cli.mjs benchmark
+node console/cli.mjs mcp
+```
 
-### Template Customization
-1. Open the Template Editor
-2. Modify the template structure
-3. Add custom functionality
-4. Save and export your changes
+MCP tools: `project_status`, `evidence_replay`, `project_benchmark`, `project_test`. Resource: `ruv://reflective-engineer/policy`. Enable local test execution with the operator environment variable `RUV_ALLOW_VALIDATION=1`. Requests cannot choose commands, paths or environment variables. Test subprocesses have a 30 second deadline, 128 KiB combined output ceiling and one active process.
 
-### Memory Integration
-1. Select a memory system
-2. Configure memory parameters
-3. Test with sample conversations
-4. Monitor memory usage and performance
+## Validation and delivery
 
-## Architecture
+```sh
+npx playwright install chromium
+npx playwright test
+npm audit --audit-level=moderate
+```
 
-### Core Components
-- **Template Engine**: Manages and processes agent templates
-- **Memory Systems**: Handles various types of agent memory
-- **Chain Manager**: Coordinates different chain types
-- **Deployment System**: Handles agent deployment and scaling
+CI runs unit, actual SDK MCP and Chromium UI tests, builds the static distribution, audits dependencies and uploads the checked artifact. Releases deliver a static site archive through a manual workflow after the same gates. Hosting remains an operator action. The previous automatic Fly deployment is retired.
 
-### Integration Points
-- LangChain
-- OpenAI
-- Vector Stores
-- Custom Tools
+See [architecture decision](docs/adr/0001-evidence-console.md), [security review](SECURITY.md), [validation](docs/validation.md) and [MetaHarness guide](.harness/README.md).
 
-## Security
+## Related projects
 
-### Features
-- Secure API key management
-- Environment-based configuration
-- Input validation and sanitization
-- Rate limiting and usage monitoring
-
-### Best Practices
-- Use environment variables for sensitive data
-- Regularly rotate API keys
-- Monitor agent activities
-- Implement proper access controls
-
-## Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
-## Documentation
-
-- **Templates**: Detailed documentation for each template type
-- **API Reference**: Complete API documentation
-- **Examples**: Sample implementations and use cases
-- **Tutorials**: Step-by-step guides for common tasks
-
-## Support
-
-- GitHub Issues: Bug reports and feature requests
-- Documentation: In-app documentation
-- Community: Discussions and knowledge sharing
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details
-
-## Acknowledgments
-
-- LangChain for the foundational framework
-- OpenAI for language models
-- shadcn/ui for UI components
-- Tailwind CSS for styling
-- Vite for build system
+[RuFlo](https://github.com/ruvnet/ruflo) coordinates work. [MetaHarness](https://github.com/ruvnet/metaharness) generates execution evidence. [Autogenous](https://github.com/ruvnet/autogenous) governs candidate selection. [Guardrail](https://github.com/ruvnet/guardrail) evaluates policy. [Agentic Search](https://github.com/ruvnet/agentic-search) supplies retrieval experiments. [Federated MCP](https://github.com/ruvnet/federated-mcp) reads federation data; a federation message is data, never authorization to execute.

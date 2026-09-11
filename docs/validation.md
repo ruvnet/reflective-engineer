@@ -1,0 +1,7 @@
+# Validation record
+
+Recorded 2026-09-11, Node24.19 on managed Linux x86_64. Supported v2 checks: npm test passes10 unit, policy, CLI and actual SDK stdio checks; npm run build passes; real Chromium UI passes2 tests covering desktop/mobile replay, malformed input and oversized import invalidation. Local root run uses BROWSER_UNSANDBOXED=1 explicitly; CI defaults to sandboxed Chromium. No remote provider call is tested or supported.
+
+npm audit reports zero known vulnerabilities across the supported lockfile on the execution date. Historical src provider modules and old dependency manifest are excluded from the build, not certified. docs/benchmark.json records1000 deterministic two-case replays; timing is host dependent and not a model benchmark. Root review caught stale UI eligibility after oversized import; fixed with browser regression. Typed metrics and declared hashes remain unauthenticated input claims. No automatic promotion exists.
+
+CI reruns checks on every PR and uploads only four supported static assets. Generated MetaHarness profiles and Autogenous integration have separate source provenance and evidence gates. Production memory storage/identity and authenticated execution provenance remain operator work tracked in issue3.

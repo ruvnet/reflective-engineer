@@ -75,3 +75,13 @@ ENV/
 env/
 env.bak/
 venv.bak/
+
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+dist/
+playwright-report/
+test-results/
+build/
+*.egg-info/

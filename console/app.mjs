@@ -1,0 +1,6 @@
+import {replay,example,LIMIT} from './evidence.mjs';
+const input=document.querySelector('#evidence'),output=document.querySelector('#output');input.value=JSON.stringify(example,null,2);
+function run(){try{const result=replay(input.value);output.textContent=JSON.stringify(result,null,2);document.querySelector('#decision').textContent=result.recommendation;document.querySelector('#download').disabled=false;}catch(e){output.textContent=e.message;document.querySelector('#decision').textContent='Invalid evidence';document.querySelector('#download').disabled=true;}}
+document.querySelector('#replay').addEventListener('click',run);
+document.querySelector('#file').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;document.querySelector('#decision').textContent='Invalid evidence';document.querySelector('#download').disabled=true;if(f.size>LIMIT){output.textContent='Evidence exceeds 64 KiB';return;}try{input.value=await f.text();run();}catch{output.textContent='File could not be read';}});
+document.querySelector('#download').addEventListener('click',()=>{const blob=new Blob([output.textContent],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='review.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});run();
