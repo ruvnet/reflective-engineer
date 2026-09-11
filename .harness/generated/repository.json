@@ -1,0 +1,9 @@
+{
+  "entrypoint": "console/cli.mjs",
+  "commands": [
+    "status",
+    "test",
+    "benchmark",
+    "mcp"
+  ]
+}
